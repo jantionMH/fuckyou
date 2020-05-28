@@ -1,0 +1,158 @@
+from appium import webdriver
+import time
+
+
+def assert_equal_el(driver, expect, actual, case, scenes):
+    now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    if expect == actual:
+        result = '成功'
+        print(result)
+
+        with open('../data/result.csv', mode='a+') as f:
+            f.write(now + ',' + scenes + ',' + case + ',' + result + ',' + '无' + ',' + '无' + '\n')
+    else:
+        result = '失败'
+        filename = '%s.png' % now
+        driver.get_screenshot_as_file("../UItest/report/screenshot/%s" % filename)
+        with open('../data/result.csv', mode="a+") as f:
+            f.write(
+                now + ',' + scenes + ',' + case + ',' + result + ',' + filename + ',' + "期望:%s,type%s,实际%s,type%s" % (
+                    expect, type(expect), actual, type(actual)) + '\n')
+
+
+def asser_equal_nu(driver, current, bet_number, after_bet, case, scenes):
+    now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    if current - bet_number == after_bet:
+        with open('../data/result.csv', mode='a+')as f:
+            f.write(now + ',' + scenes + ',' + case + ',' + "成功" +',' +'无' + ',' + '无' + '\n')
+    else:
+        cucal = current - bet_number
+        filename = '%s.png' % now
+        driver.get_screenshot_as_file("../UItest/report/screenshot/%s" % filename)
+        with open('../data/result.csv', mode='a+')as f:
+            f.write(
+                now + ',' + scenes + ',' + case + ',' + "失败" + ',' + filename + ',' + '结账前:%s下注额%s减法得到%s实际结账后:%s' % (
+                current, bet_number, cucal, after_bet) + '\n')
+
+
+def assert_more_than(driver, expect, actual, scenes, case):
+    now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    if actual > expect:
+        result = '成功'
+        with open('../data/result.csv', mode='a+') as f:
+            f.write(now + ',' + scenes + ',' + case + ',' + result + ',' + '无' + ','+'无' + '\n')
+    else:
+        result = '失败'
+        filename = '%s.png' % now
+        driver.get_screenshot_as_file("../UItest/report/screenshot/%s" % filename)
+        with open('../data/result.csv', mode="a+") as f:
+            f.write(now + ',' + scenes + ',' + case + ',' + result + ',' + filename + '\n')
+
+
+# def capture(filename):
+# ImageGrab.grab().save('../data' + filename)
+
+
+def get_html():
+    content = """
+       
+      <table witdth=1000 border=1 cellspacing=0>
+          <tr bgcolor=yellow border=1>
+          <td >BB彩票 Android 自動化測試報告</td>
+          </tr>
+          <tr bgcolor=orange>
+          
+          <td width=20% >测试时间</td>
+          <td width=10% >测试场景</td>
+          <td width=35%>测试用例</td>
+          <td width=10%>测试结果</td>
+          <td witdth=25%>错误截图</td>
+          
+          
+          </tr>
+    """
+
+    with open('../data/result.csv', mode='r')as f:
+        result = f.readlines()
+        print(result)
+        for line in result:
+            content += "<tr>"
+            content += "<td width=20%%>%s</td\n>" % line.strip().split(',')[0]
+            content += "<td width=25%%>%s</td\n>" % line.strip().split(',')[1]
+            content += "<td width=35%%>%s</td\n>" % line.strip().split(',')[2]
+
+            r = line.strip().split(',')[3]
+            if r == '成功':
+                content += "<td bgcolor=green width=15%%>%s</td\n>" % line.strip().split(',')[3]
+            else:
+                content += "<td bgcolor=red width=15%%>%s</td\n>" % line.strip().split(',')[3]
+            h = line.strip().split(',')[4]
+            if h == '无':
+                content += "<td width=20%%>%s</td\n>" % h
+            else:
+                content += "<td width=20%%><a href='../UItest/report/screenshot/%s'>%s</td\n>" % (h, h)
+
+            content += "</tr>"
+
+    content += '</table>'
+    print(content)
+
+    with open('../UItest/report/report.html', 'w+')as f:
+        f.write(content)
+
+
+def get_emial_html():
+    content = """
+
+      <table witdth=1000 border=1 cellspacing=0>
+         
+          <tr bgcolor=orange>
+          <td width=15% >测试时间</td>
+          <td width=10% >测试场景</td>
+          <td width=30%>测试用例</td>
+          <td width=5%>测试结果</td>
+          <td witdth=10%>错误截图</td>
+          <td width=30%>错误数据</td>
+          </tr>
+    """
+
+    with open('../data/result.csv', mode='r')as f:
+        result = f.readlines()
+        print(result)
+        for line in result:
+            content += "<tr>"
+            content += "<td width=15%%>%s</td\n>" % line.strip().split(',')[0]
+            content += "<td width=10%%>%s</td\n>" % line.strip().split(',')[1]
+            content += "<td width=30%%>%s</td\n>" % line.strip().split(',')[2]
+            r = line.strip().split(',')[3]
+            if r == '成功':
+                content += "<td bgcolor=green width=5%%>%s</td\n>" % line.strip().split(',')[3]
+            else:
+                content += "<td bgcolor=red width=5%%>%s</td\n>" % line.strip().split(',')[3]
+            h = line.strip().split(',')[4]
+            if h == '无':
+                content += "<td width=10%%>%s</td\n>" % h
+            else:
+                content += "<td width=10%%><a href='./%s'>%s</td\n>" % (h, h)
+            content += " <td width=30%%>%s</td>" % line.strip().split(',')[5]
+
+            content += "</tr>"
+
+    content += '</table>'
+    print(content)
+
+    with open('../UItest/report/demoreport.html', 'w+')as f:
+        f.write(content)
+
+
+def fileex():
+    with open('../data/result.csv', mode='r')as f:
+        result = f.readlines()
+        print(result[0].strip().split(','))
+        print(result[0].strip().split(',')[5])
+
+
+if __name__ == '__main__':
+    get_emial_html()
+    # get_html()
+    # fileex()
