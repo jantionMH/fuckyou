@@ -34,8 +34,8 @@ def htmlemail():
     # 发送者
     fromaddr = 'jantion1110@gmail.com'
     # 接收者
-    # toaddrs = ['jantion1110@aol.com', 'frankc@seektopser.com', 'sven@seektopser.com']
-    toaddrs =['jantion1110@aol.com','jantion@seektopser.com']
+    toaddrs = ['jantion1110@aol.com', 'frankc@seektopser.com', 'sven@seektopser.com']
+    # toaddrs =['jantion1110@aol.com','jantion@seektopser.com']
     # 邮件标题
     subject = '调试python邮件功能 '
     # 邮件的正文
@@ -55,7 +55,7 @@ def htmlemail():
 
     # 加入附件
     # attr1=MIMEText(open(r"../UItest/report\demoreport.html", 'r').read(), _subtype='plain', _charset='utf-8')
-    attr1 = MIMEText(open(r"C:\Users\janti\PycharmProjects\YYandroid\demoreport.zip", 'rb').read(), _subtype='base64',
+    attr1 = MIMEText(open(r"C:\Users\janti\PycharmProjects\autotest-android\YYandroid\demoreport.zip", 'rb').read(), _subtype='base64',
                      _charset='utf-8')
     # 加入附件的格式描述/包括打包后附件的名字
     attr1["Content-Type"] = 'application/octet-stream'

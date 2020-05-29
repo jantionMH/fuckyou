@@ -10,11 +10,14 @@ def ruleoption(driver):
 
 # 阴影三点
 def shadowcilck(driver):
-    driver.find_element_by_xpath("//android.widget.RelativeLayout").click()
-    sleep(1)
-    driver.find_element_by_xpath("//android.widget.RelativeLayout").click()
-    sleep(1)
-    driver.find_element_by_xpath("//android.widget.RelativeLayout").click()
+    try:
+        driver.find_element_by_xpath("//android.widget.RelativeLayout").click()
+        sleep(1)
+        driver.find_element_by_xpath("//android.widget.RelativeLayout").click()
+        sleep(1)
+        driver.find_element_by_xpath("//android.widget.RelativeLayout").click()
+    except:
+        print("无阴影可点")
 
 
 # 加倍
@@ -22,7 +25,7 @@ def add_double(driver):
     driver.find_element_by_xpath("//android.widget.TextView[@text='十']").click()
 
 
-# 一键投注
+# 一键投注,点击确认,返回两个金额
 def Oneclickbetting(driver, methodtitle):
     # 一键投注点击
     driver.find_element_by_xpath(
@@ -39,7 +42,7 @@ def Oneclickbetting(driver, methodtitle):
 
     # 断言:确认提示框出现表明一键投注功能可用
     subtitle = driver.find_element_by_id("com.yy.sport:id/cb_select").text
-    assert_equal_el(driver, expect='本次后不再进行确认提示', actual=subtitle, case='一键投注', scenes='玩法：%s' % methodtitle)
+    assert_equal_el(driver, expect='本次后不再进行确认提示', actual=subtitle, case='一键投注', scenes='玩法:%s' % methodtitle)
     # 点击确定
     sleep(2)
     driver.find_element_by_id("com.yy.sport:id/btn_sure").click()
@@ -73,6 +76,7 @@ def currentbalance(driver):
     currentbalance = driver.find_element_by_id("com.yy.sport:id/iv_user_balance").text
 
     newcurrent = currentbalance.replace(",", "")
+    print("当前金额",newcurrent)
     return newcurrent
 
 
@@ -92,7 +96,7 @@ def addbetpageC(driver, methodtitle):
     driver.find_element_by_id("com.yy.sport:id/btn_add").click()
     time.sleep(2)
     text = driver.find_element_by_xpath("//android.widget.TextView[@text='投注单']").text
-    assert_equal_el(driver, expect='投注单', actual=text, case="添加注单", scenes="玩法：%s" % methodtitle)
+    assert_equal_el(driver, expect='投注单', actual=text, case="添加注单", scenes="玩法:%s" % methodtitle)
 
 
 def add5bet(driver, methodtitle):
@@ -100,7 +104,7 @@ def add5bet(driver, methodtitle):
     driver.find_element_by_id("com.yy.sport:id/tv_random_5").click()
     # 投注数量
     betnum = driver.find_element_by_id("com.yy.sport:id/tv_betNum").text
-    assert_more_than(driver, expect=4, actual=int(betnum), scenes="玩法：%s" % methodtitle, case="随机添加5注")
+    assert_more_than(driver, expect=4, actual=int(betnum), scenes="玩法:%s" % methodtitle, case="随机添加5注")
 
 
 def addbet_comfire(driver, methodtitle):

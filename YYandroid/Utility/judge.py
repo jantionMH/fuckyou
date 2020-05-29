@@ -6,7 +6,7 @@ def assert_equal_el(driver, expect, actual, case, scenes):
     now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
     if expect == actual:
         result = '成功'
-        print(result)
+
 
         with open('../data/result.csv', mode='a+') as f:
             f.write(now + ',' + scenes + ',' + case + ',' + result + ',' + '无' + ',' + '无' + '\n')

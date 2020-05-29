@@ -5,10 +5,14 @@ from Utility.judge import assert_equal_el
 import time
 
 def Entrance(androidB):
+
     driver=login(androidA=androidB)
-    TouchAction(driver).tap(x=356, y=164).perform()
+    driver.implicitly_wait(5)
+    driver.find_element_by_xpath("//android.widget.TextView[@resource-id='com.yy.sport:id/tv_tab' and @text='娱乐']").click()
+    # TouchAction(driver).tap(x=356, y=164).perform()
     sleep(3)
-    TouchAction(driver).long_press(x=492, y=1442).move_to(x=448, y=247).release().perform()
+    driver.swipe(start_x=492,start_y=1442,end_x=448,end_y=247,duration=2000)
+    # TouchAction(driver).long_press(x=492, y=1442).move_to(x=448, y=247).release().perform()
     sleep(6)
     try:
      # 进入彩票游戏
