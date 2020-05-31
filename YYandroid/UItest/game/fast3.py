@@ -924,7 +924,7 @@ def gametown_fast3(driver):
             driver.get_screenshot_as_file("../report/screenshot/%s" % filename)
             with open('../data/result.csv', mode='a+')as f:
                 f.write(
-                    now + ',' + "玩法:快三娱乐城" + ',' + "一键投注" + ',' + "失败" + ',' + filename +'\n')
+                    now + ',' + "玩法:快三娱乐城" + ',' + "一键投注" + ',' + "失败" + ',' + filename +'无'+'\n')
             driver.find_element_by_id("com.yy.sport:id/btn_sure").click()
         finally:
 
