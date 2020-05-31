@@ -1,6 +1,7 @@
 .idea/
 demoreport/
-UItest/report/
-data/
+UItest/report/screenshot
+*.html
+data/result.csv
 demoreport.zip
-
+data/
