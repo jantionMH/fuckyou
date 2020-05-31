@@ -31,6 +31,8 @@ def choosefastthree():
 
 
 
+
+
 if __name__ == '__main__':
     # starttest()
     choosefastthree()

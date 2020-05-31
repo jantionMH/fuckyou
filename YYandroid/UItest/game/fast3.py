@@ -1,10 +1,12 @@
 from time import sleep
 
 import time
-from UItest.gamementhod.hhh import hhhmenthod, dxds, s3g, s3s, d3dt, d2td
+from UItest.gamementhod.hhh import hhhmenthod, dxds, s3g, s3s, d3dt, d2td, gametownchossenum, \
+    gametownchooseserial2, gametownchooseserial1
 from Utility.judge import asser_equal_nu, assert_equal_el
 from common.component import Oneclickbetting, ruleoption, add_double, shadowcilck, returntopage, currentbalance, \
-    rollbackC, addbetpageC, add5bet, addbet_comfire
+    rollbackC, addbetpageC, add5bet, addbet_comfire, officeswitchtogametown, pageamount, fast3_unitprice, \
+    gain_lottey_phase, verify_betreocrd, totalphase
 from common.fast3component import avaliable_num
 
 now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
@@ -860,6 +862,81 @@ def diff2tuo(driver):
                    case="金额验证",
                    scenes="玩法:%s" % menthodtitle)
 
+    rollbackC(driver, gametype='快三', gameport='安徽快三')
     # 完成所有游戏玩法
     # 将页面停在进入彩票的页面上
-    driver.find_elements_by_id("com.yy.sport:id/icon")[1].click()
+    # driver.find_elements_by_id("com.yy.sport:id/icon")[1].click()
+
+
+def gametown_fast3(driver):
+    global A_balance, B_balance
+    menthodtitle = '快三投注基本页面'
+    driver.implicitly_wait(5)
+    # 阴影三点
+    shadowcilck(driver)
+    try:
+        driver.find_element_by_class_name("android.widget.TextView").text == '整合'
+
+
+    except:
+
+        # 切换到娱乐城玩法并断言
+        officeswitchtogametown(driver)
+    finally:
+
+        # 获取断言要素:整合
+        title = driver.find_elements_by_class_name("android.widget.TextView")[1].text
+        assert_equal_el(driver, expect="整合", actual=title, case="到达娱乐城页面", scenes="进入快三娱乐")
+
+        # 获取断言需要的页面元素
+        titlenum = driver.find_element_by_xpath(
+            "//android.widget.TextView[@resource-id='com.yy.sport:id/tv_ball' and @text='9']").text
+        assert_equal_el(driver, expect="9", actual=titlenum, case="出现投注号码", scenes="进入快三娱乐城")
+
+        # 选号
+        gametownchossenum(driver)
+
+        # 下拉
+        driver.swipe(start_x=492, start_y=1300, end_x=448, end_y=320, duration=2000)
+
+        # 选号
+        gametownchooseserial1(driver)
+        # 下拉
+        driver.swipe(start_x=492, start_y=1300, end_x=448, end_y=320, duration=2000)
+        driver.swipe(start_x=492, start_y=1300, end_x=448, end_y=1020, duration=2000)
+        # 选号
+        gametownchooseserial2(driver)
+        # 获得当前奖期号码
+        p = gain_lottey_phase(driver)
+        # 投注单价器
+        num_bets=fast3_unitprice(driver)
+        # 投注前金额校验和断言
+        pageamount(driver)
+        # 一键投注
+        res = Oneclickbetting(driver, menthodtitle)
+        A_balance = res[0]
+        B_balance = res[1]
+        try:
+            # 返回上曾页面
+            returntopage(driver, rule=menthodtitle)
+        except:
+            filename = '%s.png' % now
+            driver.get_screenshot_as_file("../report/screenshot/%s" % filename)
+            with open('../data/result.csv', mode='a+')as f:
+                f.write(
+                    now + ',' + "玩法:快三娱乐城" + ',' + "一键投注" + ',' + "失败" + ',' + filename +'\n')
+            driver.find_element_by_id("com.yy.sport:id/btn_sure").click()
+        finally:
+
+
+            # 验证金额
+            C_balance = currentbalance(driver)
+            asser_equal_nu(driver, current=float(A_balance), bet_number=float(B_balance), after_bet=float(C_balance),
+                           case="金额验证",
+                           scenes="玩法:%s" % menthodtitle)
+
+
+            #点击投注记录
+            verify_betreocrd(driver)
+            #获取当前页面奖期数目
+            totalphase(driver,p)

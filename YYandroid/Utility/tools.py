@@ -28,10 +28,22 @@ import random,time
 #     print(type(i))
 
 # print(listrule)
-
-for i in range(5):
-  # r=random.randint(0,5)
-  r = random.choices([0, 2, 4, 7, 9, 11])
-  # r=random.randrange(6)
-  # r = random.choice([0, 1, 2, 3, 4, 5])
-  print(r)
+#
+# for i in range(5):
+#   r=random.randint(0,5)
+#   # r = random.choices([0, 2, 4, 7, 9, 11])
+#   # r=random.randrange(6)
+#   # r = random.choice([0, 1, 2, 3, 4, 5])
+#   print(r)
+# try:
+#   d=6
+# except:
+#   print('try的内容为Flase')
+# else:
+#   c=d
+#   print(c)
+r = int(44444 / int(54))
+l=len(str(r))
+for i in range(l):
+  print(str(r)[i])
+ # print(str(r)[0:l])

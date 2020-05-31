@@ -1,6 +1,7 @@
+from UItest.gamementhod.hhh import gametownchossenum
 from Utility.judge import assert_equal_el, assert_more_than
 from time import sleep
-import time
+import time,random
 
 
 # 玩法选项打开
@@ -27,27 +28,29 @@ def add_double(driver):
 
 # 一键投注,点击确认,返回两个金额
 def Oneclickbetting(driver, methodtitle):
-    # 一键投注点击
-    driver.find_element_by_xpath(
-        "//android.widget.Button[@resource-id='com.yy.sport:id/btn_bet' and @text='一键投注']").click()
-    # 获取当前余额
-    sleep(1)
-    A_beforebalance = driver.find_element_by_id("com.yy.sport:id/tv_account_balance").text
-    before = A_beforebalance.replace(",", "")
-    newbefore = before.split('.')[0] + '.' + before.split('.')[1][:2]
-    print("下注前账户金额：%s" % A_beforebalance)
-    # 获取下注额
-    B_betnum = driver.find_element_by_id("com.yy.sport:id/tv_amount").text
-    print("下注的金额%s" % B_betnum)
 
-    # 断言:确认提示框出现表明一键投注功能可用
-    subtitle = driver.find_element_by_id("com.yy.sport:id/cb_select").text
-    assert_equal_el(driver, expect='本次后不再进行确认提示', actual=subtitle, case='一键投注', scenes='玩法:%s' % methodtitle)
-    # 点击确定
-    sleep(2)
-    driver.find_element_by_id("com.yy.sport:id/btn_sure").click()
+        # 一键投注点击
+        driver.find_element_by_xpath(
+            "//android.widget.Button[@resource-id='com.yy.sport:id/btn_bet' and @text='一键投注']").click()
+        # 获取当前余额
+        sleep(1)
+        A_beforebalance = driver.find_element_by_id("com.yy.sport:id/tv_account_balance").text
+        before = A_beforebalance.replace(",", "")
+        newbefore = before.split('.')[0] + '.' + before.split('.')[1][:2]
+        print("下注前账户金额：%s" % A_beforebalance)
+        # 获取下注额
+        B_betnum = driver.find_element_by_id("com.yy.sport:id/tv_amount").text
+        b_betnum=B_betnum.replace(",","")
+        print("下注的金额%s" % b_betnum)
 
-    return [newbefore, B_betnum]
+        # 断言:确认提示框出现表明一键投注功能可用
+        subtitle = driver.find_element_by_id("com.yy.sport:id/cb_select").text
+        assert_equal_el(driver, expect='本次后不再进行确认提示', actual=subtitle, case='一键投注', scenes='玩法:%s' % methodtitle)
+        # 点击确定
+        sleep(2)
+        driver.find_element_by_id("com.yy.sport:id/btn_sure").click()
+
+        return [newbefore, b_betnum]
 
 
 # 返回上级并转到我的金额页面
@@ -127,3 +130,74 @@ def addbet_comfire(driver, methodtitle):
 
 
     return [newbefore, betnum]
+
+
+def isin_gametown(driver):
+   try:
+     driver.find_element_by_class_name("android.widget.TextView").text=='整合'
+
+
+   except:
+       officeswitchtogametown(driver)
+
+
+def officeswitchtogametown(driver):
+    #点击右上角...按钮
+    driver.find_element_by_xpath("//android.widget.ImageView[@resource-id='com.yy.sport:id/iv_right_menu']").click()
+
+    #点击娱乐城玩法按钮
+    driver.find_element_by_id("com.yy.sport:id/rb_play_happy").click()
+
+    #获取断言要素
+    title=driver.find_element_by_class_name("android.widget.TextView").text
+    assert_equal_el(driver,expect="整合",actual=title,case="到达娱乐城页面",scenes="进入快三娱乐")
+
+    #获取断言需要的页面元素
+    titlenum=driver.find_element_by_xpath("//android.widget.TextView[@resource-id='com.yy.sport:id/tv_ball' and @text='9']").text
+    assert_equal_el(driver,expect="9",actual=titlenum,case="出现投注号码",scenes="进入快三娱乐城")
+
+def fast3_unitprice(driver):
+
+    n=driver.find_element_by_xpath("//android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.RelativeLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.LinearLayout[1]/android.widget.TextView[2]").text
+    driver.find_element_by_id("com.yy.sport:id/et_input_recreation_multiple").click()
+    r=int(44444/int(n))
+    l=len(str(r))
+    for i in range(l):
+        driver.find_element_by_xpath(
+            "//android.widget.TextView[@resource-id='com.yy.sport:id/tv_number' and @text='%s']" % str(r)[i]).click()
+
+    return n
+
+def pageamount(driver):
+    bets=driver.find_element_by_xpath("//android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.RelativeLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.LinearLayout[1]/android.widget.TextView[2]").text
+    toatl=driver.find_element_by_xpath("//android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.RelativeLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.LinearLayout[1]/android.widget.TextView[4]").text
+    uprice=driver.find_element_by_id("com.yy.sport:id/et_input_recreation_multiple").text
+    mprice=int(bets)*int(uprice)
+    newtotal=toatl.replace(",","")
+    assert_equal_el(driver,expect=int(newtotal),actual=int(mprice),scenes="娱乐城玩法",case="投注前页面总金额校验")
+
+def gain_lottey_phase(driver):
+    ph=driver.find_element_by_id("com.yy.sport:id/tv_next_code").text
+    return ph
+
+
+def rightconer(driver):
+    driver.find_element_by_xpath("//android.widget.ImageView[@resource-id='com.yy.sport:id/iv_right_menu']").click()
+
+
+def page_betreocrd(driver):
+    driver.find_element_by_id("com.yy.sport:id/tv_bet_record").click()
+
+
+def verify_betreocrd(driver):
+    driver.find_element_by_xpath("//android.widget.TextView[@text='投注记录']").click()
+
+def totalphase(driver,p):
+    listnum=driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+    print(len(listnum))
+    j=0
+    for i in range(len(listnum)):
+        if listnum[i].text==p:
+            j+=1
+            print(j)
+

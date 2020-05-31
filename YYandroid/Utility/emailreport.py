@@ -55,7 +55,8 @@ def htmlemail():
 
     # 加入附件
     # attr1=MIMEText(open(r"../UItest/report\demoreport.html", 'r').read(), _subtype='plain', _charset='utf-8')
-    attr1 = MIMEText(open(r"C:\Users\janti\PycharmProjects\autotest-android\YYandroid\demoreport.zip", 'rb').read(), _subtype='base64',
+    attr1 = MIMEText(open(r"C:\Users\janti\PycharmProjects\autotest-android\YYandroid\demoreport.zip", 'rb').read(),
+                     _subtype='base64',
                      _charset='utf-8')
     # 加入附件的格式描述/包括打包后附件的名字
     attr1["Content-Type"] = 'application/octet-stream'
@@ -80,6 +81,7 @@ def htmlemail():
         print('send email successful')
     except:
         print('send email fail')
+
 
 if __name__ == '__main__':
     htmlemail()

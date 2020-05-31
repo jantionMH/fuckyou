@@ -16,7 +16,7 @@ def assert_equal_el(driver, expect, actual, case, scenes):
         driver.get_screenshot_as_file("../UItest/report/screenshot/%s" % filename)
         with open('../data/result.csv', mode="a+") as f:
             f.write(
-                now + ',' + scenes + ',' + case + ',' + result + ',' + filename + ',' + "期望:%s,type%s,实际%s,type%s" % (
+                now + ',' + scenes + ',' + case + ',' + result + ',' + filename + ',' + "期望:%s,type%s,实际:%s,type%s" % (
                     expect, type(expect), actual, type(actual)) + '\n')
 
 
