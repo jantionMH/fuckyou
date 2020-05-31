@@ -195,8 +195,10 @@ def verify_betreocrd(driver):
 def totalphase(driver,p):
     listnum=driver.find_elements_by_id("com.yy.sport:id/smallTextView")
     print(len(listnum))
+    print("当前的期数号码是：%s"%p)
     j=0
     for i in range(len(listnum)):
+        print(listnum[i])
         if listnum[i].text==p:
             j+=1
             print(j)
