@@ -6,7 +6,7 @@ from UItest.gamementhod.hhh import hhhmenthod, dxds, s3g, s3s, d3dt, d2td, gamet
 from Utility.judge import asser_equal_nu, assert_equal_el
 from common.component import Oneclickbetting, ruleoption, add_double, shadowcilck, returntopage, currentbalance, \
     rollbackC, addbetpageC, add5bet, addbet_comfire, officeswitchtogametown, pageamount, fast3_unitprice, \
-    gain_lottey_phase, verify_betreocrd, totalphase
+    gain_lottey_phase, verify_betreocrd, totalphasepage_1
 from common.fast3component import avaliable_num
 
 now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
@@ -896,12 +896,12 @@ def gametown_fast3(driver):
         # 选号
         gametownchossenum(driver)
 
-        # 下拉
+        # 下拉投注整个区域
         driver.swipe(start_x=492, start_y=1300, end_x=448, end_y=320, duration=2000)
 
         # 选号
         gametownchooseserial1(driver)
-        # 下拉
+        # 下拉投注整个区域
         driver.swipe(start_x=492, start_y=1300, end_x=448, end_y=320, duration=2000)
         driver.swipe(start_x=492, start_y=1300, end_x=448, end_y=1020, duration=2000)
         # 选号
@@ -909,9 +909,9 @@ def gametown_fast3(driver):
         # 获得当前奖期号码
         p = gain_lottey_phase(driver)
         # 投注单价器
-        num_bets=fast3_unitprice(driver)
+        #num_bets=fast3_unitprice(driver)
         # 投注前金额校验和断言
-        pageamount(driver)
+        betsnum=pageamount(driver)
         # 一键投注
         res = Oneclickbetting(driver, menthodtitle)
         A_balance = res[0]
@@ -939,4 +939,6 @@ def gametown_fast3(driver):
             #点击投注记录
             verify_betreocrd(driver)
             #获取当前页面奖期数目
-            totalphase(driver,p)
+            j=totalphasepage_1(driver,p,betsnum)
+            print(j)
+

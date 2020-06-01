@@ -175,7 +175,8 @@ def pageamount(driver):
     mprice=int(bets)*int(uprice)
     newtotal=toatl.replace(",","")
     assert_equal_el(driver,expect=int(newtotal),actual=int(mprice),scenes="娱乐城玩法",case="投注前页面总金额校验")
-
+    #返回下注的数量
+    return bets
 def gain_lottey_phase(driver):
     ph=driver.find_element_by_id("com.yy.sport:id/tv_next_code").text
     return ph
@@ -192,14 +193,183 @@ def page_betreocrd(driver):
 def verify_betreocrd(driver):
     driver.find_element_by_xpath("//android.widget.TextView[@text='投注记录']").click()
 
-def totalphase(driver,p):
+def totalphasepage_1(driver,p,b):
     listnum=driver.find_elements_by_id("com.yy.sport:id/smallTextView")
     print(len(listnum))
     print("当前的期数号码是：%s"%p)
+
     j=0
     for i in range(len(listnum)):
-        print(listnum[i])
-        if listnum[i].text==p:
-            j+=1
-            print(j)
+
+        print(listnum[i].text)
+
+        if listnum[i].text==('第'+p+'期'):
+
+              j+=1
+              if j==int(b):
+                  break
+        elif listnum[i].text!=('第'+p+'期'):
+            break
+
+    if j==5:
+        # 下拉整个屏幕
+        # driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+        driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+        listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+        for i in range(len(listnum)):
+            if listnum[i].text!=('第'+p+'期'):
+                break
+            if listnum[i].text == ('第' + p + '期'):
+                j += 1
+
+                if j == int(b):
+                    break
+
+
+    if j==10:
+        # 下拉整个屏幕
+        driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+        sleep(3)
+        driver.swipe(start_x=20, start_y=1350, end_x=20, end_y=330, duration=2000)
+        listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+        for i in range(len(listnum)):
+            if listnum[i].text != ('第' + p + '期'):
+                break
+            if listnum[i].text == ('第' + p + '期'):
+                j += 1
+                if j == int(b):
+                    break
+
+    if j==15:
+        # 下拉整个屏幕
+        driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+
+        listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+        for i in range(len(listnum)):
+            if listnum[i].text != ('第' + p + '期'):
+                break
+            if listnum[i].text == ('第' + p + '期'):
+                j += 1
+                if j == int(b):
+                    break
+
+
+    if j==20:
+        # 下拉整个屏幕
+        driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+        sleep(3)
+        driver.swipe(start_x=20, start_y=1350, end_x=20, end_y=330, duration=2000)
+        listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+        for i in range(len(listnum)):
+            if listnum[i].text != ('第' + p + '期'):
+                break
+            if listnum[i].text == ('第' + p + '期'):
+                j += 1
+                if j == int(b):
+                    break
+
+
+    if j==25:
+        # 下拉整个屏幕
+        driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+        listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+        for i in range(len(listnum)):
+            if listnum[i].text != ('第' + p + '期'):
+                break
+            if listnum[i].text == ('第' + p + '期'):
+                j += 1
+                if j == int(b):
+                    break
+
+
+    if j==30:
+        # 下拉整个屏幕
+        driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+        sleep(3)
+        driver.swipe(start_x=20, start_y=1350, end_x=20, end_y=330, duration=2000)
+        listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+        for i in range(len(listnum)):
+            if listnum[i].text != ('第' + p + '期'):
+                break
+            if listnum[i].text == ('第' + p + '期'):
+                j += 1
+                if j == int(b):
+                    break
+
+    if j==35:
+        # 下拉整个屏幕
+        driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+        listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+        for i in range(len(listnum)):
+            if listnum[i].text != ('第' + p + '期'):
+                break
+            if listnum[i].text == ('第' + p + '期'):
+                j += 1
+                if j == int(b):
+                    break
+
+    if j==40:
+        # 下拉整个屏幕
+        driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+        sleep(3)
+        driver.swipe(start_x=20, start_y=1350, end_x=20, end_y=330, duration=2000)
+        listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+        for i in range(len(listnum)):
+            if listnum[i].text != ('第' + p + '期'):
+                break
+            if listnum[i].text == ('第' + p + '期'):
+                j += 1
+                if j == int(b):
+                    break
+
+    if j==45:
+        # 下拉整个屏幕
+        driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+        listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+        for i in range(len(listnum)):
+            if listnum[i].text != ('第' + p + '期'):
+                break
+            if listnum[i].text == ('第' + p + '期'):
+                j += 1
+                if j == int(b):
+                    break
+
+    if j==50:
+        # 下拉整个屏幕
+        driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+        sleep(3)
+        driver.swipe(start_x=20, start_y=1350, end_x=20, end_y=330, duration=2000)
+        listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
+        for i in range(len(listnum)):
+            if listnum[i].text != ('第' + p + '期'):
+                break
+            if listnum[i].text == ('第' + p + '期'):
+                j += 1
+                if j == int(b):
+                    break
+
+    driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
+    sleep(3)
+    driver.swipe(start_x=20, start_y=1350, end_x=20, end_y=330, duration=2000)
+    now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    if driver.find_elements_by_id("com.yy.sport:id/smallTextView")[0]==('第' + p + '期'):
+        result = '失败'
+        filename = '%s.png' % now
+        driver.get_screenshot_as_file("../UItest/report/screenshot/%s" % filename)
+        with open('../data/result.csv', mode="a+") as f:
+            f.write(now + ',' + '玩法:快三娱乐城' + ',' + '投注记录验证' + ',' + result + ',' + filename + ','+'实际投注数量小于统计数量'+'\n')
+    if j<int(b):
+        result = '失败'
+        filename = '%s.png' % now
+        driver.get_screenshot_as_file("../UItest/report/screenshot/%s" % filename)
+        with open('../data/result.csv', mode="a+") as f:
+            f.write(now + ',' + '玩法:快三娱乐城' + ',' + '投注记录验证' + ',' + result + ',' + filename +','+'实际投注数量大于统计数量'+ '\n')
+
+
+    else:
+        assert_equal_el(driver,expect=b,actual=j,case='投注记录数量验证',scenes='玩法:快三娱乐城')
+    return j
+
+
+
 

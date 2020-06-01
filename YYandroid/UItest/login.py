@@ -8,6 +8,7 @@ from Utility.judge import assert_equal_el
 def login(androidA):
     # 不关心进入到彩票游戏之前的其他任何选择
     # 升级新版本
+
     driver=None
     if androidA==5:
 
@@ -15,12 +16,13 @@ def login(androidA):
     elif androidA==8:
         driver=android8.Android8app()
         sleep(3)
-    sleep(2)
+    driver.implicitly_wait(5)
+
     el1 = driver.find_element_by_id("com.yy.sport:id/tv_download").click()
-    sleep(3)
+
     # 输入用户名
     el3 =driver.find_element_by_id("com.yy.sport:id/account").click()
-    sleep(3)
+
     driver.find_element_by_id("com.yy.sport:id/account").send_keys("jantion001")
     # 输入密码
     driver.find_element_by_id("com.yy.sport:id/tv_password").click()
@@ -28,7 +30,7 @@ def login(androidA):
 
     # 点击登录
     el5 =driver.find_element_by_id("com.yy.sport:id/tv_login").click()
-    sleep(4)
+
     # 关闭小广告
     try:
      driver.find_element_by_id("com.yy.sport:id/iv_delete").click()
