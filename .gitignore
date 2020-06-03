@@ -5,3 +5,4 @@ UItest/report/screenshot
 data/result.csv
 demoreport.zip
 data/
+*.png
