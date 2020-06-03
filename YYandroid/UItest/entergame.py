@@ -7,13 +7,14 @@ import time
 def Entrance(androidB):
 
     driver=login(androidA=androidB)
-    driver.implicitly_wait(5)
+    driver.implicitly_wait(8)
     driver.find_element_by_xpath("//android.widget.TextView[@resource-id='com.yy.sport:id/tv_tab' and @text='娱乐']").click()
     # TouchAction(driver).tap(x=356, y=164).perform()
-    sleep(3)
+    print('进入娱乐')
+    sleep(2)
     driver.swipe(start_x=492,start_y=1442,end_x=448,end_y=247,duration=2000)
     # TouchAction(driver).long_press(x=492, y=1442).move_to(x=448, y=247).release().perform()
-    sleep(6)
+    print('下拉至彩票')
     try:
      # 进入彩票游戏
      driver.find_element_by_xpath("//android.widget.FrameLayout[1]/android.widget.LinearLayout["
@@ -26,7 +27,6 @@ def Entrance(androidB):
                                       "1]/android.view.View[1]/android.view.View[1]/android.view.View["
                                       "3]/android.view.View[1]/android.view.View[1]/android.widget.ImageView["
                                       "1]").click()
-     sleep(8)
 
      subtitle = driver.find_element_by_id("com.yy.sport:id/mToolbarTitleLabel").text
 

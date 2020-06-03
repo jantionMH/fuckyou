@@ -16,10 +16,11 @@ def login(androidA):
     elif androidA==8:
         driver=android8.Android8app()
         sleep(3)
-    driver.implicitly_wait(5)
-
-    el1 = driver.find_element_by_id("com.yy.sport:id/tv_download").click()
-
+    driver.implicitly_wait(8)
+    try:
+      driver.find_element_by_id("com.yy.sport:id/tv_download").click()
+    except:
+        print("没有广告")
     # 输入用户名
     el3 =driver.find_element_by_id("com.yy.sport:id/account").click()
 
@@ -34,7 +35,7 @@ def login(androidA):
     # 关闭小广告
     try:
      driver.find_element_by_id("com.yy.sport:id/iv_delete").click()
-     sleep(7)
+
     except:
         print("没有广告")
     listtitle = driver.find_elements_by_id('com.yy.sport:id/tv_tab')

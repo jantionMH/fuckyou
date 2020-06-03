@@ -2,11 +2,11 @@ from time import sleep
 
 import time
 from UItest.gamementhod.hhh import hhhmenthod, dxds, s3g, s3s, d3dt, d2td, gametownchossenum, \
-    gametownchooseserial2, gametownchooseserial1
+    gametownchooseserial2, gametownchooseserial1, Splitter
 from Utility.judge import asser_equal_nu, assert_equal_el
 from common.component import Oneclickbetting, ruleoption, add_double, shadowcilck, returntopage, currentbalance, \
     rollbackC, addbetpageC, add5bet, addbet_comfire, officeswitchtogametown, pageamount, fast3_unitprice, \
-    gain_lottey_phase, verify_betreocrd, totalphasepage_1
+    gain_lottey_phase, verify_betreocrd, totalphasepage_1, shadowcilckgametown, compaire_dict, strage_min_bets
 from common.fast3component import avaliable_num
 
 now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
@@ -871,9 +871,9 @@ def diff2tuo(driver):
 def gametown_fast3(driver):
     global A_balance, B_balance
     menthodtitle = '快三投注基本页面'
-    driver.implicitly_wait(5)
+    driver.implicitly_wait(8)
     # 阴影三点
-    shadowcilck(driver)
+    shadowcilckgametown(driver)
     try:
         driver.find_element_by_class_name("android.widget.TextView").text == '整合'
 
@@ -894,22 +894,28 @@ def gametown_fast3(driver):
         assert_equal_el(driver, expect="9", actual=titlenum, case="出现投注号码", scenes="进入快三娱乐城")
 
         # 选号
-        gametownchossenum(driver)
-
-        # 下拉投注整个区域
-        driver.swipe(start_x=492, start_y=1300, end_x=448, end_y=320, duration=2000)
+        page_0=gametownchossenum(driver)
+        print(page_0)
+        # 下拉投注整个区域,必须调整到两连为置顶的位置，否则路径无效
+        sleep(1)
+        driver.swipe(start_x=492, start_y=1300, end_x=448, end_y=260, duration=4000)
 
         # 选号
-        gametownchooseserial1(driver)
-        # 下拉投注整个区域
+        page_1=gametownchooseserial1(driver)
+        print(page_1)
+        # # 下拉投注整个区域
         driver.swipe(start_x=492, start_y=1300, end_x=448, end_y=320, duration=2000)
         driver.swipe(start_x=492, start_y=1300, end_x=448, end_y=1020, duration=2000)
-        # 选号
-        gametownchooseserial2(driver)
+        # # 选号
+        page_2=gametownchooseserial2(driver)
+        print(page_2)
         # 获得当前奖期号码
         p = gain_lottey_phase(driver)
         # 投注单价器
-        #num_bets=fast3_unitprice(driver)
+        num_bets=fast3_unitprice(driver)
+        #(最小投注额策略)
+        strage_min_bets(driver)
+
         # 投注前金额校验和断言
         betsnum=pageamount(driver)
         # 一键投注
@@ -938,7 +944,13 @@ def gametown_fast3(driver):
 
             #点击投注记录
             verify_betreocrd(driver)
+
             #获取当前页面奖期数目
             j=totalphasepage_1(driver,p,betsnum)
-            print(j)
+            print(type(j[1]),j[1])
 
+            #解析字典，返回整合后的字典
+            dict_statistics=Splitter(j[1])
+
+            #最后的比较字典
+            compaire_dict(page_1=page_0, page_2=page_1, page_3=page_2, dict_statistics=dict_statistics)
