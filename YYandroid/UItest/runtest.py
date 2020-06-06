@@ -35,12 +35,14 @@ def choosefastthree():
 
 if __name__ == '__main__':
     # starttest()
-    choosefastthree()
-    # for i in range(20):
-    #    try:
-    #     time.sleep(5)
-    #     choosefastthree()
-    #    except:
-             #增加截图功能以抓取android5.1系统闪退的情况
-    #        time.sleep(5)
-    #        choosefastthree()
+    # do_entergame()
+    # choosefastthree()
+
+    for i in range(20):
+       try:
+        time.sleep(5)
+        choosefastthree()
+       except:
+          # 增加截图功能以抓取android5.1系统闪退的情况
+           time.sleep(5)
+           choosefastthree()

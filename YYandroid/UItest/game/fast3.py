@@ -6,7 +6,8 @@ from UItest.gamementhod.hhh import hhhmenthod, dxds, s3g, s3s, d3dt, d2td, gamet
 from Utility.judge import asser_equal_nu, assert_equal_el
 from common.component import Oneclickbetting, ruleoption, add_double, shadowcilck, returntopage, currentbalance, \
     rollbackC, addbetpageC, add5bet, addbet_comfire, officeswitchtogametown, pageamount, fast3_unitprice, \
-    gain_lottey_phase, verify_betreocrd, totalphasepage_1, shadowcilckgametown, compaire_dict, strage_min_bets
+    gain_lottey_phase, verify_betreocrd, totalphasepage_1, shadowcilckgametown, compaire_dict, strage_min_bets, \
+    rightconer, office_play, switcho_e
 from common.fast3component import avaliable_num
 
 now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
@@ -33,12 +34,17 @@ def enterfast3(driver, gametype, gameport):
 
 # 和值-和值-和值玩法 专属方法
 def hezhi_play(driver, methodtitle):
+
     driver.implicitly_wait(5)
     gametype = '快三'
     gameport = '安徽快三'
     if methodtitle == "和值":
-        # 阴影三点
-        shadowcilck(driver)
+        # # 阴影三点
+        # shadowcilck(driver)
+        try:
+         switcho_e(driver)
+        except:
+            pass
         # sleep(1)
         # 断言进入选号页面
         avaliable_num(driver, upmethodtitle=methodtitle)
@@ -872,26 +878,20 @@ def gametown_fast3(driver):
     global A_balance, B_balance
     menthodtitle = '快三投注基本页面'
     driver.implicitly_wait(8)
-    # 阴影三点
+    # 阴影2点
     shadowcilckgametown(driver)
     try:
-        driver.find_element_by_class_name("android.widget.TextView").text == '整合'
+        if driver.find_element_by_xpath("//android.widget.TextView[@text='整合']").text == '整合':
+            print('进入娱乐城页面')
 
 
     except:
 
         # 切换到娱乐城玩法并断言
         officeswitchtogametown(driver)
-    finally:
 
-        # 获取断言要素:整合
-        title = driver.find_elements_by_class_name("android.widget.TextView")[1].text
-        assert_equal_el(driver, expect="整合", actual=title, case="到达娱乐城页面", scenes="进入快三娱乐")
-
-        # 获取断言需要的页面元素
-        titlenum = driver.find_element_by_xpath(
-            "//android.widget.TextView[@resource-id='com.yy.sport:id/tv_ball' and @text='9']").text
-        assert_equal_el(driver, expect="9", actual=titlenum, case="出现投注号码", scenes="进入快三娱乐城")
+        # 阴影2点
+        shadowcilckgametown(driver)
 
         # 选号
         page_0=gametownchossenum(driver)
@@ -932,25 +932,25 @@ def gametown_fast3(driver):
                 f.write(
                     now + ',' + "玩法:快三娱乐城" + ',' + "一键投注" + ',' + "失败" + ',' + filename +'无'+'\n')
             driver.find_element_by_id("com.yy.sport:id/btn_sure").click()
-        finally:
 
 
-            # 验证金额
-            C_balance = currentbalance(driver)
-            asser_equal_nu(driver, current=float(A_balance), bet_number=float(B_balance), after_bet=float(C_balance),
-                           case="金额验证",
-                           scenes="玩法:%s" % menthodtitle)
+
+        # 验证金额
+        C_balance = currentbalance(driver)
+        asser_equal_nu(driver, current=float(A_balance), bet_number=float(B_balance), after_bet=float(C_balance),
+                       case="金额验证",
+                       scenes="玩法:%s" % menthodtitle)
 
 
-            #点击投注记录
-            verify_betreocrd(driver)
+        #点击投注记录
+        verify_betreocrd(driver)
 
-            #获取当前页面奖期数目
-            j=totalphasepage_1(driver,p,betsnum)
-            print(type(j[1]),j[1])
+        #获取当前页面奖期数目
+        j=totalphasepage_1(driver,p,betsnum)
+        print(len(j[1]),type(j[1]),j[1])
 
-            #解析字典，返回整合后的字典
-            dict_statistics=Splitter(j[1])
+        #解析字典，返回整合后的字典
+        dict_statistics=Splitter(j[1])
 
-            #最后的比较字典
-            compaire_dict(page_1=page_0, page_2=page_1, page_3=page_2, dict_statistics=dict_statistics)
+        #最后的比较字典
+        compaire_dict(driver,page_1=page_0, page_2=page_1, page_3=page_2, dict_statistics=dict_statistics)

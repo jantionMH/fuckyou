@@ -69,39 +69,38 @@ def Choosefastthree(androidC):
 
         if spe_one == "和值":
             # 和值
-            # hezhi_play(driver, methodtitle=spe_one)
+            hezhi_play(driver, methodtitle=spe_one)
             # 大小单双
-            # SBSSDchoosenum(driver, upmethodtitle=spe_one)
+            SBSSDchoosenum(driver, upmethodtitle=spe_one)
             pass
         elif spe_one == '三同号通选':
 
-            # same3general(driver,methodtitle=spe_one)
+            same3general(driver,methodtitle=spe_one)
             pass
         elif spe_one == '三同号单选':
 
-            # same3single(driver,methodtitle=spe_one)
+            same3single(driver,methodtitle=spe_one)
             pass
         elif spe_one == '三不同号':
              #三不同号
-            # diff3(driver,methodtitle=spe_one)
+            diff3(driver,methodtitle=spe_one)
             #三不同号拖胆
-            # diff3tuo(driver)
+            diff3tuo(driver)
             pass
         elif spe_one == '三连号通选':
-            # Consecutive3general(driver)
+            Consecutive3general(driver)
             pass
         elif spe_one == '二同号复选':
-            # same2repeat(driver)
+            same2repeat(driver)
             pass
         elif spe_one == '二同号单选':
-            # same2single(driver)
+            same2single(driver)
             pass
         elif spe_one == '二不同号':
             #二不同号
-            # diff2(driver)
+            diff2(driver)
             # 二不同号胆拖
-            # diff2tuo(driver)
+            diff2tuo(driver)
             pass
         elif spe_one=='娱乐城玩法':
-
             gametown_fast3(driver)

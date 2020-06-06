@@ -1,7 +1,23 @@
+from appium.webdriver.common.touch_action import TouchAction
+
 from UItest.gamementhod.hhh import gametownchossenum
-from Utility.judge import assert_equal_el, assert_more_than
+from Utility.judge import assert_equal_el, assert_more_than, assert_not_null
 from time import sleep
 import time, random
+
+
+def switcho_e(driver):
+    try:
+        # 娱乐城阴影两点
+        shadowcilckgametown(driver)
+        # 切换到官方玩法
+        rightconer(driver)
+        # 切换到官方玩法
+        office_play(driver)
+        # 阴影三点
+        shadowcilck(driver)
+    except:
+        pass
 
 
 # 玩法选项打开
@@ -21,6 +37,8 @@ def shadowcilck(driver):
 
     except:
         print("无阴影可点")
+
+
 def shadowcilckgametown(driver):
     try:
         driver.find_element_by_xpath("//android.widget.RelativeLayout").click()
@@ -30,6 +48,7 @@ def shadowcilckgametown(driver):
 
     except:
         print("无阴影可点")
+
 
 # 加倍
 def add_double(driver):
@@ -78,7 +97,7 @@ def returntopage(driver, rule):
         driver.get_screenshot_as_file("../UItest/report/screenshot/%s" % filename)
         with open('../data/result.csv', mode="a+") as f:
             f.write(
-                now + ',' + '玩法:%s' % rule + ',' + "返回上层验证金额" + ',' + result + ',' + filename + ',' + '\n')
+                now + ',' + '玩法:%s' % rule + ',' + "返回上层验证金额" + ',' + result + ',' + filename + ',' + '返回上级箭头点击失效' + '\n')
     time.sleep(1)
     # 找到我的
     driver.find_elements_by_id("com.yy.sport:id/smallLabel")[4].click()
@@ -152,12 +171,12 @@ def isin_gametown(driver):
 def officeswitchtogametown(driver):
     # 点击右上角...按钮
     driver.find_element_by_xpath("//android.widget.ImageView[@resource-id='com.yy.sport:id/iv_right_menu']").click()
-
+    sleep(1)
     # 点击娱乐城玩法按钮
     driver.find_element_by_id("com.yy.sport:id/rb_play_happy").click()
-
+    sleep(1)
     # 获取断言要素
-    title = driver.find_element_by_class_name("android.widget.TextView").text
+    title = driver.find_element_by_xpath("//android.widget.TextView[@text='整合']").text
     assert_equal_el(driver, expect="整合", actual=title, case="到达娱乐城页面", scenes="进入快三娱乐")
 
     # 获取断言需要的页面元素
@@ -167,26 +186,27 @@ def officeswitchtogametown(driver):
 
 
 def fast3_unitprice(driver):
-    #注数
+    # 注数
     n = driver.find_element_by_xpath(
         "//android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.RelativeLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.LinearLayout[1]/android.widget.TextView[2]").text
-    #点开单价器页面
+    # 点开单价器页面
     driver.find_element_by_id("com.yy.sport:id/et_input_recreation_multiple").click()
-
-
 
     return n
 
-def stratge_max_bets(driver,n):
+
+def stratge_max_bets(driver, n):
     r = int(44444 / int(n))
     l = len(str(r))
     for i in range(l):
         driver.find_element_by_xpath(
             "//android.widget.TextView[@resource-id='com.yy.sport:id/tv_number' and @text='%s']" % str(r)[i]).click()
 
+
 def strage_min_bets(driver):
     driver.find_element_by_xpath(
         "//android.widget.TextView[@resource-id='com.yy.sport:id/tv_number' and @text='5']").click()
+
 
 def pageamount(driver):
     bets = driver.find_element_by_xpath(
@@ -206,8 +226,16 @@ def gain_lottey_phase(driver):
     return ph
 
 
+# 右上角按钮
 def rightconer(driver):
     driver.find_element_by_xpath("//android.widget.ImageView[@resource-id='com.yy.sport:id/iv_right_menu']").click()
+
+
+# 切换官方玩法
+def office_play(driver):
+    driver.find_element_by_id("com.yy.sport:id/rb_play_official").click()
+    # 随便一点，消除菜单
+    TouchAction(driver).tap(x=700, y=1000).perform()
 
 
 def page_betreocrd(driver):
@@ -215,17 +243,24 @@ def page_betreocrd(driver):
 
 
 def verify_betreocrd(driver):
+    # 注记录页面
     driver.find_element_by_xpath("//android.widget.TextView[@text='投注记录']").click()
+    # 取投‘注记录字’样断言
+    title = driver.find_element_by_id("com.yy.sport:id/mToolbarTitleLabel").text
+    assert_equal_el(driver, expect='投注记录', actual=title, case='进入投注页面', scenes='玩法:快三娱乐城')
 
 
 def totalphasepage_1(driver, p, b):
+    """
+    p：奖期号码 用于控制循环进行的条件
+    b:下注数量 用于控制循环退出的条件
+    """
     global play_name
 
     list_1 = []
 
-
     listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
-    #当前页面的所有玩法和所有下注号码
+    # 当前页面的所有玩法和所有下注号码
     play_number_1 = driver.find_elements_by_id('com.yy.sport:id/betItemTextView')
     play_name_1 = driver.find_elements_by_id("com.yy.sport:id/betTypeTextView")
     # print("奖期列表长度",len(listnum))
@@ -234,18 +269,21 @@ def totalphasepage_1(driver, p, b):
     print("当前的期数号码是：%s" % p)
 
     j = 0
+    # 循环奖期列表
     for i in range(len(listnum)):
-
+        # 分支过滤出符合条件的列表元素
         if listnum[i].text == ('第' + p + '期'):
-            dict_1 = {}
-            dict_1[play_name_1[i].text] =play_number_1[i].text
+            # 每次循环开始都初始化字典/把该分支下的玩法和下注内容编入字典
+            dict_1 = {play_name_1[i].text: play_number_1[i].text}
+            # 添加到全局的列表
             list_1.append(dict_1)
+            # 符合的数目就自加1
             j += 1
+            # 如果达到了投注数量就表明循环可以单方面停止，交给下一步去判断内同是否正确
             if j == int(b):
                 break
         elif listnum[i].text != ('第' + p + '期'):
             break
-
 
     if j == 5:
         # 下拉整个屏幕
@@ -271,6 +309,7 @@ def totalphasepage_1(driver, p, b):
         driver.swipe(start_x=20, start_y=1470, end_x=20, end_y=260, duration=2000)
         sleep(3)
         driver.swipe(start_x=20, start_y=1350, end_x=20, end_y=330, duration=2000)
+        sleep(1)
         play_number_3 = driver.find_elements_by_id('com.yy.sport:id/betItemTextView')
         play_name_3 = driver.find_elements_by_id("com.yy.sport:id/betTypeTextView")
         listnum = driver.find_elements_by_id("com.yy.sport:id/smallTextView")
@@ -279,8 +318,7 @@ def totalphasepage_1(driver, p, b):
                 break
             if listnum[i].text == ('第' + p + '期'):
                 j += 1
-                dict_3 = {}
-                dict_3[play_name_3[i].text] = play_number_3[i].text
+                dict_3 = {play_name_3[i].text: play_number_3[i].text}
                 list_1.append(dict_3)
                 if j == int(b):
                     break
@@ -404,7 +442,7 @@ def totalphasepage_1(driver, p, b):
                 break
             if listnum[i].text == ('第' + p + '期'):
                 j += 1
-                dict_10= {}
+                dict_10 = {}
                 dict_10[play_name_10[i].text] = play_number_10[i].text
                 list_1.append(dict_10)
                 if j == int(b):
@@ -450,49 +488,44 @@ def totalphasepage_1(driver, p, b):
 
 
     else:
-        assert_equal_el(driver, expect=b, actual=j, case='投注记录数量验证', scenes='玩法:快三娱乐城')
+        assert_equal_el(driver, expect=int(b), actual=j, case='投注记录数量验证', scenes='玩法:快三娱乐城')
     print(len(list_1))
 
+    return j, list_1
 
-    return j,list_1
 
+def compaire_dict(driver, page_1, page_2, page_3, dict_statistics):
+    list_content = []
+    list_except = []
 
-def compaire_dict(page_1,page_2,page_3,dict_statistics):
-
-    list_content=[]
-    list_except=[]
     for i in dict_statistics:
         # 如果键刚好在p1中
         if i in page_1:
             for j in page_1[i]:
                 if j in dict_statistics[i] and len(dict_statistics[i]) == len(page_1[i]):
-                     print("%s玩法，%s下注内容一致，数量相等"%(i,j))
-                     list_content.append('相同')
+                    # print("%s玩法，%s下注内容一致，数量相等"%(i,j))
+                    list_content.append('相同')
                 else:
-                    print('%s玩法%s下注内容一致，数量不相等'%(i,j))
-                    list_except.append({'玩法':i,'内容':j})
-
-
-
+                    # print('%s玩法%s下注内容一致，数量不相等'%(i,j))
+                    list_except.append({'玩法': i, '内容': j})
 
         if i in page_2:
             for j in page_2[i]:
                 if j in dict_statistics[i] and len(dict_statistics[i]) == len(page_2[i]):
-                    print("%s玩法，%s下注内容一致，数量相等"%(i,j))
+                    # print("%s玩法，%s下注内容一致，数量相等"%(i,j))
                     list_content.append('相同')
                 else:
-                    print('%s玩法%s下注内容一致，数量不相等'%(i,j))
+                    # print('%s玩法%s下注内容一致，数量不相等'%(i,j))
                     list_except.append({'玩法': i, '内容': j})
 
         if i in page_3:
             for j in page_3[i]:
                 if j in dict_statistics[i] and len(dict_statistics[i]) == len(page_3[i]):
-                    print("%s玩法，%s下注内容一致，数量相等"%(i,j))
+                    # print("%s玩法，%s下注内容一致，数量相等"%(i,j))
                     list_content.append('相同')
                 else:
-                    print('%s玩法%s下注内容一致，数量不相等'%(i,j))
+                    # print('%s玩法%s下注内容一致，数量不相等'%(i,j))
                     list_except.append({'玩法': i, '内容': j})
-        if list_except:
-                  raise Exception(list_except)
-        else:
-            print('下注验证成功/胜利条件：数量相等，内容一致')
+
+    assert_not_null(actual=list_except, case='投注次数和投注内容', scenes='玩法:快三娱乐城')
+    return '快三游戏执行结束'

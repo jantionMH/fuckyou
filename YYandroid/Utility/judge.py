@@ -2,6 +2,22 @@ from appium import webdriver
 import time
 
 
+def assert_not_null(actual, case, scenes):
+    now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    if len(actual) != 0:
+
+        filename = '%s.png' % now
+        # driver.get_screenshot_as_file("../UItest/report/screenshot/%s" % filename)
+        with open('../data/result.csv', mode="a+") as f:
+            f.write(
+                now + ',' + scenes + ',' + case + ',' + '失败' + ',' + filename + ',' + "期望:失败列表为空,实际:%s,type%s" % (
+                    actual, type(actual)) + '\n')
+        print('失败' + ',' + scenes + ',' + case)
+    elif len(actual) == 0:
+
+        with open('../data/result.csv', mode='a+') as f:
+            f.write(now + ',' + scenes + ',' + case + ',' + '成功' + ',' + '无' + ',' + '无' + '\n')
+
 def assert_equal_el(driver, expect, actual, case, scenes):
     now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
     if expect == actual:
@@ -82,7 +98,7 @@ def get_html():
             content += "<td width=35%%>%s</td\n>" % line.strip().split(',')[2]
 
             r = line.strip().split(',')[3]
-            if r == '成功':
+            if r == '测试成功':
                 content += "<td bgcolor=green width=15%%>%s</td\n>" % line.strip().split(',')[3]
             else:
                 content += "<td bgcolor=red width=15%%>%s</td\n>" % line.strip().split(',')[3]
@@ -125,7 +141,7 @@ def get_emial_html():
             content += "<td width=10%%>%s</td\n>" % line.strip().split(',')[1]
             content += "<td width=30%%>%s</td\n>" % line.strip().split(',')[2]
             r = line.strip().split(',')[3]
-            if r == '成功':
+            if r == '测试成功' or r=='成功':
                 content += "<td bgcolor=green width=5%%>%s</td\n>" % line.strip().split(',')[3]
             else:
                 content += "<td bgcolor=red width=5%%>%s</td\n>" % line.strip().split(',')[3]

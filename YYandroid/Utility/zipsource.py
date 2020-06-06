@@ -7,8 +7,8 @@ with zipfile.ZipFile(file='../demoreport.zip', mode='a') as f:
     # f.writestr(zinfo_or_arcname="dddd",data='../data',compresslevel=)
     # 添加被压缩的文件，并命名为新的文件名
     f.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\demoreport.html', 'demoreport.html')
-    # f.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\screenshot\20200529122113.png', '20200529122113.png')
-    # f.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\screenshot\20200529122227.png', '20200529122227.png')
+    # f.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\screenshot\20200604155806.png', '20200604155806.png')
+    # f.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\screenshot\20200604162427.png', '20200604162427.png')
     # f.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\screenshot\20200529122236.png', '20200529122236.png')
     # f.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\screenshot\20200529122254.png', '20200529122254.png')
     # f.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\screenshot\20200529122404.png', '20200529122404.png')
