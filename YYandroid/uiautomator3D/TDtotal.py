@@ -96,10 +96,10 @@ class login_to_game3d:
         game_back_to_check_balance(self, '3D-3星直选复式')
 
         # 断言：添加注单验证金额
-        get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='3d游戏3星直选复式',
+        get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D-3星直选复式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D',menthod='3D-3星直选复式')
 
     def game_3d_3star_direct_selection_single(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -121,9 +121,8 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D-3星直选单式', case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D-3星直选单式')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星直选复式')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='直选单式').click()
@@ -147,7 +146,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D-3星直选单式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星直选复式')
 
     def game_3d_3star_direct_selection_sum(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -169,9 +168,7 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D-3星直选和值', case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D-3星直选和值')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星直选和值')
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='直选和值').click()
@@ -198,7 +195,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D-3星直选和值',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星直选和值')
 
     def game_3d_3star_group_selection_3snigle(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -222,9 +219,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法：3D游戏-3星组三单式',
                                 case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D-3星组三单式')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星组三单式')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='组选').click()
@@ -250,7 +246,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法：3D游戏-3星组三单式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星组三单式')
 
     def game_3d_3star_group_selection_3duplex(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -274,9 +270,8 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D-3星组三复式', case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D-3星组三复式')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星组三复式')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='组选').click()
@@ -305,7 +300,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D-3星组三复式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星组三复式')
 
     def game_3d_3star_group_selection_6snigle(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -329,9 +324,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法：3D游戏-3星组六单式',
                                 case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D-3星组六单式')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星组六单式')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='组选').click()
@@ -357,7 +351,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法：3D游戏-3星组六单式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星组六单式')
 
     def game_3d_3star_group_selection_6duplex(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -382,9 +376,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-3星组六复式',
                                 case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-3星组六复式')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星组六复式')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='组选').click()
@@ -411,7 +404,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D-3星组六复式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-3星组六复式')
 
     def game_3d_3star_group_selection_mix_duplex(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -434,9 +427,8 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法：3D游戏-混合组选', case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-混合组选')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-混合组选')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='组选').click()
@@ -462,7 +454,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法：3D游戏-混合组选',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-混合组选')
 
     def game_3d_3star_group_selection_sum_duplex(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -488,9 +480,8 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-组选和值', case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-组选和值')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-组选和值')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='组选').click()
@@ -503,11 +494,11 @@ class login_to_game3d:
 
         self.s(text='添加注单').click()
         page_text_1 = self.s(text='投注单').get_text()
-        assert_presence(self, expect='投注单', actual=page_text_1, scenes='玩法:3D-混合组选', case='添加注单')
+        assert_presence(self, expect='投注单', actual=page_text_1, scenes='玩法:3D-组选和值', case='添加注单')
 
         self.s(text='+机选5注').click()
         betlist_count = self.s(resourceId='com.yy.sport:id/tv_bet_content').count
-        assert_presence(self, expect=6, actual=betlist_count, scenes='玩法:3D-混合组选', case='随机添加5注')
+        assert_presence(self, expect=6, actual=betlist_count, scenes='玩法:3D-组选和值', case='随机添加5注')
         # 添加注单
         betsadd = add_list_bet(self)
         # 断言：下注成功
@@ -519,7 +510,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D游戏-组选和值',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-组选和值')
 
     def game_3d_2star_top2_direct_duplex(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -542,7 +533,7 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-2星前二直选复式', case='一键投注')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星前二直选复式')
         game_text = self.s(text="玩法").get_text()
         assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:33D游戏-2星前二直选复式')
 
@@ -569,7 +560,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D游戏-2星前二直选复式',
                                 case='添加注单')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星前二直选复式')
 
     def game_3d_2star_top2_direct_single(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -591,9 +582,8 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法：3D游戏-2星前二直选单式', case='一键投注')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-2星前二直选单式')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星前二直选单式')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='二星').click()
@@ -618,7 +608,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法：3D游戏-2星前二直选单式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星前二直选单式')
 
     def game_3d_2star_last2_direct_duplex(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -641,7 +631,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-2星后二直选复式',
                                 case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星后二直选复式')
         game_text = self.s(text="玩法").get_text()
         assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-2星后二直选复式')
 
@@ -669,7 +659,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D游戏-2星后二直选复式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星后二直选复式')
 
     def game_3d_2star_last2_direct_single(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -692,7 +682,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法：3D游戏-2星后二直选单式',
                                 case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星后二直选单式')
         game_text = self.s(text="玩法").get_text()
         assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-2星后二直选单式')
 
@@ -719,7 +709,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法：3D游戏-2星后二直选单式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星后二直选单式')
 
     def game_3d_2star_top2_group_duplex(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -735,7 +725,7 @@ class login_to_game3d:
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=6).click()
         # 一键投注
         bets = oneclick_bet(self)
-        # 断言：一键投注动作
+        # 断言：一键投注成功
         assert_equal_bet(self, scenes='玩法:3D游戏-2星前二组选复式', case='一键投注')
         # 返回上级
         game_back_to_check_balance(self, '3D游戏-2星前二组选复式')
@@ -743,9 +733,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-2星前二组选复式',
                                 case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-2星前二组选复式')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星前二组选复式')
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='二星').click()
@@ -772,7 +760,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D游戏-2星前二组选复式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星前二组选复式')
 
     def game_3d_2star_top2_group_single(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -795,9 +783,8 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法：3D游戏-2星前二组选单式', case='一键投注')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-2星前二组选单式')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星前二组选单式')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='二星').click()
@@ -823,7 +810,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法：3D游戏-2星前二组选单式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星前二组选单式')
 
     def game_3d_2star_last2_group_duplex(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -847,9 +834,8 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-2星后二组选复式', case='一键投注')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-2星后二组选复式')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星后二组选复式')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='二星').click()
@@ -877,7 +863,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D游戏-2星后二组选复式',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星后二组选复式')
 
     def game_3d_2star_last2_group_single(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -901,10 +887,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法：3D游戏-2星后二组选单式',
                                 case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        self.s().must_wait = 2
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-2星后二组选单式')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星后二组选单式')
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='二星').click()
@@ -929,7 +912,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法：3D游戏-2星后二组选单式',
                                 case='添加注单验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-2星后二组选单式')
 
     def position(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -952,9 +935,8 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-定位胆', case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-定位胆')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-定位胆')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='定位胆', instance=0).click()
@@ -981,7 +963,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D游戏-定位胆',
                                 case='添加注单验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-定位胆')
 
     def random_postion_1(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1002,9 +984,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-一码不定位',
                                 case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-一码不定位')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-一码不定位')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='不定位', instance=0).click()
@@ -1028,7 +1009,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='3d游戏3星一码不定位',
                                 case='添加注单验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-一码不定位')
 
     def random_postion_2(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1051,9 +1032,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-二码不定位',
                                 case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-二码不定位')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-二码不定位')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='不定位', instance=0).click()
@@ -1079,7 +1059,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D-一码不定位',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-二码不定位')
 
     def dxds_top2(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1102,9 +1082,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-前二大小单双',
                                 case='一键投注金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-前二大小单双')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-前二大小单双')
+
 
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
         self.s(text='大小单双', instance=0).click()
@@ -1130,7 +1109,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D游戏-前二大小单双',
                                 case='添加注单金额验证')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-前二大小单双')
 
     def dxds_last2(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1151,7 +1130,7 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D游戏-后二大小单双', case='一键投注')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-后二大小单双')
         game_text = self.s(text="玩法").get_text()
         assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D游戏-后二大小单双')
 
@@ -1179,7 +1158,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod='玩法:3D-后二大小单双',
                                 case='添加注单')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D-后二大小单双')
 
     def gametown_3D_position_1(self):
         try:
@@ -1204,9 +1183,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城一字定位-百',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城一字定位-百')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城一字定位-百')
 
         # 切换到娱乐城
         try:
@@ -1232,9 +1209,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城一字定位-十',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城一字定位-十')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城一字定位-十')
 
         # 切换到娱乐城
         try:
@@ -1260,9 +1235,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城一字定位-个',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城一字定位-个')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城一字定位-个')
+
 
     def gametown_3d_duplex_1(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1281,9 +1255,8 @@ class login_to_game3d:
         # 断言：一键投注验证金额
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城一字组合', case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城一字组合')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城一字组合')
+
 
     def gametown_3d_positon_2(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1303,9 +1276,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城-二字定位',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城-二字定位')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城-二字定位')
+
 
     def gametown_3d_duplex_2(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1325,9 +1297,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城-二字组合',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城-二字组合')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城-二字组合')
+
 
     def gametown_3d_sum_2(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1346,9 +1317,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城-二字和数-百十和数',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城-二字和数-百十和数')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城-二字和数-百十和数')
+
 
         # 百个和数
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1372,9 +1342,7 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城-二字和数-百个和数',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城-二字和数-百个和数')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城-二字和数-百个和数')
 
         # 十个和数
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1393,9 +1361,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城-二字和数-十个和数',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城-二字和数-十个和数')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城-二字和数-十个和数')
+
 
     def gametown_3d_position_3(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1422,9 +1389,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城-三字定位',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城-三字定位')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城-三字定位')
+
 
     def gametown_3d_deplex_3(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1446,9 +1412,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城-三字组合',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城-三字组合')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城-三字组合')
+
 
     def gametown_3d_sum_3(self):
         self.s(resourceId='com.yy.sport:id/lin_center_title').click()
@@ -1468,9 +1433,8 @@ class login_to_game3d:
         get_c_balance_and_check(self, amount=bets[0], beforeamount=bets[1], playmenthod='玩法:3D娱乐城-三字和数',
                                 case='一键投注验证金额')
         # 返回页面
-        balance_back_to_game(self, gamename='3D彩', style='福彩3D')
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:3D娱乐城-三字和数')
+        balance_back_to_game(self, gamename='3D彩', style='福彩3D', menthod='3D娱乐城-三字和数')
+
 
     # if __name__ == '__main__':
     #     ltg = login_to_game3d()
