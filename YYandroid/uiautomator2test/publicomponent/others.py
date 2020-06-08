@@ -1,9 +1,9 @@
 import time, random
 
-from uiautomator3D.publicomponent.assertion import assert_equal_bet, assert_presence
-from uiautomator3D.publicomponent.bettingwidget import oneclick_bet
+from uiautomator2test.publicomponent.assertion import assert_equal_bet, assert_presence
+from uiautomator2test.publicomponent.bettingwidget import oneclick_bet
 
-
+now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
 def game_back_to_check_balance(self, gamename):
     self.s().must_wait(2)
     self.s(resourceId='com.yy.sport:id/iv_back').click()
@@ -38,7 +38,7 @@ def get_c_balance_and_check(self, amount, beforeamount, playmenthod, case):
     else:
         print(case)
         filename = '%s.png' % now
-        self.s.screenshot('../report/screenshot/%s' % filename)
+        self.s.screenshot('../UItest/report/screenshot/%s' % filename)
         with open('../data/result.csv', mode='a') as f:
             f.write(
                 now + ',' + '%s' % playmenthod + ',' + case + ',' + "失败" + ',' + filename + ',' + '结账前:%s下注额%s减法得到%s实际结账后:%s' % (
@@ -93,11 +93,56 @@ def choose_betstyle(self, betstyle_1, betstyle_2=None, instance2=None, betstyle_
         self.s(text=betstyle_3, instance=instance3).click()
 
 
-def random_add_5(self, style):
-    n1 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
-    self.s(text='+机选5注').click()
-    n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
-    assert_presence(self, expect=int(n2), actual=int(n1) + 5, scenes='玩法:%s' % style, case='随机添加5注')
+def random_add_5(self, style,n1,filenamebefore,key=None,key_2=None):
+    if key==None and key_2==None:
+        print('无key')
+        n3=self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
+        print('点击添加注单后',n3)
+        if n3!=n1:
+            filename = '%s.png' % now
+            self.s.screenshot('../UItest/report/screenshot/%s' % filename)
+            with open('../data/result.csv', mode='a') as f:
+                f.write(
+                    now + ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename+'/'+filenamebefore + ',' + '添加注单前后数量不一致'+'\n')
+
+        # assert_presence(self,expect=n1,actual=n3,case='注单的数量',scenes='玩法:%s' % style)
+        self.s(text='+机选5注').click()
+        n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
+        print('添加5注后',n2)
+        print('添加前',n1)
+        assert_presence(self, expect=int(n2), actual=int(n1) + 5, scenes='玩法:%s' % style, case='随机添加5注')
+    elif key=='组合':
+        print('组合key')
+        n3 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
+        if n3 != n1:
+            filename = '%s.png' % now
+            self.s.screenshot('../UItest/report/screenshot/%s' % filename)
+            with open('../data/result.csv', mode='a') as f:
+                f.write(
+                    now + ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename + '/' + filenamebefore + ',' + '添加注单前后数量不一致' + '\n')
+        self.s(text='+机选5注').click()
+        n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
+        assert_presence(self, expect=int(n2), actual=int(n1)*6, scenes='玩法:%s' % style, case='随机添加5注')
+    elif key_2 in ["跨度",'前三直选和值','前三组选和值','中三直选和值','中三组选和值','后三直选和值','后三组选和值'
+        ,'后二直选和值','后二组选和值','任选2直选和值','任选2组选和值','任选3直选和值','任选3组选和值','任选4直选和值']:
+        print('请注意这是特殊玩法玩法')
+        n3 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
+        print('点击添加注单后', n3)
+        if n3 != n1:
+            filename = '%s.png' % now
+            self.s.screenshot('../UItest/report/screenshot/%s' % filename)
+            with open('../data/result.csv', mode='a') as f:
+                f.write(
+                    now + ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename + '/' + filenamebefore + ',' + '添加注单前后数量不一致' + '\n')
+        self.s(text='+机选5注').click()
+    elif key_2=='组三复式':
+        print('组三复式')
+        n3 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
+        assert_presence(self, expect=n1, actual=n3, case='注单的数量', scenes='玩法:%s' % style)
+        self.s(text='+机选5注').click()
+        n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
+        assert_presence(self, expect=12, actual=int(n2), scenes='玩法:%s' % style, case='随机添加5注')
+
 
 
 def gamtown_11c5_randomchoose(self):
@@ -215,3 +260,28 @@ def pk10_luckship_bet_page(self, num1_9=None, num10_18=None, num20_29=None, num3
     else:
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=num30_39_2).click()
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=num39_30_2).click()
+
+def M6_5_star5_direct_num_page(self,num0_9=None,num10_19=None,num20_29=None,num30_39_1=None,num30_39_2=None):
+            self.s(resourceId='com.yy.sport:id/tv_ball', instance=num0_9).click()
+            if num10_19==None:
+                pass
+            else:
+                 self.s(resourceId='com.yy.sport:id/tv_ball', instance=num10_19).click()
+            if num20_29==None:
+               pass
+            else:
+               self.s(resourceId='com.yy.sport:id/tv_ball', instance=num20_29).click()
+            if num30_39_1==None:
+                pass
+
+            else:
+                self.s(resourceId='com.yy.sport:id/tv_ball', instance=num30_39_1).click()
+
+            if num30_39_2==None:
+                pass
+            else:
+                self.s.swipe(fx=40, fy=1300, tx=40, ty=500)
+                self.s.swipe(fx=40, fy=1300, tx=40, ty=500)
+
+                self.s(resourceId='com.yy.sport:id/tv_ball', instance=num30_39_2).click()
+

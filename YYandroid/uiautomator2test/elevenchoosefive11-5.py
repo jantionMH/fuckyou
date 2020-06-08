@@ -1,9 +1,9 @@
 import uiautomator2
 
-from uiautomator3D.publicomponent.assertion import assert_presence, assert_equal_bet, page_number_avaliable, \
+from uiautomator2test.publicomponent.assertion import assert_presence, assert_equal_bet, page_number_avaliable, \
     add_list_and_assert, page_text_avaliable
-from uiautomator3D.publicomponent.bettingwidget import oneclick_bet, add_list_bet
-from uiautomator3D.publicomponent.others import game_back_to_check_balance, balance_back_to_game, \
+from uiautomator2test.publicomponent.bettingwidget import oneclick_bet, add_list_bet
+from uiautomator2test.publicomponent.others import game_back_to_check_balance, balance_back_to_game, \
     get_c_balance_and_check, check_if_in_gametown, check_if_in_offical, choose_betstyle, random_add_5, \
     gamtown_11c5_randomchoose, gametown_11c5_TG
 

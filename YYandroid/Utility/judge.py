@@ -148,6 +148,7 @@ def get_emial_html():
             h = line.strip().split(',')[4]
             if h == '无':
                 content += "<td width=10%%>%s</td\n>" % h
+            # elif '/' in h:
             else:
                 content += "<td width=10%%><a href='./%s'>%s</td\n>" % (h, h)
             content += " <td width=30%%>%s</td>" % line.strip().split(',')[5]

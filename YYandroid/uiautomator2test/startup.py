@@ -1,4 +1,4 @@
-from uiautomator3D.TDtotal import login_to_game3d
+from uiautomator2test.TDtotal import login_to_game3d
 
 # 初始化游戏登录
 ltg = login_to_game3d()

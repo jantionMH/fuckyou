@@ -1,10 +1,10 @@
 import uiautomator2
 import time
 
-from uiautomator3D.publicomponent.assertion import assert_presence, page_number_avaliable, assert_equal_bet
-from uiautomator3D.publicomponent.bettingwidget import oneclick_bet
-from uiautomator3D.publicomponent.modules import onclick_verify_balance_back_game, add_betlist_verify_balance_back_game
-from uiautomator3D.publicomponent.others import check_if_in_offical, choose_betstyle, game_back_to_check_balance, \
+from uiautomator2test.publicomponent.assertion import assert_presence, page_number_avaliable, assert_equal_bet
+from uiautomator2test.publicomponent.bettingwidget import oneclick_bet
+from uiautomator2test.publicomponent.modules import onclick_verify_balance_back_game, add_betlist_verify_balance_back_game
+from uiautomator2test.publicomponent.others import check_if_in_offical, choose_betstyle, game_back_to_check_balance, \
     get_c_balance_and_check, balance_back_to_game, pk10_luckship_bet_page, check_if_in_gametown
 
 

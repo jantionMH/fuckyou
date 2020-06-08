@@ -1,8 +1,8 @@
 import uiautomator2
 
-from uiautomator3D.publicomponent.assertion import assert_equal_bet, assert_presence
-from uiautomator3D.publicomponent.bettingwidget import oneclick_bet, add_list_bet
-from uiautomator3D.publicomponent.others import game_back_to_check_balance, get_c_balance_and_check, \
+from uiautomator2test.publicomponent.assertion import assert_equal_bet, assert_presence
+from uiautomator2test.publicomponent.bettingwidget import oneclick_bet, add_list_bet
+from uiautomator2test.publicomponent.others import game_back_to_check_balance, get_c_balance_and_check, \
     balance_back_to_game
 
 
