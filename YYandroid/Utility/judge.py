@@ -124,11 +124,11 @@ def get_emial_html():
          
           <tr bgcolor=orange>
           <td width=15% >测试时间</td>
-          <td width=10% >测试场景</td>
-          <td width=30%>测试用例</td>
-          <td width=5%>测试结果</td>
+          <td width=30% >测试场景</td>
+          <td width=20%>测试用例</td>
+          <td width=10%>测试结果</td>
           <td witdth=10%>错误截图</td>
-          <td width=30%>错误数据</td>
+          <td width=15%>错误数据</td>
           </tr>
     """
 
@@ -138,20 +138,21 @@ def get_emial_html():
         for line in result:
             content += "<tr>"
             content += "<td width=15%%>%s</td\n>" % line.strip().split(',')[0]
-            content += "<td width=10%%>%s</td\n>" % line.strip().split(',')[1]
-            content += "<td width=30%%>%s</td\n>" % line.strip().split(',')[2]
+            content += "<td width=30%%>%s</td\n>" % line.strip().split(',')[1]
+            content += "<td width=20%%>%s</td\n>" % line.strip().split(',')[2]
             r = line.strip().split(',')[3]
             if r == '测试成功' or r=='成功':
-                content += "<td bgcolor=green width=5%%>%s</td\n>" % line.strip().split(',')[3]
+                content += "<td bgcolor=green width=10%%>%s</td\n>" % line.strip().split(',')[3]
             else:
-                content += "<td bgcolor=red width=5%%>%s</td\n>" % line.strip().split(',')[3]
+                content += "<td bgcolor=red width=10%%>%s</td\n>" % line.strip().split(',')[3]
             h = line.strip().split(',')[4]
             if h == '无':
                 content += "<td width=10%%>%s</td\n>" % h
-            # elif '/' in h:
+            elif '/' in h:
+                content += "<td width=10%%><a href='./%s%s'>%s%s</td\n>" % (h.split('/')[0],h.split('/')[1], h.split('/')[0],h.split('/')[1])
             else:
                 content += "<td width=10%%><a href='./%s'>%s</td\n>" % (h, h)
-            content += " <td width=30%%>%s</td>" % line.strip().split(',')[5]
+            content += " <td width=15%%>%s</td>" % line.strip().split(',')[5]
 
             content += "</tr>"
 

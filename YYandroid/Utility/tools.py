@@ -161,6 +161,13 @@ from interface.fast3gametown import *
 #         with open('../data/result.csv', mode='a+') as f:
 #             f.write(now + ',' + scenes + ',' + case + ',' + '成功' + ',' + '无' + ',' + '无' + '\n')
 #
-# assert_not_null(actual=list_except, scenes='投注记录', case='投注次数和投注内容')
-list = ['龙,0', '虎,1']
-print(type(random.choice(list).split(',')[0]))
+# # assert_not_null(actual=list_except, scenes='投注记录', case='投注次数和投注内容')
+# list = ['龙,0', '虎,1']
+# print(type(random.choice(list).split(',')[0]))
+# for i in range(20):
+#  ra=random.randrange(0,10)
+#  print(ra)
+
+listname = [{'平特一肖':['鼠','虎','牛','蛇','狗']}, {'平特尾数':['0尾','2尾','5尾','7尾','9尾']}]
+
+print(list(listname[0].values())[0])

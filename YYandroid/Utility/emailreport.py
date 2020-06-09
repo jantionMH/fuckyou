@@ -36,6 +36,7 @@ def htmlemail():
     # 接收者
     toaddrs = ['jantion1110@aol.com', 'frankc@seektopser.com', 'sven@seektopser.com']
     # toaddrs =['jantion1110@aol.com','jantion@seektopser.com']
+    # toaddrs =['mihai@zr.slimxu.com']
     # 邮件标题
     subject = '调试python邮件功能 '
     # 邮件的正文

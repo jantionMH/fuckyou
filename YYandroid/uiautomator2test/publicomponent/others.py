@@ -6,19 +6,32 @@ from uiautomator2test.publicomponent.bettingwidget import oneclick_bet
 now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
 def game_back_to_check_balance(self, gamename):
     self.s().must_wait(2)
+    time.sleep(2)
     self.s(resourceId='com.yy.sport:id/iv_back').click()
     caipiao_text = self.s(text="彩票").get_text()
     assert_presence(self, expect='彩票', actual=caipiao_text, case='返回上级页面', scenes='玩法:%s' % gamename)
+    time.sleep(2)
     self.s(text='彩票管理').click()
 
 
 def balance_back_to_game(self, gamename, style, menthod):
+    time.sleep(2)
     self.s(text='彩票').click()
+    time.sleep(2)
     self.s(text="%s" % gamename).click()
-    self.s().must_wait(timeout=2)
-    self.s(text="%s" % style).click()
-    print('返回游戏投注页面')
-    self.s().must_wait = 2
+    try:
+      self.s().must_wait(timeout=2)
+      time.sleep(2)
+      self.s(text="%s" % style).click()
+      print('返回游戏投注页面')
+      self.s().must_wait = 2
+    except:
+        self.s().must_wait(timeout=2)
+        time.sleep(2)
+        self.s(text="%s" % style).click()
+        print('返回游戏投注页面')
+        self.s().must_wait = 2
+
     game_text = self.s(text="玩法").get_text()
     assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:%s' % (menthod))
 
@@ -70,7 +83,8 @@ def check_if_in_offical(self, text, style):
 # 选择玩法类型，分三段选择
 def choose_betstyle(self, betstyle_1, betstyle_2=None, instance2=None, betstyle_3=None, instance3=None):
     self.s(resourceId='com.yy.sport:id/lin_center_title').click()
-    self.s(text='%s' % betstyle_1).click()
+    self.s(text=betstyle_1).click()
+    print('选择玩法')
     # if betstyle_2 ==None:
     #     pass
     # else:
@@ -105,8 +119,9 @@ def random_add_5(self, style,n1,filenamebefore,key=None,key_2=None):
                 f.write(
                     now + ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename+'/'+filenamebefore + ',' + '添加注单前后数量不一致'+'\n')
 
-        # assert_presence(self,expect=n1,actual=n3,case='注单的数量',scenes='玩法:%s' % style)
+        time.sleep(2)
         self.s(text='+机选5注').click()
+
         n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
         print('添加5注后',n2)
         print('添加前',n1)
@@ -120,12 +135,14 @@ def random_add_5(self, style,n1,filenamebefore,key=None,key_2=None):
             with open('../data/result.csv', mode='a') as f:
                 f.write(
                     now + ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename + '/' + filenamebefore + ',' + '添加注单前后数量不一致' + '\n')
+        time.sleep(2)
         self.s(text='+机选5注').click()
         n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
         assert_presence(self, expect=int(n2), actual=int(n1)*6, scenes='玩法:%s' % style, case='随机添加5注')
     elif key_2 in ["跨度",'前三直选和值','前三组选和值','中三直选和值','中三组选和值','后三直选和值','后三组选和值'
         ,'后二直选和值','后二组选和值','任选2直选和值','任选2组选和值','任选3直选和值','任选3组选和值','任选4直选和值']:
         print('请注意这是特殊玩法玩法')
+
         n3 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
         print('点击添加注单后', n3)
         if n3 != n1:
@@ -139,6 +156,7 @@ def random_add_5(self, style,n1,filenamebefore,key=None,key_2=None):
         print('组三复式')
         n3 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
         assert_presence(self, expect=n1, actual=n3, case='注单的数量', scenes='玩法:%s' % style)
+        time.sleep(2)
         self.s(text='+机选5注').click()
         n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
         assert_presence(self, expect=12, actual=int(n2), scenes='玩法:%s' % style, case='随机添加5注')
@@ -285,3 +303,8 @@ def M6_5_star5_direct_num_page(self,num0_9=None,num10_19=None,num20_29=None,num3
 
                 self.s(resourceId='com.yy.sport:id/tv_ball', instance=num30_39_2).click()
 
+
+def marksix_unitprice(self):
+    self.s(resourceId='com.yy.sport:id/et_input_recreation_multiple').click()
+    self.s(resourceId='com.yy.sport:id/tv_number', instance=5).click()
+    self.s(resourceId='com.yy.sport:id/tv_number', instance=6).click()
