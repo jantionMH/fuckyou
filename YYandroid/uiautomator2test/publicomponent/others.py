@@ -3,43 +3,72 @@ import time, random
 from uiautomator2test.publicomponent.assertion import assert_equal_bet, assert_presence
 from uiautomator2test.publicomponent.bettingwidget import oneclick_bet
 
-now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+
 def game_back_to_check_balance(self, gamename):
     self.s().must_wait(2)
+    # 录制视频
+    now1 = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    filename1 = '%s.mp4' % now1
+    self.s.screenrecord('../data/%s' % filename1)
     time.sleep(2)
     self.s(resourceId='com.yy.sport:id/iv_back').click()
     caipiao_text = self.s(text="彩票").get_text()
-    assert_presence(self, expect='彩票', actual=caipiao_text, case='返回上级页面', scenes='玩法:%s' % gamename)
+
+    # 结束录制，文件名参数传入断言
     time.sleep(2)
-    self.s(text='彩票管理').click()
+    self.s.screenrecord.stop()
+    assert_presence(self, expect='彩票', actual=caipiao_text, case='返回上级页面', scenes='玩法:%s' % gamename,video=filename1)
+
 
 
 def balance_back_to_game(self, gamename, style, menthod):
+    # 录制视频
+    now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    filename = '%s.mp4' % now
+    self.s.screenrecord('../data/%s' % filename)
     time.sleep(2)
     self.s(text='彩票').click()
     time.sleep(2)
     self.s(text="%s" % gamename).click()
+
     try:
       self.s().must_wait(timeout=2)
       time.sleep(2)
       self.s(text="%s" % style).click()
+      # 结束录制，文件名参数传入断言
+      time.sleep(2)
+      self.s.screenrecord.stop()
       print('返回游戏投注页面')
       self.s().must_wait = 2
     except:
         self.s().must_wait(timeout=2)
         time.sleep(2)
         self.s(text="%s" % style).click()
+        # 结束录制，文件名参数传入断言
+        time.sleep(2)
+        self.s.screenrecord.stop()
         print('返回游戏投注页面')
         self.s().must_wait = 2
 
     game_text = self.s(text="玩法").get_text()
-    assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:%s' % (menthod))
+    assert_presence(self, expect='玩法', actual=game_text, case='返回投注页面', scenes='玩法:%s' % (menthod),video=filename)
 
 
 def get_c_balance_and_check(self, amount, beforeamount, playmenthod, case):
+    # 录制视频
+    now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    vediofilename = '%s.mp4' % now
+    self.s.screenrecord('../data/%s' % vediofilename)
+    time.sleep(2)
+    self.s(text='彩票管理').click()
+    # 结束录制，文件名参数传入断言
+    time.sleep(2)
+    self.s.screenrecord.stop()
+    #获取余额数字
     self.s().must_wait(2)
     c_balance = self.s(resourceId='com.yy.sport:id/iv_user_balance').get_text()
     c = c_balance.replace(',', '')
+
 
     now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
     if float(beforeamount) - float(amount) == float(c):
@@ -54,7 +83,7 @@ def get_c_balance_and_check(self, amount, beforeamount, playmenthod, case):
         self.s.screenshot('../UItest/report/screenshot/%s' % filename)
         with open('../data/result.csv', mode='a') as f:
             f.write(
-                now + ',' + '%s' % playmenthod + ',' + case + ',' + "失败" + ',' + filename + ',' + '结账前:%s下注额%s减法得到%s实际结账后:%s' % (
+                now + ',' + '%s' % playmenthod + ',' + case + ',' + "失败" + ',' + filename + ',' + '%s结账前:%s下注额%s减法得到%s实际结账后:%s' % (vediofilename,
                     beforeamount, amount, float(beforeamount) - float(amount), c) + '\n')
 
 
@@ -82,7 +111,11 @@ def check_if_in_offical(self, text, style):
 
 # 选择玩法类型，分三段选择
 def choose_betstyle(self, betstyle_1, betstyle_2=None, instance2=None, betstyle_3=None, instance3=None):
-    self.s(resourceId='com.yy.sport:id/lin_center_title').click()
+    try:
+        self.s(resourceId='com.yy.sport:id/lin_center_title').click()
+    except:
+        self.s(resourceId='com.yy.sport:id/lin_center_title').click()
+
     self.s(text=betstyle_1).click()
     print('选择玩法')
     # if betstyle_2 ==None:
@@ -107,59 +140,94 @@ def choose_betstyle(self, betstyle_1, betstyle_2=None, instance2=None, betstyle_
         self.s(text=betstyle_3, instance=instance3).click()
 
 
-def random_add_5(self, style,n1,filenamebefore,key=None,key_2=None):
+def random_add_5(self, style,n1,filenamebefore,exvideo,key=None,key_2=None):
     if key==None and key_2==None:
         print('无key')
         n3=self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
         print('点击添加注单后',n3)
         if n3!=n1:
-            filename = '%s.png' % now
+            now0 = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+            filename = '%s.png' % now0
             self.s.screenshot('../UItest/report/screenshot/%s' % filename)
             with open('../data/result.csv', mode='a') as f:
                 f.write(
-                    now + ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename+'/'+filenamebefore + ',' + '添加注单前后数量不一致'+'\n')
-
-        time.sleep(2)
+                    now0 + ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename+'/'+filenamebefore + ',' + '添加注单前后数量不一致'+'\n')
+        # 录制视频
+        now1 = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+        videofilename1 = '%s.mp4' % now1
+        self.s.screenrecord('../data/%s' % videofilename1)
+        time.sleep(1)
         self.s(text='+机选5注').click()
 
         n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
         print('添加5注后',n2)
         print('添加前',n1)
-        assert_presence(self, expect=int(n2), actual=int(n1) + 5, scenes='玩法:%s' % style, case='随机添加5注')
+        # 结束录制，文件名参数传入断言
+        time.sleep(3)
+        self.s.screenrecord.stop()
+        assert_presence(self, expect=int(n2), actual=int(n1) + 5, scenes='玩法:%s' % style, case='随机添加5注',video=videofilename1,video_2=exvideo)
     elif key=='组合':
         print('组合key')
         n3 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
         if n3 != n1:
-            filename = '%s.png' % now
-            self.s.screenshot('../UItest/report/screenshot/%s' % filename)
+            now2 = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+            filename = '%s.png' % now2
+            self.s.screenrecord('../data/%s' % filename)
             with open('../data/result.csv', mode='a') as f:
                 f.write(
-                    now + ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename + '/' + filenamebefore + ',' + '添加注单前后数量不一致' + '\n')
+                    now2+ ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename + '/' + filenamebefore + ',' + '添加注单前后数量不一致' + '\n')
+        # 录制视频
+        now3 = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+        videofilename2 = '%s.mp4' % now3
+        self.s.screenrecord('../data/%s' % videofilename2)
         time.sleep(2)
         self.s(text='+机选5注').click()
         n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
-        assert_presence(self, expect=int(n2), actual=int(n1)*6, scenes='玩法:%s' % style, case='随机添加5注')
+        # 结束录制，文件名参数传入断言
+        time.sleep(2)
+        self.s.screenrecord.stop()
+        assert_presence(self, expect=int(n2), actual=int(n1)*6, scenes='玩法:%s' % style, case='随机添加5注',video=videofilename2,video_2=exvideo)
+
     elif key_2 in ["跨度",'前三直选和值','前三组选和值','中三直选和值','中三组选和值','后三直选和值','后三组选和值'
-        ,'后二直选和值','后二组选和值','任选2直选和值','任选2组选和值','任选3直选和值','任选3组选和值','任选4直选和值']:
+        ,'后二直选和值','后二组选和值','任选2直选和值','任选2组选和值','任选3直选和值','任选3组选和值','任选4直选和值','组三复式']:
         print('请注意这是特殊玩法玩法')
 
         n3 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
         print('点击添加注单后', n3)
         if n3 != n1:
-            filename = '%s.png' % now
-            self.s.screenshot('../UItest/report/screenshot/%s' % filename)
+            now4 = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+            filename = '%s.png' % now4
+            self.s.screenshot('../data/%s' % filename)
             with open('../data/result.csv', mode='a') as f:
                 f.write(
-                    now + ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename + '/' + filenamebefore + ',' + '添加注单前后数量不一致' + '\n')
+                    now4 + ',' + '添加注单后' + ',' + '验证注单数量' + ',' + "失败" + ',' + filename + '/' + filenamebefore + ',' + '添加注单前后数量不一致' + '\n')
+
         self.s(text='+机选5注').click()
-    elif key_2=='组三复式':
-        print('组三复式')
-        n3 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
-        assert_presence(self, expect=n1, actual=n3, case='注单的数量', scenes='玩法:%s' % style)
-        time.sleep(2)
-        self.s(text='+机选5注').click()
-        n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
-        assert_presence(self, expect=12, actual=int(n2), scenes='玩法:%s' % style, case='随机添加5注')
+
+    # elif key_2=='组三复式':
+    #     print('组三复式')
+    #     # 录制视频
+    #     now5 = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    #     videofilename3 = '%s.mp4' % now5
+    #     self.s.screenrecord('../data/%s' % videofilename3)
+    #     time.sleep(2)
+    #     n3 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
+    #     # 结束录制，文件名参数传入断言
+    #     time.sleep(2)
+    #     self.s.screenrecord.stop()
+    #     assert_presence(self, expect=n1, actual=n3, case='注单的数量', scenes='玩法:%s' % style,video=videofilename3,video_2=exvideo)
+    #
+    #     # 录制视频
+    #     now6= time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    #     videofilename4 = '%s.mp4' % now6
+    #     self.s.screenrecord('../data/%s' % videofilename4)
+    #     time.sleep(2)
+    #     self.s(text='+机选5注').click()
+    #     n2 = self.s(resourceId='com.yy.sport:id/tv_betNum').get_text()
+    #     # 结束录制，文件名参数传入断言
+    #     time.sleep(2)
+    #     self.s.screenrecord.stop()
+    #     assert_presence(self, expect=12, actual=int(n2), scenes='玩法:%s' % style, case='随机添加5注',video=videofilename4,video_2=exvideo)
 
 
 
@@ -192,6 +260,7 @@ def gamtown_11c5_randomchoose(self):
     self.s(resourceId='com.yy.sport:id/tv_ball', instance=4).click()
     self.s(resourceId='com.yy.sport:id/tv_ball', instance=5).click()
     self.s(resourceId='com.yy.sport:id/tv_ball', instance=9).click()
+    self.s(resourceId='com.yy.sport:id/tv_ball', instance=8).click()
     self.s(resourceId='com.yy.sport:id/tv_ball', instance=1).click()
     self.s(resourceId='com.yy.sport:id/tv_ball', instance=2).click()
     self.s(resourceId='com.yy.sport:id/tv_ball', instance=3).click()
@@ -308,3 +377,6 @@ def marksix_unitprice(self):
     self.s(resourceId='com.yy.sport:id/et_input_recreation_multiple').click()
     self.s(resourceId='com.yy.sport:id/tv_number', instance=5).click()
     self.s(resourceId='com.yy.sport:id/tv_number', instance=6).click()
+
+
+

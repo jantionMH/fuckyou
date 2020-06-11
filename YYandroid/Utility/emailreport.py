@@ -55,7 +55,7 @@ def htmlemail():
     message.attach(maintext)
 
     # 加入附件
-    # attr1=MIMEText(open(r"../UItest/report\demoreport.html", 'r').read(), _subtype='plain', _charset='utf-8')
+    # attr1=MIMEText(open(r"../UItest/report\demoreport11_5.html", 'r').read(), _subtype='plain', _charset='utf-8')
     attr1 = MIMEText(open(r"C:\Users\janti\PycharmProjects\autotest-android\YYandroid\demoreport.zip", 'rb').read(),
                      _subtype='base64',
                      _charset='utf-8')

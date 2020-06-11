@@ -1,6 +1,10 @@
 import random, time
+import os
+
+import uiautomator2
 
 from interface.fast3gametown import *
+import zipfile
 
 # text='福彩3D第 20204362 期'
 # if '3D' in text:
@@ -168,6 +172,25 @@ from interface.fast3gametown import *
 #  ra=random.randrange(0,10)
 #  print(ra)
 
-listname = [{'平特一肖':['鼠','虎','牛','蛇','狗']}, {'平特尾数':['0尾','2尾','5尾','7尾','9尾']}]
+# listname = [{'平特一肖':['鼠','虎','牛','蛇','狗']}, {'平特尾数':['0尾','2尾','5尾','7尾','9尾']}]
+#
+# print(list(listname[0].values())[0])
 
-print(list(listname[0].values())[0])
+# for filename in os.listdir(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\screenshot'):
+#     fpng=filename.split('.')[0]
+#     with open(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\data\result.csv') as f:
+#         # print(f.readline())
+#         if fpng in f.readline():
+#                with zipfile.ZipFile(file='../demoreport.zip',mode='a') as z:
+#                    z.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\screenshot\%s.png'%fpng,fpng+'.png')
+#                    z.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\demoreport11_5.html', 'demoreport11_5.html')
+#                    z.close()
+
+def ddd():
+    phone = uiautomator2.connect('127.0.0.1:62001')
+    print(phone.device_info)
+    phone.app_start('com.yy.sport')
+    phone.session(package_name='com.yy.sport', attach=True)
+    phone.service('uiautomator').stop()
+
+ddd()

@@ -68,6 +68,70 @@ def assert_more_than(driver, expect, actual, scenes, case):
 # def capture(filename):
 # ImageGrab.grab().save('../data' + filename)
 
+def creat_report():
+
+    content="""
+         <table witdth=1000 border=1 cellspacing=0>
+                  <tr bgcolor=yellow border=1>
+                  <td >BB彩票 Android 自動化測試報告</td>
+                  </tr>
+                  <tr bgcolor=orange>
+                  
+                  <td width=20% >测试时间</td>
+                  <td width=10% >测试场景</td>
+                  <td width=35%>测试用例</td>
+                  <td width=10%>测试结果</td>
+                  <td witdth=25%>错误截图</td>
+                  
+                  
+                  </tr>
+    """
+
+    with open('../data/result.csv', mode='r')as f:
+        result = f.readlines()
+        print(result)
+        for line in result:
+            print(line)
+            if ',' not in line:
+
+                content+="<tr>"
+                content+="<td width=15%%>%s</td\n>"%line
+                content += "</tr>"
+
+            if ',' in line:
+                content += "<tr>"
+
+                content += "<td width=15%%>%s</td\n>" % line.strip().split(',')[0]
+                content += "<td width=30%%>%s</td\n>" % line.strip().split(',')[1]
+                content += "<td width=20%%>%s</td\n>" % line.strip().split(',')[2]
+                r = line.strip().split(',')[3]
+                if r == '测试成功' or r == '成功':
+                    content += "<td bgcolor=green width=10%%>%s</td\n>" % line.strip().split(',')[3]
+                else:
+                    content += "<td bgcolor=red width=10%%>%s</td\n>" % line.strip().split(',')[3]
+                h = line.strip().split(',')[4]
+                if h == '无':
+                    content += "<td width=10%%>%s</td\n>" % h
+                elif '/' in h:
+                    content += "<td width=10%%><a href='./%s%s'>%s,%s</td\n>" % (
+                    h.split('/')[0], h.split('/')[1], h.split('/')[0], h.split('/')[1])
+                else:
+                    content += "<td width=10%%><a href='./%s'>%s</td\n>" % (h, h)
+                v = line.strip().split(',')[5]
+                if v == '无':
+                    content += "<td width=15%%>%s</td\n>" % v
+                elif '/' in v:
+                    content += " <td width=15%%><a href='./%s'>%s<a href='./%s'>%s</td>" % (
+                    v.split('/')[0], v.split('/')[0], v.split('/')[1], v.split('/')[1])
+
+                else:
+                    content += "<td width=15%%><a href='./%s'>%s</td\n>" % (v, v)
+                content += "</tr>"
+    content += '</table>'
+    print(content)
+    with open('../UItest/report/report.html', 'w+')as f:
+        f.write(content)
+
 
 def get_html():
     content = """
@@ -93,6 +157,7 @@ def get_html():
         print(result)
         for line in result:
             content += "<tr>"
+
             content += "<td width=20%%>%s</td\n>" % line.strip().split(',')[0]
             content += "<td width=25%%>%s</td\n>" % line.strip().split(',')[1]
             content += "<td width=35%%>%s</td\n>" % line.strip().split(',')[2]
@@ -128,15 +193,17 @@ def get_emial_html():
           <td width=20%>测试用例</td>
           <td width=10%>测试结果</td>
           <td witdth=10%>错误截图</td>
-          <td width=15%>错误数据</td>
+          <td width=15%>错误视频</td>
           </tr>
     """
 
     with open('../data/result.csv', mode='r')as f:
         result = f.readlines()
-        print(result)
+
+
         for line in result:
             content += "<tr>"
+
             content += "<td width=15%%>%s</td\n>" % line.strip().split(',')[0]
             content += "<td width=30%%>%s</td\n>" % line.strip().split(',')[1]
             content += "<td width=20%%>%s</td\n>" % line.strip().split(',')[2]
@@ -149,17 +216,23 @@ def get_emial_html():
             if h == '无':
                 content += "<td width=10%%>%s</td\n>" % h
             elif '/' in h:
-                content += "<td width=10%%><a href='./%s%s'>%s%s</td\n>" % (h.split('/')[0],h.split('/')[1], h.split('/')[0],h.split('/')[1])
+                content += "<td width=10%%><a href='./%s%s'>%s,%s</td\n>" % (h.split('/')[0],h.split('/')[1], h.split('/')[0],h.split('/')[1])
             else:
                 content += "<td width=10%%><a href='./%s'>%s</td\n>" % (h, h)
-            content += " <td width=15%%>%s</td>" % line.strip().split(',')[5]
+            v=line.strip().split(',')[5]
+            if v=='无':
+                content += "<td width=15%%>%s</td\n>" % v
+            elif '/'in v:
+               content += " <td width=15%%><a href='./%s'>%s<a href='./%s'>%s</td>" %(v.split('/')[0],v.split('/')[0],v.split('/')[1],v.split('/')[1])
 
+            else:
+                content += "<td width=15%%><a href='./%s'>%s</td\n>" % (v,v)
             content += "</tr>"
 
     content += '</table>'
     print(content)
 
-    with open('../UItest/report/demoreport.html', 'w+')as f:
+    with open('../UItest/report/demoreport11_5.html', 'w+')as f:
         f.write(content)
 
 
@@ -171,6 +244,7 @@ def fileex():
 
 
 if __name__ == '__main__':
+    # creat_report()
     get_emial_html()
     # get_html()
     # fileex()

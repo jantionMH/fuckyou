@@ -14,6 +14,10 @@ class Luckship:
         def __init__(self):
             phone = uiautomator2.connect('127.0.0.1:62001')
             print(phone.device_info)
+            phone.watcher("ok").when(
+                xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(
+                text='OK').click()
+            phone.watcher.start()
             phone.app_start('com.yy.sport')
             self.s = phone.session(package_name='com.yy.sport', attach=True)
             self.s.implicitly_wait = 5
@@ -29,8 +33,17 @@ class Luckship:
             self.s(resourceId="com.yy.sport:id/tv_password").send_keys('jantion001')
             self.s(resourceId="com.yy.sport:id/tv_login").click()
 
-            login_text = self.s(text="M6体育").get_text()
-            assert_presence(self, expect='M6体育', actual=login_text, case='登录测试', scenes='进入首页')
+            try:
+                self.s(resourceId="com.yy.sport:id/iv_delete").click()  # 活动公告
+
+
+            except:
+                print('没有广告')
+            try:
+                login_text = self.s(text="M6体育").get_text()
+                assert_presence(self, expect='M6体育', actual=login_text, case='登录测试', scenes='进入首页')
+            except:
+                pass
 
             self.s(description="娱乐").click()
             self.s().must_wait(2)
@@ -58,6 +71,7 @@ class Luckship:
             check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
             choose_betstyle(self, betstyle_1='前五', betstyle_2='定位胆', betstyle_3='定位胆',instance3=1)  # 选择玩法
             page_number_avaliable(self, style='PK10-幸运飞艇-前五-定位胆-定位胆', num=0, exnum='01')  # 页面选号断言
+
             pk10_luckship_bet_page(self, num1_9=1, num9_1=9, num10_18=10, num18_10=18, num20_29=20, num29_20=29, num30_39_1=30, num39_30_1=39,
                                    num30_39_2=30, num39_30_2=39)
             # 一键投注+返回上级+一键投注验证金额+返回页面+4个断言断言
@@ -65,6 +79,7 @@ class Luckship:
                                              gamename1='PK10-幸运飞艇-前五-定位胆-定位胆',
                                              playmenthod='玩法:PK10-幸运飞艇-前五-定位胆-定位胆',case2='一键投注金额验证',
                                              gamename2='PK10',style='幸运飞艇',menthod='PK10-幸运飞艇-前五-定位胆-定位胆')
+            check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
             choose_betstyle(self, betstyle_1='前五', betstyle_2='定位胆', betstyle_3='定位胆', instance3=1)  # 选择玩法
             pk10_luckship_bet_page(self, num1_9=1, num9_1=9, num10_18=10, num18_10=18, num20_29=20, num29_20=29,
                                    num30_39_1=30, num39_30_1=39,
@@ -84,6 +99,7 @@ class Luckship:
                                              gamename1='PK10-幸运飞艇-前五-直选-直选复式',
                                              playmenthod='玩法:PK10-幸运飞艇-前五-直选-直选复式', case2='一键投注金额验证',
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-前五-直选-直选复式')
+            check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
             choose_betstyle(self, betstyle_1='前五', betstyle_2='直选', betstyle_3='直选复式')  # 选择玩法
             pk10_luckship_bet_page(self, num1_9=1, num10_18=15,  num20_29=26, num30_39_1=38, num30_39_2=39)
             # 添加注单+随机5注+确认下注+返回上级+验证金额+返回游戏+6个断言
@@ -104,6 +120,7 @@ class Luckship:
                                              gamename1='PK10-幸运飞艇-后五-定位胆-定位胆',
                                              playmenthod='玩法:PK10-幸运飞艇-后五-定位胆-定位胆', case2='一键投注金额验证',
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-后五-定位胆-定位胆')
+            check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
             choose_betstyle(self, betstyle_1='后五', betstyle_2='定位胆', betstyle_3='定位胆', instance3=1)  # 选择玩法
             pk10_luckship_bet_page(self, num1_9=1, num9_1=9, num10_18=10, num18_10=18, num20_29=20, num29_20=29,
                                    num30_39_1=30, num39_30_1=39,
@@ -125,6 +142,7 @@ class Luckship:
                                              gamename1='PK10-幸运飞艇-前四-直选-直选复式',
                                              playmenthod='玩法:PK10-幸运飞艇-前四-直选-直选复式', case2='一键投注金额验证',
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-前四-直选-直选复式')
+            check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
             choose_betstyle(self, betstyle_1='前四', betstyle_2='直选', betstyle_3='直选复式')  # 选择玩法
             pk10_luckship_bet_page(self, num1_9=1, num10_18=15, num20_29=26, num30_39_1=38)
             # 添加注单+随机5注+确认下注+返回上级+验证金额+返回游戏+6个断言
@@ -144,6 +162,7 @@ class Luckship:
                                              gamename1='PK10-幸运飞艇-前三-直选-直选复式',
                                              playmenthod='玩法:PK10-幸运飞艇-前三-直选-直选复式', case2='一键投注金额验证',
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-前三-直选-直选复式')
+            check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
             choose_betstyle(self, betstyle_1='前三', betstyle_2='直选', betstyle_3='直选复式')  # 选择玩法
             pk10_luckship_bet_page(self, num1_9=1, num10_18=15, num20_29=26)
             # 添加注单+随机5注+确认下注+返回上级+验证金额+返回游戏+6个断言
@@ -162,6 +181,7 @@ class Luckship:
                                              gamename1='PK10-幸运飞艇-前二-直选-直选复式',
                                              playmenthod='玩法:PK10-幸运飞艇-前二-直选-直选复式', case2='一键投注金额验证',
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-前二-直选-直选复式')
+            check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
             choose_betstyle(self, betstyle_1='前二', betstyle_2='直选', betstyle_3='直选复式')  # 选择玩法
             pk10_luckship_bet_page(self, num1_9=1, num10_18=15)
             # 添加注单+随机5注+确认下注+返回上级+验证金额+返回游戏+6个断言
@@ -179,6 +199,8 @@ class Luckship:
                                              gamename1='PK10-幸运飞艇-前一-直选-直选复式',
                                              playmenthod='玩法:PK10-幸运飞艇-前一-直选-直选复式', case2='一键投注金额验证',
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-前一-直选-直选复式')
+
+            check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
             choose_betstyle(self, betstyle_1='前一', betstyle_2='直选', betstyle_3='直选复式')  # 选择玩法
             pk10_luckship_bet_page(self, num1_9=1)
             # 添加注单+随机5注+确认下注+返回上级+验证金额+返回游戏+6个断言
@@ -201,6 +223,8 @@ class Luckship:
                                              playmenthod='玩法:PK10-幸运飞艇-大小单双-大小单双-大小单双', case2='一键投注金额验证',
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-大小单双-大小单双-大小单双')
 
+            check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
+
             choose_betstyle(self, betstyle_1='大小单双', betstyle_2='大小单双',instance2=1, betstyle_3='大小单双',instance3=2)
             page_number_avaliable(self, style='PK10-幸运飞艇-大小单双-大小单双-大小单双', num=0, exnum='大')  # 页面选号断言
             self.s(text='大', instance=0).click()
@@ -215,7 +239,7 @@ class Luckship:
                                                  gamename2='PK10', style2='幸运飞艇', menthod='PK10-幸运飞艇-大小单双-大小单双-大小单双')
         def TG_all(self):
             import random
-
+            check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
             list_game=['冠军','亚军','季军','第四名','第五名']
             for i in list_game:
                 list = ['龙,0', '虎,0']
@@ -267,6 +291,8 @@ class Luckship:
                                              gamename1='PK10-幸运飞艇-娱乐城-猜和值-冠亚',
                                              playmenthod='玩法:PK10-幸运飞艇-娱乐城-猜和值-冠亚', case2='一键投注金额验证',
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-娱乐城-猜和值-冠亚')
+
+            check_if_in_gametown(self, text='两面', style='PK10-幸运飞艇')
             choose_betstyle(self, betstyle_1='猜和值')  # 选择玩法
             self.s(text='冠亚季和值').click()
             self.s(resourceId='com.yy.sport:id/tv_ball', instance=20).click()
@@ -274,6 +300,7 @@ class Luckship:
                                              gamename1='PK10-幸运飞艇-娱乐城-猜和值-冠亚季和值',
                                              playmenthod='玩法:PK10-幸运飞艇-娱乐城-猜和值-冠亚季和值', case2='一键投注金额验证',
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-娱乐城-猜和值-冠亚季和值')
+            check_if_in_gametown(self, text='两面', style='PK10-幸运飞艇')
             choose_betstyle(self, betstyle_1='猜和值')  # 选择玩法
             self.s(text='首尾和值').click()
             self.s(resourceId='com.yy.sport:id/tv_ball', instance=13).click()
@@ -309,6 +336,7 @@ class Luckship:
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-娱乐城-猜和值-第1-10名')
         def gametown_luckship_TG(self):
             import random
+            check_if_in_gametown(self, text='两面', style='PK10-幸运飞艇')
             choose_betstyle(self, betstyle_1='龙虎斗')  # 选择玩法
             list=['龙','虎']
             for i in range(4):
@@ -321,16 +349,16 @@ class Luckship:
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-娱乐城-猜和值-龙虎斗')
 if __name__ == '__main__':
     L=Luckship()
-    L.top5_position()
-    L.top5_direct_duplex()
-    L.last5_position()
-    L.top4_direct_duplex()
-    L.top3_direct_duplex()
-    L. top2_direct_duplex()
-    L.top1_direct_duplex()
-    L.dxds()
-    L.TG_all()
-    L.gametown_PK10_two_sides()
-    L.gametown_PK10_guess_sum()
-    L.gametown_PK10_champion_tenth()
-    L.gametown_luckship_TG()
+    # L.top5_position()
+    # L.top5_direct_duplex()
+    # L.last5_position()
+    # L.top4_direct_duplex()
+    # L.top3_direct_duplex()
+    # L. top2_direct_duplex()
+    # L.top1_direct_duplex()
+    # L.dxds()
+    # L.TG_all()
+    # L.gametown_PK10_two_sides()
+    # L.gametown_PK10_guess_sum()
+    # L.gametown_PK10_champion_tenth()
+    # L.gametown_luckship_TG()

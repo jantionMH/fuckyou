@@ -10,6 +10,9 @@ class HongkongMarksix:
     def __init__(self):
         phone = uiautomator2.connect('127.0.0.1:62001')
         print(phone.device_info)
+        phone.watcher("ok").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(text='OK').click()
+        phone.watcher.start()
         phone.app_start('com.yy.sport')
         self.s = phone.session(package_name='com.yy.sport', attach=True)
 
@@ -26,10 +29,15 @@ class HongkongMarksix:
         self.s(resourceId="com.yy.sport:id/tv_login").click()
         try:
             self.s(resourceId="com.yy.sport:id/iv_delete").click()  # 活动公告
+
+
+        except:
+            print('没有广告')
+        try:
             login_text = self.s(text="M6体育").get_text()
             assert_presence(self, expect='M6体育', actual=login_text, case='登录测试', scenes='进入首页')
         except:
-            assert_presence(self, expect='M6体育', actual='无', case='登录测试', scenes='进入首页')
+            pass
 
         self.s(description="娱乐").click()
         self.s().must_wait(2)
@@ -283,20 +291,20 @@ class HongkongMarksix:
                                          gamename2='六合彩', style='香港六合彩', menthod='六合彩-香港六合彩-自选不中')
 
 
-
+        self.s.service('uiautomator').stop()
 
 if __name__ == '__main__':
     HK = HongkongMarksix()
-    # HK.specialnum()
-    # HK.twosides()
-    # HK.colorwave()
-    # HK.special_animal()
+    HK.specialnum()
+    HK.twosides()
+    HK.colorwave()
+    HK.special_animal()
 
-    # HK.head_tail_num()
-    # HK.hexiao()
-    # HK.zheng_code()
-    # HK.zheng_code_te()
-    # HK.zheng_code_1_6()
-    # HK.continuou_animal()
-    # HK.ptxw()
+    HK.head_tail_num()
+    HK.hexiao()
+    HK.zheng_code()
+    HK.zheng_code_te()
+    HK.zheng_code_1_6()
+    HK.continuou_animal()
+    HK.ptxw()
     HK.choose_miss()

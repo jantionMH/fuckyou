@@ -11,6 +11,9 @@ class M65:
     def __init__(self):
         phone = uiautomator2.connect('127.0.0.1:62001')
         print(phone.device_info)
+        phone.watcher("ok").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(text='OK').click()
+        phone.watcher.start()
         phone.app_start('com.yy.sport')
         self.s = phone.session(package_name='com.yy.sport', attach=True)
 
@@ -27,10 +30,15 @@ class M65:
         self.s(resourceId="com.yy.sport:id/tv_login").click()
         try:
             self.s(resourceId="com.yy.sport:id/iv_delete").click()  # 活动公告
+
+
+        except:
+            print('没有广告')
+        try:
             login_text = self.s(text="M6体育").get_text()
             assert_presence(self, expect='M6体育', actual=login_text, case='登录测试', scenes='进入首页')
         except:
-            assert_presence(self, expect='M6体育', actual='无', case='登录测试', scenes='进入首页')
+            pass
 
         self.s(description="娱乐").click()
         self.s().must_wait(2)
@@ -111,6 +119,8 @@ class M65:
                                          gamename1='时时彩-M6_5分彩-五星-直选-直选单式',
                                          playmenthod='玩法:时时彩-M6_5分彩-五星-直选-直选单式', case2='一键投注金额验证',
                                          gamename2='时时彩', style='M6-5分彩', menthod='时时彩-M6_5分彩-五星-直选-直选单式')
+
+        check_if_in_offical(self, text='五星-直选-直选复式', style='M6_5分彩')  # 检查当前页面是否为官方玩法页面
         choose_betstyle(self, betstyle_1='五星', betstyle_2='直选', betstyle_3='直选单式')  # 选择玩法
         page_text_avaliable(self, text='12345', style='M6_5分彩-五星-直选-直选单式')  # 检查文本框可输入
         self.s(resourceId='com.yy.sport:id/tv_text').send_keys(text='12345')
@@ -131,8 +141,11 @@ class M65:
                                          gamename1='时时彩-M6_5分彩-五星-组选-组选120',
                                          playmenthod='玩法:时时彩-M6_5分彩-五星-组选-组选120', case2='一键投注金额验证',
                                          gamename2='时时彩', style='M6-5分彩', menthod='时时彩-M6_5分彩-五星-组选-组选120')
+
+        check_if_in_offical(self, text='五星-直选-直选复式', style='M6_5分彩')  # 检查当前页面是否为官方玩法页面
         choose_betstyle(self, betstyle_1='五星', betstyle_2='组选', betstyle_3='组选120')  # 选择玩法
         page_number_avaliable(self, style='时时彩-M6_5分彩-五星-组选-组选120', num=0, exnum='0')  # 页面选号断言
+
         for i in range(5):
             self.s(resourceId='com.yy.sport:id/tv_ball', instance=i).click()
             # 添加注单+随机5注+确认下注+返回上级+验证金额+返回游戏+6个断言
@@ -154,6 +167,8 @@ class M65:
                                          gamename1='时时彩-M6_5分彩-五星-组选-组选60',
                                          playmenthod='玩法:时时彩-M6_5分彩-五星-组选-组选60', case2='一键投注金额验证',
                                          gamename2='时时彩', style='M6-5分彩', menthod='时时彩-M6_5分彩-五星-组选-组选60')
+
+        check_if_in_offical(self, text='五星-直选-直选复式', style='M6_5分彩')  # 检查当前页面是否为官方玩法页面
         choose_betstyle(self, betstyle_1='五星', betstyle_2='组选', betstyle_3='组选60')  # 选择玩法
         page_number_avaliable(self, style='时时彩-M6_5分彩-五星-组选-组选60', num=0, exnum='0')  # 页面选号断言
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=0).click()
@@ -178,6 +193,8 @@ class M65:
                                          gamename1='时时彩-M6_5分彩-五星-组选-组选30',
                                          playmenthod='玩法:时时彩-M6_5分彩-五星-组选-组选30', case2='一键投注金额验证',
                                          gamename2='时时彩', style='M6-5分彩', menthod='时时彩-M6_5分彩-五星-组选-组选30')
+
+        check_if_in_offical(self, text='五星-直选-直选复式', style='M6_5分彩')  # 检查当前页面是否为官方玩法页面
         choose_betstyle(self, betstyle_1='五星', betstyle_2='组选', betstyle_3='组选30')  # 选择玩法
         page_number_avaliable(self, style='时时彩-M6_5分彩-五星-组选-组选30', num=0, exnum='0')  # 页面选号断言
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=15).click()
@@ -202,6 +219,8 @@ class M65:
                                          gamename1='时时彩-M6_5分彩-五星-组选-组选20',
                                          playmenthod='玩法:时时彩-M6_5分彩-五星-组选-组选20', case2='一键投注金额验证',
                                          gamename2='时时彩', style='M6-5分彩', menthod='时时彩-M6_5分彩-五星-组选-组选20')
+
+        check_if_in_offical(self, text='五星-直选-直选复式', style='M6_5分彩')  # 检查当前页面是否为官方玩法页面
         choose_betstyle(self, betstyle_1='五星', betstyle_2='组选', betstyle_3='组选20')  # 选择玩法
         page_number_avaliable(self, style='时时彩-M6_5分彩-五星-组选-组选20', num=0, exnum='0')  # 页面选号断言
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=2).click()
@@ -226,6 +245,8 @@ class M65:
                                          gamename1='时时彩-M6_5分彩-五星-组选-组选10',
                                          playmenthod='玩法:时时彩-M6_5分彩-五星-组选-组选10', case2='一键投注金额验证',
                                          gamename2='时时彩', style='M6-5分彩', menthod='时时彩-M6_5分彩-五星-组选-组选10')
+
+        check_if_in_offical(self, text='五星-直选-直选复式', style='M6_5分彩')  # 检查当前页面是否为官方玩法页面
         choose_betstyle(self, betstyle_1='五星', betstyle_2='组选', betstyle_3='组选10')  # 选择玩法
         page_number_avaliable(self, style='时时彩-M6_5分彩-五星-组选-组选10', num=0, exnum='0')  # 页面选号断言
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=3).click()
@@ -250,6 +271,8 @@ class M65:
                                          gamename1='时时彩-M6_5分彩-五星-组选-组选5',
                                          playmenthod='玩法:时时彩-M6_5分彩-五星-组选-组选5', case2='一键投注金额验证',
                                          gamename2='时时彩', style='M6-5分彩', menthod='时时彩-M6_5分彩-五星-组选-组选5')
+
+        check_if_in_offical(self, text='五星-直选-直选复式', style='M6_5分彩')  # 检查当前页面是否为官方玩法页面
         choose_betstyle(self, betstyle_1='五星', betstyle_2='组选', betstyle_3='组选5')  # 选择玩法
         page_number_avaliable(self, style='时时彩-M6_5分彩-五星-组选-组选5', num=0, exnum='0')  # 页面选号断言
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=3).click()
@@ -274,6 +297,8 @@ class M65:
                                          gamename1='时时彩-M6_5分彩-五星-其他-龙虎和',
                                          playmenthod='玩法:时时彩-M6_5分彩-五星-其他-龙虎和', case2='一键投注金额验证',
                                          gamename2='时时彩', style='M6-5分彩', menthod='时时彩-M6_5分彩-五星-其他-龙虎和')
+
+        check_if_in_offical(self, text='五星-直选-直选复式', style='M6_5分彩')  # 检查当前页面是否为官方玩法页面
         choose_betstyle(self, betstyle_1='五星', betstyle_2='其他', betstyle_3='龙虎和')  # 选择玩法
         page_number_avaliable(self, style='时时彩-M6_5分彩-五星-其他-龙虎和', num=0, exnum='龙')  # 页面选号断言
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=0).click()
@@ -986,7 +1011,7 @@ class M65:
                                          gamename1='时时彩-M6_5分彩-后三-直选-后三组合',
                                          playmenthod='玩法:时时彩-M6_5分彩-后三-直选-后三组合', case2='一键投注金额验证',
                                          gamename2='时时彩', style='M6-5分彩', menthod='时时彩-M6_5分彩-后三-直选-后三组合')
-
+        check_if_in_offical(self, text='五星-直选-直选复式', style='M6_5分彩')  # 检查当前页面是否为官方玩法页面
         choose_betstyle(self, betstyle_1='后三', betstyle_2='直选', betstyle_3='后三组合')  # 选择玩法
         M6_5_star5_direct_num_page(self, num0_9=2, num10_19=13, num20_29=24)
         # 添加注单+随机5注+确认下注+返回上级+验证金额+返回游戏+6个断言
@@ -2060,108 +2085,108 @@ class M65:
 
 if __name__ == '__main__':
     M = M65()
-    # M.star5_driect_duplex()
-    # M.star5_driect_selection()
-    # M.star5_direct_single()
-    # M.star5_group_120()
-    # M.star5_group_60()
-    # M.star5_group_30()
-    # M.star5_group_20()
-    # M.star5_group_10()
-    # M.star5_group_5()
-    # M.star5_other_TGsum()
-    # M.star5_other_dxds()
+    M.star5_driect_duplex()
+    M.star5_driect_selection()
+    M.star5_direct_single()
+    M.star5_group_120()
+    M.star5_group_60()
+    M.star5_group_30()
+    M.star5_group_20()
+    M.star5_group_10()
+    M.star5_group_5()
+    M.star5_other_TGsum()
+    M.star5_other_dxds()
 
-    # M.top4_direct_duplex()
-    # M.top4_direct_single()
-    # M.top4_direct_selection()
-    # M.top4_group_slection24()
-    # M.top4_group_slection12()
-    # M.top4_group_slection6()
-    # M.top4_group_slection4()
+    M.top4_direct_duplex()
+    M.top4_direct_single()
+    M.top4_direct_selection()
+    M.top4_group_slection24()
+    M.top4_group_slection12()
+    M.top4_group_slection6()
+    M.top4_group_slection4()
 
-    # M.top3_direct_duplex()
-    # M.top3_direct_single()
-    # M.top3_direct_selection()
-    # M.top3_direct_span()
-    # M.top3_group3_duplex()
-    # M.top3_group3_single()
-    # M.top3_group6_duplex()
-    # M.top3_group6_single()
-    # M.top3_group_mix()
-    # M.top3_group_sum()
+    M.top3_direct_duplex()
+    M.top3_direct_single()
+    M.top3_direct_selection()
+    M.top3_direct_span()
+    M.top3_group3_duplex()
+    M.top3_group3_single()
+    M.top3_group6_duplex()
+    M.top3_group6_single()
+    M.top3_group_mix()
+    M.top3_group_sum()
 
-    # M.mid3_direct_duplex()
-    # M.mid3_direct_single()
-    # M.mid3_direct_selection()
-    # M.mid3_direct_span()
-    # M.mid3_direct_sum()
-    # M.mid3_group3_duplex()
-    # M.mid3_group3_single()
-    # M.mid3_group6_duplex()
-    # M.mid3_group6_single()
-    # M.mid3_group_mix()
-    # M.mid3_group_sum()
+    M.mid3_direct_duplex()
+    M.mid3_direct_single()
+    M.mid3_direct_selection()
+    M.mid3_direct_span()
+    M.mid3_direct_sum()
+    M.mid3_group3_duplex()
+    M.mid3_group3_single()
+    M.mid3_group6_duplex()
+    M.mid3_group6_single()
+    M.mid3_group_mix()
+    M.mid3_group_sum()
 
-    # M.last3_direct_duplex()
-    # M.last3_direct_single()
-    # M.last3_direct_selection()
-    # M.last3_direct_span()
-    # M.mid3_direct_sum()
-    # M.last3_group3_duplex()
-    # M.last3_group3_single()
-    # M.last3_group6_duplex()
-    # M.last3_group6_single()
-    # M.last3_group_mix()
-    # M.last3_group_sum()
+    M.last3_direct_duplex()
+    M.last3_direct_single()
+    M.last3_direct_selection()
+    M.last3_direct_span()
+    M.mid3_direct_sum()
+    M.last3_group3_duplex()
+    M.last3_group3_single()
+    M.last3_group6_duplex()
+    M.last3_group6_single()
+    M.last3_group_mix()
+    M.last3_group_sum()
 
-    # M.top2_direct_duplex()
-    # M.top2_direct_single()
-    # M.top2_direct_sum()
-    # M.top2_group_duplex()
-    # M.top2_group_single()
-    # M.top2_group_sum()
+    M.top2_direct_duplex()
+    M.top2_direct_single()
+    M.top2_direct_sum()
+    M.top2_group_duplex()
+    M.top2_group_single()
+    M.top2_group_sum()
 
-    # M.last2_direct_duplex()
-    # M.last2_direct_single()
-    # M.last2_direct_sum()
-    # M.last2_group_duplex()
-    # M.last2_group_single()
-    # M.last2_group_sum()
+    M.last2_direct_duplex()
+    M.last2_direct_single()
+    M.last2_direct_sum()
+    M.last2_group_duplex()
+    M.last2_group_single()
+    M.last2_group_sum()
 
-    # M.M6_5_position()
+    M.M6_5_position()
 
-    # M.random_position_5star_1()
-    # M.random_position_5star_2()
-    # M.random_position_5star_3()
-    # M.random_position_top4_1()
-    # M.random_position_last4_1()
-    # M.random_position_top3_1()
-    # M.random_position_top3_2()
-    # M.random_position_last3_1()
-    # M.random_position_last3_2()
-    # M.random_position_mid3_1()
-    # M.random_position_mid3_2()
+    M.random_position_5star_1()
+    M.random_position_5star_2()
+    M.random_position_5star_3()
+    M.random_position_top4_1()
+    M.random_position_last4_1()
+    M.random_position_top3_1()
+    M.random_position_top3_2()
+    M.random_position_last3_1()
+    M.random_position_last3_2()
+    M.random_position_mid3_1()
+    M.random_position_mid3_2()
 
-    # M.random2_direct_duplex()
-    # M.random2_dricet_sum()
-    # M.random2_group_duplex()
-    # M.random2_group_sum()
-    # M.random2_group_single()
+    M.random2_direct_duplex()
+    M.random2_dricet_sum()
+    M.random2_group_duplex()
+    M.random2_group_sum()
+    M.random2_group_single()
 
-    # M.random3_direct_duplex()
-    # M.random3_dircet_sum()
-    # M.random3_group3_duplex()
-    # M.random3_group3_single()
-    # M.random3_group6_duplex()
-    # M.random3_group6_single()
-    # M.random3_group_mix()
-    # M.random3_group_sum()
+    M.random3_direct_duplex()
+    M.random3_dircet_sum()
+    M.random3_group3_duplex()
+    M.random3_group3_single()
+    M.random3_group6_duplex()
+    M.random3_group6_single()
+    M.random3_group_mix()
+    M.random3_group_sum()
 
     M.random4_driect_duplex()
 
-    # M.gametown_M6_5_Integration()
-    # M.gametown_M6_5_TG()
-    # M.gametown_M6_5_ball1_ball5()
-    # M.gametown_M6_5_one_in5()
-    # M.gametown_M6_5_niuniu()
+    M.gametown_M6_5_Integration()
+    M.gametown_M6_5_TG()
+    M.gametown_M6_5_ball1_ball5()
+    M.gametown_M6_5_one_in5()
+    M.gametown_M6_5_niuniu()
