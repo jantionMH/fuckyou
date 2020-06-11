@@ -9,11 +9,11 @@ from uiautomator2test.publicomponent.others import choose_betstyle, marksix_unit
 class HongkongMarksix:
     def __init__(self):
         phone = uiautomator2.connect('127.0.0.1:62001')
-        print(phone.device_info)
+        phone.reset_uiautomator()
         phone.watcher("ok").when(
-            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(text='OK').click()
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
         phone.watcher.start()
-        phone.app_start('com.yy.sport')
+        phone.app_start('com.yy.sport', stop=True)
         self.s = phone.session(package_name='com.yy.sport', attach=True)
 
         try:
