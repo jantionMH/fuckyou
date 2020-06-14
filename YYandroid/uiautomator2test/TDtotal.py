@@ -8,23 +8,43 @@ from uiautomator2test.publicomponent.bettingwidget import oneclick_bet, add_list
 from uiautomator2test.publicomponent.modules import onclick_verify_balance_back_game, \
     add_betlist_verify_balance_back_game
 from uiautomator2test.publicomponent.others import game_back_to_check_balance, get_c_balance_and_check, \
-    balance_back_to_game, check_if_in_gametown, check_if_in_offical, choose_betstyle
+    balance_back_to_game, check_if_in_gametown, check_if_in_offical, choose_betstyle, shadow_click
 
 
 class login_to_game3d:
 
     def __init__(self):
+
+
+
         phone = uiautomator2.connect('127.0.0.1:62001')
         print(phone.device_info)
-        phone.reset_uiautomator()
-        phone.watcher("ok").when(xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+
+        phone.app_clear("com.yy.sport")
+        print('清除app')
+
+
+        phone.watcher("OK").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='Wait']").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+        print('启动watcher ,点击ok')
         phone.watcher.start()
-        phone.app_start('com.yy.sport',stop=True)
+
+
+        phone.app_start('com.yy.sport',stop=True,wait=True)
+        print('启动app')
+        phone.watcher("OK").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+        print('启动watcher ,点击ok')
+        phone.watcher.start()
+        phone.wait_timeout=20
 
         self.s = phone.session(package_name='com.yy.sport', attach=True)
-        self.s.implicitly_wait = 5
+
 
         try:
+
             self.s(resourceId='com.yy.sport:id/tv_download').click()
             print('点广告')
         except:
@@ -53,16 +73,37 @@ class login_to_game3d:
         self.s.swipe(fx=448, fy=1350, tx=448, ty=250, duration=0.5)
         self.s().must_wait(2)
         self.s(resourceId="com.yy.sport:id/home_imageview2", instance=4).click()
-
-        caipiao_text = self.s(text="彩票").get_text()
-        assert_presence(self, expect='彩票', actual=caipiao_text, case='进入彩票模块', scenes='进入首页')
+        try:
+            caipiao_text = self.s(text="彩票").get_text()
+            assert_presence(self, expect='彩票', actual=caipiao_text, case='进入彩票模块', scenes='进入首页')
+        except:
+            try:
+                self.s(resourceId="com.yy.sport:id/home_imageview2", instance=4).click()
+                caipiao_text = self.s(text="彩票").get_text()
+                assert_presence(self, expect='彩票', actual=caipiao_text, case='进入彩票模块', scenes='进入首页')
+            except:
+                assert_presence(self, expect='彩票', actual='无', case='进入彩票模块', scenes='进入首页')
 
         self.s(text="3D彩").click()
-        self.s().must_wait = 1
-        self.s(text="福彩3D").click()
 
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='进入3D福彩投注页面', scenes='进入游戏')
+
+
+        try:
+            self.s(text="福彩3D").click()
+            game_text = self.s(text="玩法").get_text()
+            assert_presence(self, expect='玩法', actual=game_text, case='进入3D彩-福彩3D', scenes='进入游戏')
+        except:
+            print('第一次点击失败了')
+            self.s(text="福彩3D").click(timeout=2)
+            game_text = self.s(text="玩法").get_text()
+            assert_presence(self, expect='玩法', actual=game_text, case='进入3D彩-福彩3D', scenes='进入游戏')
+        try:
+
+            self.s.click(x=430, y=770)
+            self.s.click(x=430, y=770)
+            self.s.click(x=430, y=770)
+        except:
+            print('没有阴影')
 
     def game_3d_basic(self):
         """
@@ -628,7 +669,9 @@ class login_to_game3d:
                                              gamename2='3D彩', style2='福彩3D', menthod='3D-后二大小单双')
 
     def gametown_3D_position_1(self):
+
         check_if_in_gametown(self, text='一字定位', style='3D-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='一字定位')  # 选择玩法
 
 
@@ -643,7 +686,7 @@ class login_to_game3d:
 
         # 切换到娱乐城
         check_if_in_gametown(self, text='一字定位', style='3D-娱乐城')
-
+        shadow_click(self)
         self.s(text='十定位').click()
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=5).click()
         self.s(text='单').click()
@@ -668,7 +711,9 @@ class login_to_game3d:
                                          gamename2='3D彩', style='福彩3D', menthod='3D娱乐城一字定位-个')
 
     def gametown_3d_duplex_1(self):
+
         check_if_in_gametown(self, text='一字定位', style='3D-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='一字组合')  # 选择玩法
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=3).click()
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=5).click()
@@ -680,7 +725,10 @@ class login_to_game3d:
                                          gamename2='3D彩', style='福彩3D', menthod='3D娱乐城一字组合')
 
     def gametown_3d_positon_2(self):
+
         check_if_in_gametown(self, text='一字定位', style='3D-娱乐城')
+        shadow_click(self)
+
         choose_betstyle(self, betstyle_1='二字定位')  # 选择玩法
 
         self.s().swipe('up', steps=10)
@@ -694,7 +742,9 @@ class login_to_game3d:
                                          gamename2='3D彩', style='福彩3D', menthod='3D娱乐城-二字定位')
 
     def gametown_3d_duplex_2(self):
+
         check_if_in_gametown(self, text='一字定位', style='3D-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='二字组合')  # 选择玩法
 
         self.s().swipe('up', steps=10)
@@ -708,7 +758,9 @@ class login_to_game3d:
                                          gamename2='3D彩', style='福彩3D', menthod='3D娱乐城-二字组合')
 
     def gametown_3d_sum_2(self):
+
         check_if_in_gametown(self, text='一字定位', style='3D-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='二字和数')  # 选择玩法
 
         self.s().swipe('up', steps=10)
@@ -721,7 +773,9 @@ class login_to_game3d:
                                          gamename2='3D彩', style='福彩3D', menthod='3D娱乐城-二字和数-百十和数')
 
         # 百个和数
+
         choose_betstyle(self, betstyle_1='二字和数')  # 选择玩法
+        shadow_click(self)
         self.s(text='百个和数').click()
         self.s().swipe('up', steps=10)
         self.s(text='17').click()
@@ -733,7 +787,9 @@ class login_to_game3d:
                                          gamename2='3D彩', style='福彩3D', menthod='3D娱乐城-二字和数-百个和数')
 
         # 十个和数
+
         choose_betstyle(self, betstyle_1='二字和数')  # 选择玩法
+        shadow_click(self)
         self.s(text='十个和数').click()
         self.s().swipe('up', steps=10)
         self.s(text='17').click()
@@ -745,7 +801,9 @@ class login_to_game3d:
                                          gamename2='3D彩', style='福彩3D', menthod='3D娱乐城-二字和数-十个和数')
 
     def gametown_3d_position_3(self):
+
         check_if_in_gametown(self, text='一字定位', style='3D-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='三字定位')  # 选择玩法
 
         self.s().swipe('up', steps=10)
@@ -762,7 +820,9 @@ class login_to_game3d:
                                          gamename2='3D彩', style='福彩3D', menthod='3D娱乐城-三字定位')
 
     def gametown_3d_deplex_3(self):
+
         check_if_in_gametown(self, text='一字定位', style='3D-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='三字组合')  # 选择玩法
 
         self.s().swipe('up', steps=10)
@@ -778,7 +838,9 @@ class login_to_game3d:
                                          gamename2='3D彩', style='福彩3D', menthod='3D娱乐城-三字组合')
 
     def gametown_3d_sum_3(self):
+
         check_if_in_gametown(self, text='一字定位', style='3D-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='三字和数')  # 选择玩法
 
         self.s().swipe('up', steps=10)
@@ -793,42 +855,44 @@ class login_to_game3d:
 
 
 if __name__ == '__main__':
-    ltg = login_to_game3d()
+    for i in range(100):
+       ltg = login_to_game3d()
+
 
     # 3star
-    ltg.game_3d_basic()
-    ltg.game_3d_3star_direct_selection_single()
-    ltg.game_3d_3star_direct_selection_sum()
-    ltg.game_3d_3star_group_selection_3snigle()
-    ltg.game_3d_3star_group_selection_3duplex()
-    ltg.game_3d_3star_group_selection_6snigle()
-    ltg.game_3d_3star_group_selection_6duplex()
-    ltg.game_3d_3star_group_selection_mix_duplex()
-    ltg.game_3d_3star_group_selection_sum_duplex()
-
-    '''
-    2star
-    '''
-    ltg.game_3d_2star_top2_direct_duplex()
-    ltg.game_3d_2star_top2_direct_single()
-    ltg.game_3d_2star_last2_direct_duplex()
-    ltg.game_3d_2star_last2_direct_single()
-    ltg.game_3d_2star_top2_group_single()
-    ltg.game_3d_2star_top2_group_duplex()
-    ltg.game_3d_2star_last2_group_single()
-    ltg.game_3d_2star_last2_group_duplex()
-    '''
-    定位胆
-    
-    '''
-    ltg.position()
-    """
-    不定位
-    """
-    ltg.random_postion_1()
-    ltg.random_postion_2()
-    """
-    大小单双
-    """
-    ltg.dxds_top2()
-    ltg.dxds_last2()
+    # ltg.game_3d_basic()
+    # ltg.game_3d_3star_direct_selection_single()
+    # ltg.game_3d_3star_direct_selection_sum()
+    # ltg.game_3d_3star_group_selection_3snigle()
+    # ltg.game_3d_3star_group_selection_3duplex()
+    # ltg.game_3d_3star_group_selection_6snigle()
+    # ltg.game_3d_3star_group_selection_6duplex()
+    # ltg.game_3d_3star_group_selection_mix_duplex()
+    # ltg.game_3d_3star_group_selection_sum_duplex()
+    #
+    # '''
+    # 2star
+    # '''
+    # ltg.game_3d_2star_top2_direct_duplex()
+    # ltg.game_3d_2star_top2_direct_single()
+    # ltg.game_3d_2star_last2_direct_duplex()
+    # ltg.game_3d_2star_last2_direct_single()
+    # ltg.game_3d_2star_top2_group_single()
+    # ltg.game_3d_2star_top2_group_duplex()
+    # ltg.game_3d_2star_last2_group_single()
+    # ltg.game_3d_2star_last2_group_duplex()
+    # '''
+    # 定位胆
+    #
+    # '''
+    # ltg.position()
+    # """
+    # 不定位
+    # """
+    # ltg.random_postion_1()
+    # ltg.random_postion_2()
+    # """
+    # 大小单双
+    # """
+    # ltg.dxds_top2()
+    # ltg.dxds_last2()

@@ -4,18 +4,33 @@ from uiautomator2test.publicomponent.assertion import assert_presence, page_numb
 from uiautomator2test.publicomponent.modules import onclick_verify_balance_back_game, \
     add_betlist_verify_balance_back_game
 from uiautomator2test.publicomponent.others import M6_5_star5_direct_num_page, check_if_in_offical, choose_betstyle, \
-    check_if_in_gametown
+    check_if_in_gametown, shadow_click
 
 
 class M65:
     def __init__(self):
         phone = uiautomator2.connect('127.0.0.1:62001')
         print(phone.device_info)
-        phone.reset_uiautomator()
-        phone.watcher("ok").when(
-            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+
+
+        phone.app_clear("com.yy.sport")
+        print('清除app')
+
+        phone.watcher("OK").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='Wait']").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+        print('启动watcher ,点击ok')
         phone.watcher.start()
-        phone.app_start('com.yy.sport', stop=True)
+
+        phone.app_start('com.yy.sport',stop=True)
+        print('启动app')
+        phone.watcher("OK").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+        print('启动watcher ,点击ok')
+        phone.watcher.start()
+        phone.settings['wait_timeout'] = 20
+
         self.s = phone.session(package_name='com.yy.sport', attach=True)
 
         try:
@@ -57,9 +72,10 @@ class M65:
             except:
                 assert_presence(self, expect='彩票', actual='无', case='进入彩票模块', scenes='进入首页')
         self.s(text="时时彩").click()
-        self.s().must_wait = 1
-        self.s(text="M6-5分彩").click(timeout=2)
+
+
         try:
+            self.s(text="M6-5分彩").click(timeout=2)
             game_text = self.s(text="玩法").get_text()
             assert_presence(self, expect='玩法', actual=game_text, case='进入"M6-5分彩"', scenes='进入游戏')
         except:
@@ -67,6 +83,13 @@ class M65:
             self.s(text="M6-5分彩").click(timeout=2)
             game_text = self.s(text="玩法").get_text()
             assert_presence(self, expect='玩法', actual=game_text, case='进入"M6-5分彩"', scenes='进入游戏')
+        try:
+
+            self.s.click(x=430, y=770)
+            self.s.click(x=430, y=770)
+            self.s.click(x=430, y=770)
+        except:
+            print('没有阴影')
 
     def star5_driect_duplex(self):
         # self.s.implicitly_wait = 5
@@ -2001,6 +2024,7 @@ class M65:
 
     def gametown_M6_5_Integration(self):
         check_if_in_gametown(self, text='整合', style='时时彩-M6_5分彩')
+        shadow_click(self)
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=5).click()
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=14).click()
         self.s.swipe(fx=40,fy=1300,tx=40,ty=500)
@@ -2021,6 +2045,7 @@ class M65:
 
     def gametown_M6_5_TG(self):
         check_if_in_gametown(self, text='整合', style='时时彩-M6_5分彩')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='龙虎斗')  # 选择玩法
         self.s(text='龙', instance=0).click()
         self.s(text='龙', instance=1).click()
@@ -2045,6 +2070,7 @@ class M65:
     def gametown_M6_5_ball1_ball5(self):
         for i in ['第一球','第二球','第三球','第四球','第五球']:
             check_if_in_gametown(self, text='整合', style='时时彩-M6_5分彩')
+            shadow_click(self)
             choose_betstyle(self, betstyle_1=i)  # 选择玩法
             self.s(resourceId='com.yy.sport:id/tv_ball', instance=5).click()
             self.s(text='大', instance=0).click()
@@ -2061,6 +2087,7 @@ class M65:
 
     def gametown_M6_5_one_in5(self):
         check_if_in_gametown(self, text='整合', style='时时彩-M6_5分彩')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='全五中ㄧ')  # 选择玩法
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=5).click()
         self.s(resourceId='com.yy.sport:id/tv_ball', instance=6).click()
@@ -2073,6 +2100,7 @@ class M65:
 
     def gametown_M6_5_niuniu(self):
         check_if_in_gametown(self, text='整合', style='时时彩-M6_5分彩')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='时时彩牛牛')  # 选择玩法
         self.s(text='牛大', instance=0).click()
         self.s(text='牛小', instance=0).click()
@@ -2089,105 +2117,105 @@ if __name__ == '__main__':
     M.star5_driect_duplex()
     M.star5_driect_selection()
     M.star5_direct_single()
-    M.star5_group_120()
-    M.star5_group_60()
-    M.star5_group_30()
-    M.star5_group_20()
-    M.star5_group_10()
-    M.star5_group_5()
-    M.star5_other_TGsum()
-    M.star5_other_dxds()
-
-    M.top4_direct_duplex()
-    M.top4_direct_single()
-    M.top4_direct_selection()
-    M.top4_group_slection24()
-    M.top4_group_slection12()
-    M.top4_group_slection6()
-    M.top4_group_slection4()
-
-    M.top3_direct_duplex()
-    M.top3_direct_single()
-    M.top3_direct_selection()
-    M.top3_direct_span()
-    M.top3_group3_duplex()
-    M.top3_group3_single()
-    M.top3_group6_duplex()
-    M.top3_group6_single()
-    M.top3_group_mix()
-    M.top3_group_sum()
-
-    M.mid3_direct_duplex()
-    M.mid3_direct_single()
-    M.mid3_direct_selection()
-    M.mid3_direct_span()
-    M.mid3_direct_sum()
-    M.mid3_group3_duplex()
-    M.mid3_group3_single()
-    M.mid3_group6_duplex()
-    M.mid3_group6_single()
-    M.mid3_group_mix()
-    M.mid3_group_sum()
-
-    M.last3_direct_duplex()
-    M.last3_direct_single()
-    M.last3_direct_selection()
-    M.last3_direct_span()
-    M.mid3_direct_sum()
-    M.last3_group3_duplex()
-    M.last3_group3_single()
-    M.last3_group6_duplex()
-    M.last3_group6_single()
-    M.last3_group_mix()
-    M.last3_group_sum()
-
-    M.top2_direct_duplex()
-    M.top2_direct_single()
-    M.top2_direct_sum()
-    M.top2_group_duplex()
-    M.top2_group_single()
-    M.top2_group_sum()
-
-    M.last2_direct_duplex()
-    M.last2_direct_single()
-    M.last2_direct_sum()
-    M.last2_group_duplex()
-    M.last2_group_single()
-    M.last2_group_sum()
-
-    M.M6_5_position()
-
-    M.random_position_5star_1()
-    M.random_position_5star_2()
-    M.random_position_5star_3()
-    M.random_position_top4_1()
-    M.random_position_last4_1()
-    M.random_position_top3_1()
-    M.random_position_top3_2()
-    M.random_position_last3_1()
-    M.random_position_last3_2()
-    M.random_position_mid3_1()
-    M.random_position_mid3_2()
-
-    M.random2_direct_duplex()
-    M.random2_dricet_sum()
-    M.random2_group_duplex()
-    M.random2_group_sum()
-    M.random2_group_single()
-
-    M.random3_direct_duplex()
+    # M.star5_group_120()
+    # M.star5_group_60()
+    # M.star5_group_30()
+    # M.star5_group_20()
+    # M.star5_group_10()
+    # M.star5_group_5()
+    # M.star5_other_TGsum()
+    # M.star5_other_dxds()
+    #
+    # M.top4_direct_duplex()
+    # M.top4_direct_single()
+    # M.top4_direct_selection()
+    # M.top4_group_slection24()
+    # M.top4_group_slection12()
+    # M.top4_group_slection6()
+    # M.top4_group_slection4()
+    #
+    # M.top3_direct_duplex()
+    # M.top3_direct_single()
+    # M.top3_direct_selection()
+    # M.top3_direct_span()
+    # M.top3_group3_duplex()
+    # M.top3_group3_single()
+    # M.top3_group6_duplex()
+    # M.top3_group6_single()
+    # M.top3_group_mix()
+    # M.top3_group_sum()
+    #
+    # M.mid3_direct_duplex()
+    # M.mid3_direct_single()
+    # M.mid3_direct_selection()
+    # M.mid3_direct_span()
+    # M.mid3_direct_sum()
+    # M.mid3_group3_duplex()
+    # M.mid3_group3_single()
+    # M.mid3_group6_duplex()
+    # M.mid3_group6_single()
+    # M.mid3_group_mix()
+    # M.mid3_group_sum()
+    #
+    # M.last3_direct_duplex()
+    # M.last3_direct_single()
+    # M.last3_direct_selection()
+    # M.last3_direct_span()
+    # M.mid3_direct_sum()
+    # M.last3_group3_duplex()
+    # M.last3_group3_single()
+    # M.last3_group6_duplex()
+    # M.last3_group6_single()
+    # M.last3_group_mix()
+    # M.last3_group_sum()
+    #
+    # M.top2_direct_duplex()
+    # M.top2_direct_single()
+    # M.top2_direct_sum()
+    # M.top2_group_duplex()
+    # M.top2_group_single()
+    # M.top2_group_sum()
+    #
+    # M.last2_direct_duplex()
+    # M.last2_direct_single()
+    # M.last2_direct_sum()
+    # M.last2_group_duplex()
+    # M.last2_group_single()
+    # M.last2_group_sum()
+    #
+    # M.M6_5_position()
+    #
+    # M.random_position_5star_1()
+    # M.random_position_5star_2()
+    # M.random_position_5star_3()
+    # M.random_position_top4_1()
+    # M.random_position_last4_1()
+    # M.random_position_top3_1()
+    # M.random_position_top3_2()
+    # M.random_position_last3_1()
+    # M.random_position_last3_2()
+    # M.random_position_mid3_1()
+    # M.random_position_mid3_2()
+    #
+    # M.random2_direct_duplex()
+    # M.random2_dricet_sum()
+    # M.random2_group_duplex()
+    # M.random2_group_sum()
+    # M.random2_group_single()
+    #
+    # M.random3_direct_duplex()
     M.random3_dircet_sum()
-    M.random3_group3_duplex()
-    M.random3_group3_single()
-    M.random3_group6_duplex()
-    M.random3_group6_single()
-    M.random3_group_mix()
-    M.random3_group_sum()
+    # M.random3_group3_duplex()
+    # M.random3_group3_single()
+    # M.random3_group6_duplex()
+    # M.random3_group6_single()
+    # M.random3_group_mix()
+    # M.random3_group_sum()
+    #
+    # M.random4_driect_duplex()
 
-    M.random4_driect_duplex()
-
-    M.gametown_M6_5_Integration()
-    M.gametown_M6_5_TG()
-    M.gametown_M6_5_ball1_ball5()
-    M.gametown_M6_5_one_in5()
-    M.gametown_M6_5_niuniu()
+    # M.gametown_M6_5_Integration()
+    # M.gametown_M6_5_TG()
+    # M.gametown_M6_5_ball1_ball5()
+    # M.gametown_M6_5_one_in5()
+    # M.gametown_M6_5_niuniu()

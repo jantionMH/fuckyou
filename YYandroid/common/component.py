@@ -9,7 +9,7 @@ import time, random
 def switcho_e(driver):
     try:
         # 娱乐城阴影两点
-        shadowcilckgametown(driver)
+        # shadowcilckgametown(driver)
         # 切换到官方玩法
         rightconer(driver)
         # 切换到官方玩法
@@ -43,6 +43,7 @@ def shadowcilckgametown(driver):
     try:
         driver.find_element_by_xpath("//android.widget.RelativeLayout").click()
         sleep(1)
+        driver.find_element_by_xpath("//android.widget.RelativeLayout").click()
         driver.find_element_by_xpath("//android.widget.RelativeLayout").click()
 
 

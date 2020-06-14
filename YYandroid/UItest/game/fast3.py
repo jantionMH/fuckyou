@@ -39,12 +39,14 @@ def hezhi_play(driver, methodtitle):
     gametype = '快三'
     gameport = '安徽快三'
     if methodtitle == "和值":
-        # # 阴影三点
-        # shadowcilck(driver)
         try:
-         switcho_e(driver)
+            shadowcilck(driver)
         except:
-            pass
+            print('无阴影可点')
+        # try:
+         # switcho_e(driver)
+        # except:
+        #     pass
         # sleep(1)
         # 断言进入选号页面
         avaliable_num(driver, upmethodtitle=methodtitle)

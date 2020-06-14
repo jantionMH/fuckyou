@@ -183,57 +183,103 @@ def get_html():
 
 
 def get_emial_html():
+    count_success=0
+    coount_fail=0
     content = """
-
-      <table witdth=1000 border=1 cellspacing=0>
-         
-          <tr bgcolor=orange>
+      
+      <table  witdth=100% border=2 cellspacing=2 cellpadding=2>
+          <tr bgcolor=lightblue >
+                 <td colspan=7 height=60px align=center>YY彩票 Android 自動化測試報告</td>
+          </tr>
+          <tr bgcolor=lightgrey >
+            <td >时间${testtime}</td>
+            <td >测试机型${machinetype}</td>
+            <td >测试用例总数${totalnum}</td>
+            <td >成功率${successrate}</td>
+            <td >成功数${successnum}</td>
+            <td >失败数${failnum}</td>
+            <td >软件版本${version}</td>
+          </tr>
+          
+      
+          <tr bgcolor=lightyellow>
+          <td width=5% >序号</td>
           <td width=15% >测试时间</td>
           <td width=30% >测试场景</td>
           <td width=20%>测试用例</td>
           <td width=10%>测试结果</td>
-          <td witdth=10%>错误截图</td>
-          <td width=15%>错误视频</td>
+          <td width=10%>错误截图</td>
+          <td width=10%>视频回看</td>
           </tr>
     """
 
-    with open('../data/result.csv', mode='r')as f:
+    with open('../data/result.csv', mode='r',encoding='UTF-8')as f:
         result = f.readlines()
+        print()
 
+        for line in range(len(result)):
+            if ',' not in result[line]:
 
-        for line in result:
-            content += "<tr>"
-
-            content += "<td width=15%%>%s</td\n>" % line.strip().split(',')[0]
-            content += "<td width=30%%>%s</td\n>" % line.strip().split(',')[1]
-            content += "<td width=20%%>%s</td\n>" % line.strip().split(',')[2]
-            r = line.strip().split(',')[3]
-            if r == '测试成功' or r=='成功':
-                content += "<td bgcolor=green width=10%%>%s</td\n>" % line.strip().split(',')[3]
+                content+="<tr >"
+                content += "<td width=5%%>%s</td\n>" % line
+                content+="<td  style='font-size:12px;color:red;' colspan=7 width=15%%>%s</td\n>"%result[line]
+                content += "</tr>"
             else:
-                content += "<td bgcolor=red width=10%%>%s</td\n>" % line.strip().split(',')[3]
-            h = line.strip().split(',')[4]
-            if h == '无':
-                content += "<td width=10%%>%s</td\n>" % h
-            elif '/' in h:
-                content += "<td width=10%%><a href='./%s%s'>%s,%s</td\n>" % (h.split('/')[0],h.split('/')[1], h.split('/')[0],h.split('/')[1])
-            else:
-                content += "<td width=10%%><a href='./%s'>%s</td\n>" % (h, h)
-            v=line.strip().split(',')[5]
-            if v=='无':
-                content += "<td width=15%%>%s</td\n>" % v
-            elif '/'in v:
-               content += " <td width=15%%><a href='./%s'>%s<a href='./%s'>%s</td>" %(v.split('/')[0],v.split('/')[0],v.split('/')[1],v.split('/')[1])
+                content += "<tr >"
+                content += "<td width=5%%>%s</td\n>" % line
+                content += "<td width=15%%>%s</td\n>" % result[line].strip().split(',')[0]
+                content += "<td width=30%%>%s</td\n>" % result[line].strip().split(',')[1]
+                content += "<td width=20%%>%s</td\n>" % result[line].strip().split(',')[2]
+                r = result[line].strip().split(',')[3]
+                if r == '测试成功' or r=='成功':
+                    content += "<td bgcolor=lightgreen width=10%%>%s</td\n>" % result[line].strip().split(',')[3]
+                    count_success+=1
+                else:
+                    content += "<td bgcolor=pink width=10%%>%s</td\n>" % result[line].strip().split(',')[3]
+                    coount_fail+=1
+                h = result[line].strip().split(',')[4]
+                if h == '无':
+                    content += "<td width=10%%>%s</td\n>" % h
+                elif '/' in h:
+                    content += "<td width=10%%><a href='./%s%s'>%s,%s</td\n>" % (h.split('/')[0],h.split('/')[1], h.split('/')[0],h.split('/')[1])
+                else:
+                    content += "<td width=10%%><a href='./%s'>%s</td\n>" % (h, h)
+                v=result[line].strip().split(',')[5]
+                if v=='无':
+                    content += "<td width=10%%>%s</td\n>" % v
+                elif '/'in v:
+                   content += " <td width=10%%><a href='./%s'>%s<a href='./%s'>%s</td>" %(v.split('/')[0],v.split('/')[0],v.split('/')[1],v.split('/')[1])
 
-            else:
-                content += "<td width=15%%><a href='./%s'>%s</td\n>" % (v,v)
-            content += "</tr>"
+                else:
+                    content += "<td width=10%%><a href='./%s'>%s</td\n>" % (v,v)
+                content += "</tr>"
 
-    content += '</table>'
-    print(content)
+        content += '</table>'
 
-    with open('../UItest/report/demoreport11_5.html', 'w+')as f:
-        f.write(content)
+
+
+    with open('../UItest/report/demoreport11_5.html', 'w+',encoding='UTF-8')as f:
+              f.write(content)
+
+    with open('../UItest/report/demoreport11_5.html',encoding='utf-8')as f:
+        re = f.read()
+        re=re.replace('${successrate}','{:.2%}'.format(count_success / len(result)))
+        re=re.replace('${totalnum}','%s'%len(result))
+        re=re.replace('${testtime}','%s'%time.strftime("%m-%d",time.localtime(time.time())))
+        re=re.replace('${failnum}','%s'%coount_fail)
+        re=re.replace('${machinetype}',':androdi5 huawei')
+        re=re.replace('${successnum}','%s'%count_success)
+        re=re.replace('${version}','V1.23')
+        print(re)
+        with open('../UItest/report/test_report.html','w',encoding='utf-8')as f1:
+            f1.write(re)
+    # return [len(result),count_success / len(result),coount_fail,'androdi5 huawei']
+
+
+
+
+
+
 
 
 def fileex():
@@ -246,5 +292,8 @@ def fileex():
 if __name__ == '__main__':
     # creat_report()
     get_emial_html()
+    # print(g)
+
+
     # get_html()
     # fileex()

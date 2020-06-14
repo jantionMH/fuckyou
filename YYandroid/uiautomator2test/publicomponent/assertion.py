@@ -1,33 +1,33 @@
 import time
 
 
-def assert_equal_bet(self, case, scenes,video):
+def assert_equal_bet(self, case, scenes):
     t = self.s.toast.get_message()
     now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
     if t == '投注成功':
-        with open('../data/result.csv', mode='a+') as f:
+        with open('../data/result.csv', mode='a+',encoding='UTF-8') as f:
             f.write(now + ',' + '%s' % scenes + ',' + case + ',' + '测试成功' + ',' + '无' + ',' + '无' + '\n')
     else:
         filename = '%s.png' % now
         self.s.screenshot('../UItest/report/screenshot/%s' % filename)
-        with open('../data/result.csv', mode='a') as f:
+        with open('../data/result.csv', mode='a',encoding='UTF-8') as f:
             f.write(
-                now + ',' + '%s' % scenes + ',' + case + ',' + "失败" + ',' + filename + ','+video+'未收到投注成功提示' + '\n')
+                now + ',' + '%s' % scenes + ',' + case + ',' + "失败" + ',' + filename + ',' + '未收到投注成功提示' + '\n')
 
 
-def assert_presence(self, expect, actual, case, scenes, video=None,video_2=None, key=None):
+def assert_presence(self, expect, actual, case, scenes, key=None):
     now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
     if expect == actual:
-        print('测试成功,预期=实际')
-        with open('../data/result.csv', mode='a+') as f:
+        print('%s测试成功,预期=实际' % case)
+        with open('../data/result.csv', mode='a+',encoding='utf-8') as f:
             f.write(now + ',' + '%s' % scenes + ',' + case + ',' + '测试成功' + ',' + '无' + ',' + '无' + '\n')
     elif expect != actual:
-        print('测试失败')
+        print('%s测试失败' % case)
         filename = '%s.png' % now
         self.s.screenshot('../UItest/report/screenshot/%s' % filename)
-        with open('../data/result.csv', mode='a') as f:
+        with open('../data/result.csv', mode='a',encoding='utf-8') as f:
             f.write(
-                now + ',' + '%s' % scenes + ',' + case + ',' + "失败" + ',' + filename+ ',' + video+'/'+video_2 + '\n')
+                now + ',' + '%s' % scenes + ',' + case + ',' + "失败" + ',' + filename + ','+'未知'+ '\n')
 
 
 # 数字页面选号断言
@@ -52,21 +52,17 @@ def page_text_avaliable(self, text, style):
 
 def add_list_and_assert(self, style):
     self.s.wait_timeout = 5
-    # 录制视频
-    now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
-    videofilename = '%s.mp4' % now
-    self.s.screenrecord('../data/%s' % videofilename)
-    #截图
+
+    # 截图 目的:已经选号的注数
     now0 = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
     filename = '%s.png' % now0
     self.s.screenshot('../UItest/report/screenshot/%s' % filename)
+    # 已选注数
     n1 = self.s(text='已选').sibling(className='android.widget.TextView', instance=1).get_text()
     print('添加前的注单数', n1)
     time.sleep(1)
     self.s(text='添加注单').click()
     page_text_1 = self.s(text='投注单').get_text()
-    # 结束录制，文件名参数传入断言
-    time.sleep(3)
-    self.s.screenrecord.stop()
-    assert_presence(self, expect='投注单', actual=page_text_1, scenes='玩法:%s' % style, case='添加注单', video=videofilename)
-    return n1, filename,videofilename
+
+    assert_presence(self, expect='投注单', actual=page_text_1, scenes='玩法:%s' % style, case='添加注单')
+    return n1, filename

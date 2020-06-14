@@ -184,13 +184,31 @@ import zipfile
 #                with zipfile.ZipFile(file='../demoreport.zip',mode='a') as z:
 #                    z.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\screenshot\%s.png'%fpng,fpng+'.png')
 #                    z.write(r'C:\Users\janti\PycharmProjects\autotest-android\YYandroid\UItest\report\demoreport11_5.html', 'demoreport11_5.html')
-#                    z.close()
+# #                    z.close()
+# try:
+#   print(x)
+# except:
+#   print("An exception occurred")
+# finally:
+#
+#     try:
+#       print(x)
+#     except:
+#       print("An exception occurred")
+#
+#     try:
+#       print(x)
+#     except:
+#       print("An exception occurred")
+#     try:
+#       print(1)
+#     except:
+#       print("An exception occurred")
+#
+#     try:
+#       print(x)
+#     except:
+#       print("An exception occurred")
 
-def ddd():
-    phone = uiautomator2.connect('127.0.0.1:62001')
-    print(phone.device_info)
-    phone.app_start('com.yy.sport')
-    phone.session(package_name='com.yy.sport', attach=True)
-    phone.service('uiautomator').stop()
-
-ddd()
+with open('../data/dict.csv', mode='a', encoding='UTF-8') as f:
+    f.write('dfuhfaifhjshf')

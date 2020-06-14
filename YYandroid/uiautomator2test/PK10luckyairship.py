@@ -5,7 +5,7 @@ from uiautomator2test.publicomponent.assertion import assert_presence, page_numb
 from uiautomator2test.publicomponent.bettingwidget import oneclick_bet
 from uiautomator2test.publicomponent.modules import onclick_verify_balance_back_game, add_betlist_verify_balance_back_game
 from uiautomator2test.publicomponent.others import check_if_in_offical, choose_betstyle, game_back_to_check_balance, \
-    get_c_balance_and_check, balance_back_to_game, pk10_luckship_bet_page, check_if_in_gametown
+    get_c_balance_and_check, balance_back_to_game, pk10_luckship_bet_page, check_if_in_gametown, shadow_click
 
 
 class Luckship:
@@ -14,13 +14,26 @@ class Luckship:
         def __init__(self):
             phone = uiautomator2.connect('127.0.0.1:62001')
             print(phone.device_info)
-            phone.reset_uiautomator()
-            phone.watcher("ok").when(
-                xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+
+            phone.app_clear("com.yy.sport")
+            print('清除app')
+
+            phone.watcher("OK").when(
+                xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='Wait']").when(
+                xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+            print('启动watcher ,点击ok')
             phone.watcher.start()
+
             phone.app_start('com.yy.sport', stop=True)
+            print('启动app')
+            phone.watcher("OK").when(
+                xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(
+                xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+            print('启动watcher ,点击ok')
+            phone.watcher.start()
+            phone.wait_timeout = 20
+
             self.s = phone.session(package_name='com.yy.sport', attach=True)
-            self.s.implicitly_wait = 5
             try:
                 self.s(resourceId='com.yy.sport:id/tv_download').click()
                 print('点广告')
@@ -51,14 +64,20 @@ class Luckship:
             self.s().must_wait(2)
             self.s(resourceId="com.yy.sport:id/home_imageview2", instance=4).click()
             try:
-              caipiao_text = self.s(text="彩票").get_text()
-              assert_presence(self, expect='彩票', actual=caipiao_text, case='进入彩票模块', scenes='进入首页')
+                caipiao_text = self.s(text="彩票").get_text()
+                assert_presence(self, expect='彩票', actual=caipiao_text, case='进入彩票模块', scenes='进入首页')
             except:
-                self.s(resourceId="com.yy.sport:id/home_imageview2", instance=4).click()
+                try:
+                    self.s(resourceId="com.yy.sport:id/home_imageview2", instance=4).click()
+                    caipiao_text = self.s(text="彩票").get_text()
+                    assert_presence(self, expect='彩票', actual=caipiao_text, case='进入彩票模块', scenes='进入首页')
+                except:
+                    assert_presence(self, expect='彩票', actual='无', case='进入彩票模块', scenes='进入首页')
             self.s(text="PK10").click()
-            self.s().must_wait = 1
-            self.s(text="幸运飞艇").click(timeout=2)
+
+
             try:
+               self.s(text="幸运飞艇").click(timeout=2)
                game_text = self.s(text="玩法").get_text()
                assert_presence(self, expect='玩法', actual=game_text, case='进入PK10-幸运飞艇', scenes='进入游戏')
             except:
@@ -66,6 +85,14 @@ class Luckship:
                 self.s(text="幸运飞艇").click(timeout=2)
                 game_text = self.s(text="玩法").get_text()
                 assert_presence(self, expect='玩法', actual=game_text, case='进入PK10-幸运飞艇', scenes='进入游戏')
+
+            try:
+
+                self.s.click(x=430, y=770)
+                self.s.click(x=430, y=770)
+                self.s.click(x=430, y=770)
+            except:
+                print('没有阴影')
 
         def top5_position(self):
             check_if_in_offical(self, text='前五-定位胆-定位胆', style='幸运飞艇')  # 检查当前页面是否为官方玩法页面
@@ -261,6 +288,7 @@ class Luckship:
                                                      gamename2='PK10', style2='幸运飞艇', menthod='PK10-幸运飞艇-龙虎-龙虎-%s'%i)
         def gametown_PK10_two_sides(self):
             check_if_in_gametown(self, text='两面', style='PK10-幸运飞艇')
+            shadow_click(self)
             choose_betstyle(self, betstyle_1='两面')  # 选择玩法
             self.s(text="大", instance=0).click()
             self.s(text="1V10虎", instance=0).click()
@@ -285,6 +313,7 @@ class Luckship:
 
         def gametown_PK10_guess_sum(self):
             check_if_in_gametown(self, text='两面', style='PK10-幸运飞艇')
+            shadow_click(self)
             choose_betstyle(self, betstyle_1='猜和值')  # 选择玩法
             self.s(resourceId='com.yy.sport:id/tv_ball', instance=5).click()
             onclick_verify_balance_back_game(self, scenes='玩法:PK10-幸运飞艇-娱乐城-猜和值-冠亚', case1='一键投注',
@@ -293,6 +322,7 @@ class Luckship:
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-娱乐城-猜和值-冠亚')
 
             check_if_in_gametown(self, text='两面', style='PK10-幸运飞艇')
+            shadow_click(self)
             choose_betstyle(self, betstyle_1='猜和值')  # 选择玩法
             self.s(text='冠亚季和值').click()
             self.s(resourceId='com.yy.sport:id/tv_ball', instance=20).click()
@@ -301,6 +331,7 @@ class Luckship:
                                              playmenthod='玩法:PK10-幸运飞艇-娱乐城-猜和值-冠亚季和值', case2='一键投注金额验证',
                                              gamename2='PK10', style='幸运飞艇', menthod='PK10-幸运飞艇-娱乐城-猜和值-冠亚季和值')
             check_if_in_gametown(self, text='两面', style='PK10-幸运飞艇')
+            shadow_click(self)
             choose_betstyle(self, betstyle_1='猜和值')  # 选择玩法
             self.s(text='首尾和值').click()
             self.s(resourceId='com.yy.sport:id/tv_ball', instance=13).click()
@@ -311,6 +342,7 @@ class Luckship:
 
         def gametown_PK10_champion_tenth(self):
             check_if_in_gametown(self, text='两面', style='PK10-幸运飞艇')
+            shadow_click(self)
             choose_betstyle(self, betstyle_1='第1-10名')  # 选择玩法
             self.s(resourceId='com.yy.sport:id/tv_ball', instance=0).click()
             self.s(resourceId='com.yy.sport:id/tv_ball', instance=10).click()
@@ -337,6 +369,7 @@ class Luckship:
         def gametown_luckship_TG(self):
             import random
             check_if_in_gametown(self, text='两面', style='PK10-幸运飞艇')
+            shadow_click(self)
             choose_betstyle(self, betstyle_1='龙虎斗')  # 选择玩法
             list=['龙','虎']
             for i in range(4):

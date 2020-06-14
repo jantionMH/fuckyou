@@ -13,14 +13,14 @@ def origin_zip():
 
 
 def upgrade_zipfile():
-    with open('../data/result.csv') as f:
+    with open('../data/result.csv',encoding='UTF-8') as f:
         text=f.read()
         # print(text)
-        with zipfile.ZipFile(file='../demoreport.zip', mode='a') as z:
+        with zipfile.ZipFile(file='../test_result_set.zip', mode='a') as z:
             for filename in os.listdir('../UItest/report/screenshot'):
                 if filename in text:
                     z.write('../UItest/report/screenshot/%s' % filename, filename)
-                    z.write('../UItest/report/demoreport11_5.html','UItestreport.html')
+                    z.write('../UItest/report/demoreport.html','UItestreport.html')
             for videofile in os.listdir('../data'):
                    if videofile in text:
                        print(videofile)

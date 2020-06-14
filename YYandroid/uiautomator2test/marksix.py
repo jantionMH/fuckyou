@@ -9,13 +9,29 @@ from uiautomator2test.publicomponent.others import choose_betstyle, marksix_unit
 class HongkongMarksix:
     def __init__(self):
         phone = uiautomator2.connect('127.0.0.1:62001')
-        phone.reset_uiautomator()
-        phone.watcher("ok").when(
-            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
-        phone.watcher.start()
-        phone.app_start('com.yy.sport', stop=True)
-        self.s = phone.session(package_name='com.yy.sport', attach=True)
+        print(phone.device_info)
 
+        phone.service('uiautomator').stop()
+        phone.app_clear("com.yy.sport")
+        print('清除app')
+        phone.reset_uiautomator()
+        phone.watcher("OK").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='Wait']").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+        print('启动watcher ,点击ok')
+        phone.watcher.start()
+
+
+        phone.app_start('com.yy.sport', stop=True)
+        print('启动app')
+        phone.watcher("OK").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+        print('启动watcher ,点击ok')
+        phone.watcher.start()
+        phone.wait_timeout = 20
+
+        self.s = phone.session(package_name='com.yy.sport', attach=True)
         try:
             self.s(resourceId='com.yy.sport:id/tv_download').click()
             print('点广告')
@@ -56,8 +72,9 @@ class HongkongMarksix:
                 assert_presence(self, expect='彩票', actual='无', case='进入彩票模块', scenes='进入首页')
         self.s(text="六合彩").click()
         self.s().must_wait = 1
-        self.s(text="香港六合彩").click(timeout=2)
+
         try:
+            self.s(text="香港六合彩").click(timeout=2)
             game_text = self.s(text="玩法").get_text()
             assert_presence(self, expect='玩法', actual=game_text, case='进入"香港六合彩"', scenes='进入游戏')
         except:
@@ -65,6 +82,13 @@ class HongkongMarksix:
             self.s(text="香港六合彩").click(timeout=2)
             game_text = self.s(text="玩法").get_text()
             assert_presence(self, expect='玩法', actual=game_text, case='进入"香港六合彩"', scenes='进入游戏')
+        try:
+
+            self.s.click(x=430,y=770)
+            self.s.click(x=430,y=770)
+            self.s.click(x=430,y=770)
+        except:
+            print('没有阴影')
 
     def specialnum(self):
         self.s(text='01').click()
@@ -76,7 +100,7 @@ class HongkongMarksix:
         self.s(text='特大').click()
         self.s(text='特合小').click()
         self.s(text='特后肖').click()
-        self.s.service('uiautomator').stop()
+        marksix_unitprice(self)
         # 一键投注+返回上级+一键投注验证金额+返回页面+4个断言断言
         onclick_verify_balance_back_game(self, scenes='玩法:六合彩-香港六合彩-特码', case1='一键投注',
                                          gamename1='六合彩-香港六合彩-特码',

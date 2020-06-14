@@ -9,20 +9,33 @@ from uiautomator2test.publicomponent.modules import onclick_verify_balance_back_
     add_betlist_verify_balance_back_game
 from uiautomator2test.publicomponent.others import game_back_to_check_balance, balance_back_to_game, \
     get_c_balance_and_check, check_if_in_gametown, check_if_in_offical, choose_betstyle, random_add_5, \
-    gamtown_11c5_randomchoose, gametown_11c5_TG
+    gamtown_11c5_randomchoose, gametown_11c5_TG, shadow_click
 
 
 class login_to_11c5:
     def __init__(self):
         phone = uiautomator2.connect('127.0.0.1:62001')
         print(phone.device_info)
-        phone.reset_uiautomator()
-        phone.watcher("ok").when(
-            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+
+        phone.app_clear("com.yy.sport")
+        print('清除app')
+
+        phone.watcher("OK").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='Wait']").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+        print('启动watcher ,点击ok')
         phone.watcher.start()
+
         phone.app_start('com.yy.sport', stop=True)
+        print('启动app')
+        phone.watcher("OK").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(
+            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+        print('启动watcher ,点击ok')
+        phone.watcher.start()
+        phone.wait_timeout = 20
+
         self.s = phone.session(package_name='com.yy.sport', attach=True)
-        self.s.implicitly_wait = 5
         try:
             self.s(resourceId='com.yy.sport:id/tv_download').click()
             print('点广告')
@@ -52,17 +65,35 @@ class login_to_11c5:
         self.s.swipe(fx=448, fy=1350, tx=448, ty=250, duration=0.5)
         self.s().must_wait(2)
         self.s(resourceId="com.yy.sport:id/home_imageview2", instance=4).click()
-
-        caipiao_text = self.s(text="彩票").get_text()
-        assert_presence(self, expect='彩票', actual=caipiao_text, case='进入彩票模块', scenes='进入首页')
+        try:
+            caipiao_text = self.s(text="彩票").get_text()
+            assert_presence(self, expect='彩票', actual=caipiao_text, case='进入彩票模块', scenes='进入首页')
+        except:
+            try:
+                self.s(resourceId="com.yy.sport:id/home_imageview2", instance=4).click()
+                caipiao_text = self.s(text="彩票").get_text()
+                assert_presence(self, expect='彩票', actual=caipiao_text, case='进入彩票模块', scenes='进入首页')
+            except:
+                assert_presence(self, expect='彩票', actual='无', case='进入彩票模块', scenes='进入首页')
 
         self.s(text="十一选五").click()
         self.s().must_wait = 1
-        self.s(text="上海11选5").click(timeout=1)
 
-        game_text = self.s(text="玩法").get_text()
-        assert_presence(self, expect='玩法', actual=game_text, case='进入上海11选5', scenes='进入游戏')
+        try:
+                self.s(text="上海11选5").click(timeout=1)
+                game_text = self.s(text="玩法").get_text()
+                assert_presence(self, expect='玩法', actual=game_text, case='进入上海11选5', scenes='进入游戏')
+        except:
+                self.s(text="上海11选5").click(timeout=1)
+                game_text = self.s(text="玩法").get_text()
+                assert_presence(self, expect='玩法', actual=game_text, case='进入上海11选5', scenes='进入游戏')
+        try:
 
+            self.s.click(x=430, y=770)
+            self.s.click(x=430, y=770)
+            self.s.click(x=430, y=770)
+        except:
+            print('没有阴影')
     def top3_direct_duplex(self):
 
         check_if_in_offical(self, text='三码-直选-前三直选复式', style='上海11选5')  # 检查当前页面是否为官方玩法页面
@@ -311,6 +342,7 @@ class login_to_11c5:
     def gametown_11c5_two_sides(self):
 
         check_if_in_gametown(self, text='两面', style='上海11选5-娱乐城')
+        shadow_click(self)
         # 页面选号
         page_number_avaliable(self, style='上海11选5-娱乐城-两面', num=0, exnum='大')
 
@@ -330,6 +362,7 @@ class login_to_11c5:
 
     def gametown_11c5_ball_1(self):
         check_if_in_gametown(self, text='两面', style='上海11选5-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='第一球')  # 选择玩法
         # 页面选号
         page_number_avaliable(self, style='上海11选5-娱乐城-第一球', num=0, exnum='1')
@@ -345,6 +378,7 @@ class login_to_11c5:
 
     def gametown_11c5_ball_2(self):
         check_if_in_gametown(self, text='两面', style='上海11选5-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='第二球')  # 选择玩法
         # 页面选号
         page_number_avaliable(self, style='上海11选5-娱乐城-第二球', num=0, exnum='1')
@@ -360,6 +394,7 @@ class login_to_11c5:
 
     def gametown_11c5_ball_3(self):
         check_if_in_gametown(self, text='两面', style='上海11选5-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='第三球')  # 选择玩法
         # 页面选号
         page_number_avaliable(self, style='上海11选5-娱乐城-第三球', num=0, exnum='1')
@@ -375,6 +410,7 @@ class login_to_11c5:
 
     def gametown_11c5_ball_4(self):
         check_if_in_gametown(self, text='两面', style='上海11选5-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='第四球')  # 选择玩法
         # 页面选号
         page_number_avaliable(self, style='上海11选5-娱乐城-第四球', num=0, exnum='1')
@@ -390,6 +426,7 @@ class login_to_11c5:
 
     def gametown_11c5_ball_5(self):
         check_if_in_gametown(self, text='两面', style='上海11选5-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='第五球')  # 选择玩法
         # 页面选号
         page_number_avaliable(self, style='上海11选5-娱乐城-第五球', num=0, exnum='1')
@@ -405,6 +442,7 @@ class login_to_11c5:
 
     def gametown_11c5_ball_random(self):
         check_if_in_gametown(self, text='两面', style='上海11选5-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='任选')  # 选择玩法
         # 页面选号
         page_number_avaliable(self, style='上海11选5-娱乐城-任选', num=0, exnum='1')
@@ -418,6 +456,7 @@ class login_to_11c5:
 
     def gametown_11c5_ball_TG(self):
         check_if_in_gametown(self, text='两面', style='上海11选5-娱乐城')
+        shadow_click(self)
         choose_betstyle(self, betstyle_1='龙虎斗')  # 选择玩法
         # 页面选号
         page_number_avaliable(self, style='上海11选5-娱乐城-龙虎斗', num=0, exnum='龙')
