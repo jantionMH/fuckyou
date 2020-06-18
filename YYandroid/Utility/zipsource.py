@@ -20,7 +20,7 @@ def upgrade_zipfile():
             for filename in os.listdir('../UItest/report/screenshot'):
                 if filename in text:
                     z.write('../UItest/report/screenshot/%s' % filename, filename)
-                    z.write('../UItest/report/demoreport.html','UItestreport.html')
+                    z.write('../UItest/report/test_report.html','UItestreport.html')
             for videofile in os.listdir('../data'):
                    if videofile in text:
                        print(videofile)

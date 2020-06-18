@@ -5,12 +5,12 @@ def assert_equal_bet(self, case, scenes):
     t = self.s.toast.get_message()
     now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
     if t == '投注成功':
-        with open('../data/result.csv', mode='a+',encoding='UTF-8') as f:
+        with open('../data/result.csv', mode='a+') as f:
             f.write(now + ',' + '%s' % scenes + ',' + case + ',' + '测试成功' + ',' + '无' + ',' + '无' + '\n')
     else:
         filename = '%s.png' % now
         self.s.screenshot('../UItest/report/screenshot/%s' % filename)
-        with open('../data/result.csv', mode='a',encoding='UTF-8') as f:
+        with open('../data/result.csv', mode='a') as f:
             f.write(
                 now + ',' + '%s' % scenes + ',' + case + ',' + "失败" + ',' + filename + ',' + '未收到投注成功提示' + '\n')
 
@@ -19,13 +19,13 @@ def assert_presence(self, expect, actual, case, scenes, key=None):
     now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
     if expect == actual:
         print('%s测试成功,预期=实际' % case)
-        with open('../data/result.csv', mode='a+',encoding='utf-8') as f:
+        with open('../data/result.csv', mode='a+') as f:
             f.write(now + ',' + '%s' % scenes + ',' + case + ',' + '测试成功' + ',' + '无' + ',' + '无' + '\n')
     elif expect != actual:
         print('%s测试失败' % case)
         filename = '%s.png' % now
         self.s.screenshot('../UItest/report/screenshot/%s' % filename)
-        with open('../data/result.csv', mode='a',encoding='utf-8') as f:
+        with open('../data/result.csv', mode='a') as f:
             f.write(
                 now + ',' + '%s' % scenes + ',' + case + ',' + "失败" + ',' + filename + ','+'未知'+ '\n')
 
@@ -60,7 +60,7 @@ def add_list_and_assert(self, style):
     # 已选注数
     n1 = self.s(text='已选').sibling(className='android.widget.TextView', instance=1).get_text()
     print('添加前的注单数', n1)
-    time.sleep(1)
+    time.sleep(2)
     self.s(text='添加注单').click()
     page_text_1 = self.s(text='投注单').get_text()
 

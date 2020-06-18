@@ -11,7 +11,7 @@ class HongkongMarksix:
         phone = uiautomator2.connect('127.0.0.1:62001')
         print(phone.device_info)
 
-        phone.service('uiautomator').stop()
+        # phone.service('uiautomator').stop()
         phone.app_clear("com.yy.sport")
         print('清除app')
         phone.reset_uiautomator()

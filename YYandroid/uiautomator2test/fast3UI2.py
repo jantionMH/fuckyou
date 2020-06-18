@@ -363,7 +363,7 @@ class Anhuifast3:
         shadow_click(self)
         check_if_in_gametown(self, text='整合', style='快三-安徽快三')
         shadow_click(self)
-        choose_betstyle(self, betstyle_1='猜和值')  # 选择玩法
+
         self.s(text='3').click()
         self.s(text='4').click()
         self.s(text='5').click()

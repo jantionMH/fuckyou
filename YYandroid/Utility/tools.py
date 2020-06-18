@@ -210,5 +210,6 @@ import zipfile
 #     except:
 #       print("An exception occurred")
 
-with open('../data/dict.csv', mode='a', encoding='UTF-8') as f:
-    f.write('dfuhfaifhjshf')
+# with open('../data/dict.csv', mode='a', encoding='UTF-8') as f:
+#     f.write('dfuhfaifhjshf')
+print(float(5.20)-float(2)==float(3.20))

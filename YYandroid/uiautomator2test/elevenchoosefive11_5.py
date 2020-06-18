@@ -16,7 +16,7 @@ class login_to_11c5:
     def __init__(self):
         phone = uiautomator2.connect('127.0.0.1:62001')
         print(phone.device_info)
-
+        # phone.set_orientation('1')
         phone.app_clear("com.yy.sport")
         print('清除app')
 

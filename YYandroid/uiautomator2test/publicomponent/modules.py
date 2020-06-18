@@ -56,12 +56,13 @@ def add_betlist_verify_balance_back_game(self, style1, scenes, case1, gamename1,
 
     # 返回上级
     game_back_to_check_balance(self, gamename=gamename1)
+    # 结束录制，文件名参数传入断言
+    time.sleep(2)
+    self.s.screenrecord.stop()
 
     # 断言：添加注单验证金额
     get_c_balance_and_check(self, amount=betsadd[0], beforeamount=betsadd[1], playmenthod=playmenthod,
                             case=case2,video=filename1)
-    # 结束录制，文件名参数传入断言
-    time.sleep(1)
-    self.s.screenrecord.stop()
+
     # 返回页面
     balance_back_to_game(self, gamename=gamename2, style=style2, menthod=menthod)

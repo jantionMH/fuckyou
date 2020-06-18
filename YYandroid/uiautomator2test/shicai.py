@@ -88,6 +88,7 @@ class M65:
             self.s.click(x=430, y=770)
             self.s.click(x=430, y=770)
             self.s.click(x=430, y=770)
+            self.s.click(x=430, y=770)
         except:
             print('没有阴影')
 

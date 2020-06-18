@@ -34,7 +34,8 @@ def public_htmlemail(content):
     # 发送者
     fromaddr = 'jantion1110@gmail.com'
     # 接收者
-    toaddrs = ['jantion1110@aol.com', 'frankc@seektopser.com', 'sven@seektopser.com','manda@seektopser.com']
+    # toaddrs = ['jantion1110@aol.com', 'frankc@seektopser.com', 'sven@seektopser.com','manda@seektopser.com']
+    toaddrs = ['leo@seektopser.com']
 
 
     # 邮件标题
@@ -115,7 +116,7 @@ def htmlemail(content):
 
     # 加入附件
     if content=='测试完成':
-        attr1=MIMEText(open(r"../UItest/report/test_report.html", 'r').read(), _subtype='plain', _charset='utf-8')
+        attr1=MIMEText(open(r"../UItest/report/test_report.html", 'r',encoding='utf-8').read(), _subtype='plain', _charset='utf-8')
         # attr1 = MIMEText(open(r"C:\Users\janti\PycharmProjects\autotest-android\YYandroid\demoreport.zip", 'rb').read(),
         #                  _subtype='base64',
         #                  _charset='utf-8')

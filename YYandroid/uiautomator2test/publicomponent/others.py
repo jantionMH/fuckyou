@@ -50,10 +50,10 @@ def get_c_balance_and_check(self, amount, beforeamount, playmenthod, case,video)
 
     c_balance = self.s(resourceId='com.yy.sport:id/iv_user_balance').get_text()
     c = c_balance.replace(',', '')
-
+    float(beforeamount) - float(amount)
 
     now = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
-    if float(beforeamount) - float(amount) == float(c):
+    if float(beforeamount) - float(amount)== float(c):
         print(case)
         result = '测试成功'
 
@@ -65,7 +65,7 @@ def get_c_balance_and_check(self, amount, beforeamount, playmenthod, case,video)
         self.s.screenshot('../UItest/report/screenshot/%s' % filename)
         with open('../data/result.csv', mode='a') as f:
             f.write(
-                now + ',' + '%s' % playmenthod + ',' + case + ',' + "失败" + ',' + filename + ',' +video+','+ '结账前:%s下注额%s减法得到%s实际结账后:%s' % (
+                now + ',' + '%s' % playmenthod + ',' + case + ',' + "失败" + ',' + filename + ',' +video+'/'+ '结账前:%s下注额%s减法得到%s实际结账后:%s' % (
                     beforeamount, amount, float(beforeamount) - float(amount), c) + '\n')
 
 
@@ -229,7 +229,7 @@ def gamtown_11c5_randomchoose(self):
     self.s(resourceId='com.yy.sport:id/tv_ball', instance=4).click()
 
     self.s(resourceId='com.yy.sport:id/tv_ball', instance=11).click()
-    # self.s(resourceId='com.yy.sport:id/tv_ball', instance=14).click()
+    self.s(resourceId='com.yy.sport:id/tv_ball', instance=14).click()
     # self.s(scrollable=True).scroll.to(text='三中三')
     #
     # self.s(resourceId='com.yy.sport:id/tv_ball', instance=6).click()
