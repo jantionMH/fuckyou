@@ -7,3 +7,5 @@ demoreport.zip
 data/
 *.png
 *.mp4
+venv/
+*.zip
