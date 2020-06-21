@@ -1,6 +1,6 @@
 import random, time
 import os
-
+import sys
 import uiautomator2
 
 from interface.fast3gametown import *
@@ -212,4 +212,7 @@ import zipfile
 
 # with open('../data/dict.csv', mode='a', encoding='UTF-8') as f:
 #     f.write('dfuhfaifhjshf')
-print(float(5.20)-float(2)==float(3.20))
+# print(float(5.20)-float(2)==float(3.20))
+os.system('taskkill /F /IM Nox.exe')
+os.popen(r'C:\Program Files (x86)\Nox\bin\Nox.exe')
+# os.popen('C:\\Program Files (x86)\\Nox\\bin\\Nox.exe')

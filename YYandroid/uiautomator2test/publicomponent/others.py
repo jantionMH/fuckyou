@@ -5,7 +5,7 @@ from uiautomator2test.publicomponent.bettingwidget import oneclick_bet
 
 
 def game_back_to_check_balance(self, gamename):
-    self.s().must_wait(2)
+
 
     #点击返回箭头
     self.s(resourceId='com.yy.sport:id/iv_back').click()
@@ -18,28 +18,28 @@ def game_back_to_check_balance(self, gamename):
 
 def balance_back_to_game(self, gamename, style, menthod):
 
-    time.sleep(2)
+    # time.sleep(0.5)
     self.s(text='彩票').click()
-    time.sleep(2)
     self.s(text="%s" % gamename).click()
 
     try:
-      self.s().must_wait(timeout=2)
-      time.sleep(2)
+
+
+      self.s(text="%s" % style).wait(timeout=5)
       self.s(text="%s" % style).click()
 
       print('返回游戏投注页面')
-      self.s().must_wait = 2
+
 
     except:
-        self.s().must_wait(timeout=2)
-        time.sleep(2)
+
+        self.s(text="%s" % style).wait(timeout=5)
         self.s(text="%s" % style).click()
         # 结束录制，文件名参数传入断言
-        time.sleep(2)
+        # time.sleep(0.2)
         self.s.screenrecord.stop()
         print('返回游戏投注页面')
-        self.s().must_wait = 2
+
 
 
     game_text = self.s(text="玩法").get_text()
@@ -92,6 +92,7 @@ def check_if_in_gametown(self, text, style):
 
 def check_if_in_offical(self, text, style):
     try:
+        print('页面检查')
         page_text = self.s(text='%s' % text).get_text()
         assert_presence(self, expect='%s' % text, actual=page_text, case='进入官方玩法页面', scenes="玩法:%s" % style)
     except:

@@ -1,3 +1,5 @@
+import os
+
 import uiautomator2
 import time
 from uiautomator2test.publicomponent.assertion import assert_presence, page_number_avaliable, page_text_avaliable
@@ -33,11 +35,26 @@ class M65:
 
         self.s = phone.session(package_name='com.yy.sport', attach=True)
 
-        try:
-            self.s(resourceId='com.yy.sport:id/tv_download').click()
-            print('点广告')
-        except:
-            print('没有广告')
+        self.s(resourceId='com.yy.sport:id/tv_download').wait(timeout=15)
+        if self.s.exists(resourceId='com.yy.sport:id/tv_download'):
+            try:
+                self.s(resourceId='com.yy.sport:id/tv_download').click()
+                print('点广告')
+            except:
+                print('点击广告无效')
+                os.system('taskkill /F /IM Nox.exe')
+                time.sleep(10)
+                os.popen(r'C:\Program Files (x86)\Nox\bin\Nox.exe')
+                time.sleep(60)
+        else:
+
+            if self.s.exists(resourceId='com.yy.sport:id/tv_download'):
+                os.system('taskkill /F /IM Nox.exe')
+                time.sleep(10)
+                os.popen(r'C:\Program Files (x86)\Nox\bin\Nox.exe')
+                time.sleep(60)
+            else:
+                print('真的没有广告了吗')
         self.s(resourceId='com.yy.sport:id/account').click(timeout=8)
         self.s(resourceId='com.yy.sport:id/account').clear_text()
         self.s(resourceId='com.yy.sport:id/account').send_keys('jantion001')
@@ -57,9 +74,11 @@ class M65:
             pass
 
         self.s(description="娱乐").click()
-        self.s().must_wait(2)
-        self.s.swipe(fx=448, fy=1350, tx=448, ty=250, duration=0.5)
-        self.s().must_wait(2)
+
+        self.s.swipe(fx=448, fy=1350, tx=448, ty=250)
+        self.s.swipe(fx=448, fy=1350, tx=448, ty=250)
+        self.s.swipe(fx=448, fy=1350, tx=448, ty=250)
+
         self.s(resourceId="com.yy.sport:id/home_imageview2", instance=4).click()
         try:
             caipiao_text = self.s(text="彩票").get_text()
@@ -2116,8 +2135,8 @@ class M65:
 if __name__ == '__main__':
     M = M65()
     M.star5_driect_duplex()
-    M.star5_driect_selection()
-    M.star5_direct_single()
+    # M.star5_driect_selection()
+    # M.star5_direct_single()
     # M.star5_group_120()
     # M.star5_group_60()
     # M.star5_group_30()
@@ -2205,7 +2224,7 @@ if __name__ == '__main__':
     # M.random2_group_single()
     #
     # M.random3_direct_duplex()
-    M.random3_dircet_sum()
+    # M.random3_dircet_sum()
     # M.random3_group3_duplex()
     # M.random3_group3_single()
     # M.random3_group6_duplex()

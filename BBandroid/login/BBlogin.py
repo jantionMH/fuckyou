@@ -1,29 +1,39 @@
 import uiautomator2
-import os,subprocess,time
+import os, subprocess, time,pexpect
+
 
 class BB:
 
     def __init__(self):
 
         phone = uiautomator2.connect('127.0.0.1:62001')
-        print(phone.device_info)
+
+        if phone.device_info:
+            print('设备在线',phone.device_info)
+            print('debug',phone.set_orientation(2))
+            print('窗口大小',phone.window_size())
+        else:
+            print('设备不在线，请重启/自动重启设备')
+            os.popen(r'C:\Program Files (x86)\Nox\bin\Nox.exe')
+            time.sleep(60)
+            phone = uiautomator2.connect('127.0.0.1:62001')
+            print(phone.device_info)
 
 
         phone.app_clear("com.cy.sports")
-        print('清除app')
 
-        phone.watcher("OK").when(
-            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='Wait']").when(
-            xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
-        print('启动watcher ,点击ok')
-        phone.watcher.start()
+        # 全局watcher,可以应对任何时候出现的系统弹框
+        # phone.watcher("OK").when(
+        #     xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").when(
+        #     xpath="//android.widget.Button[@resource-id='android:id/button1' and @text='OK']").click()
+        # print('启动watcher ,点击ok')
+        # phone.watcher.start()
 
-
-        phone.app_start('com.cy.sports',stop=True)
+        phone.app_start('com.cy.sports', stop=True)
         print('启动app')
 
         phone.implicitly_wait(20)
-        self.s=phone
+        self.s = phone
         # self.s = phone.session(package_name='com.cy.sports', attach=True)
         try:
             self.s(resourceId='com.cy.sports:id/tv_cancel').click()
@@ -31,14 +41,12 @@ class BB:
         except:
             print('没有广告')
 
-        # self.s(resourceId='com.yy.sport:id/account').click(timeout=8)
-        self.s(resourceId='com.cy.sports:id/et_input').click(timeout=8)
+        self.s(resourceId='com.cy.sports:id/et_input').click()
         self.s(resourceId='com.cy.sports:id/et_input').clear_text()
         self.s(resourceId='com.cy.sports:id/et_input').send_keys('jantion001')
-        self.s(resourceId="com.cy.sports:id/et_input",instance=1).click()
-        self.s(resourceId="com.cy.sports:id/et_input",instance=1).send_keys('jantion001')
+        self.s(resourceId="com.cy.sports:id/et_input", instance=1).click()
+        self.s(resourceId="com.cy.sports:id/et_input", instance=1).send_keys('jantion001')
         self.s(resourceId="com.cy.sports:id/tv_login").click()
-
 
         try:
             self.s(resourceId="com.cy.sports:id/iv_close").click()  # 活动公告
@@ -58,8 +66,10 @@ class BB:
         self.s.swipe(fx=448, fy=1350, tx=448, ty=250, duration=0.5)
         self.s.swipe(fx=448, fy=1350, tx=448, ty=250, duration=0.5)
 
-        # self.s().must_wait(2)
         self.s(resourceId="com.cy.sports:id/iv_image", instance=0).click()
+
+        time.sleep(80)
+
         # try:
         #     caipiao_text = self.s(text="彩票").get_text()
         #     assert_presence(self, expect='彩票', actual=caipiao_text, case='进入彩票模块', scenes='进入首页')
@@ -89,12 +99,13 @@ class BB:
         #     self.s.click(x=430,y=770)
         # except:
         #     print('没有阴影')
+
+
 if __name__ == '__main__':
     # subprocess.getstatusoutput(r'C:\Program Files (x86)\Nox\bin\Nox.exe')
 
     # os.system(r'C:\Program Files (x86)\Nox\bin\Nox.exe')
+
     os.popen(r'C:\Program Files (x86)\Nox\bin\Nox.exe')
-    time.sleep(30)
+    time.sleep(60)
     B = BB()
-
-

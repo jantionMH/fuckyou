@@ -37,13 +37,17 @@ def upload_zipfile_ftp(date, type, subtype, key):
                         connect.storbinary(cmd='STOR %s' % i, fp=pf, blocksize=4096)
     elif key == '上传html':
 
-        with open(file='../UItest/report/test_report.html', mode='rb') as hf:
+        with open(file='../UItest/report/test_reportnew.html', mode='rb') as hf:
             hf.seek(0)
 
-            connect.storbinary(cmd='STOR test_report.html', fp=hf)
+            connect.storbinary(cmd='STOR test_reportnew.html', fp=hf)
         print('上传成功')
             # connect.quit()
-
+    elif key=='上传css_js':
+        with open(file='../UItest/report/jquery.min.js',mode='rb') as jf:
+            connect.storbinary(cmd='STOR jquery.min.js',fp=jf)
+        with open(file='../UItest/report/test.css',mode='rb') as cf:
+            connect.storbinary(cmd='STOR test.css',fp=cf)
 
 # 上传整个录频文件
 def upload_Mp4(date, type, subtype):

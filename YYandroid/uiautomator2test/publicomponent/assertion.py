@@ -51,7 +51,7 @@ def page_text_avaliable(self, text, style):
 # 添加注单并断言
 
 def add_list_and_assert(self, style):
-    self.s.wait_timeout = 5
+
 
     # 截图 目的:已经选号的注数
     now0 = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
@@ -60,7 +60,7 @@ def add_list_and_assert(self, style):
     # 已选注数
     n1 = self.s(text='已选').sibling(className='android.widget.TextView', instance=1).get_text()
     print('添加前的注单数', n1)
-    time.sleep(2)
+    # time.sleep(0.2)
     self.s(text='添加注单').click()
     page_text_1 = self.s(text='投注单').get_text()
 

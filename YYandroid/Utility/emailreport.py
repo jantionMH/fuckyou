@@ -34,8 +34,8 @@ def public_htmlemail(content):
     # 发送者
     fromaddr = 'jantion1110@gmail.com'
     # 接收者
-    # toaddrs = ['jantion1110@aol.com', 'frankc@seektopser.com', 'sven@seektopser.com','manda@seektopser.com']
-    toaddrs = ['leo@seektopser.com']
+    toaddrs = ['jantion1110@aol.com', 'frankc@seektopser.com', 'sven@seektopser.com','manda@seektopser.com','leo@seektopser.com']
+    # toaddrs = ['leo@seektopser.com']
 
 
     # 邮件标题
@@ -45,7 +45,7 @@ def public_htmlemail(content):
 
     # 登录邮箱服务器
     username = 'jantion1110@gmail.com'
-    password = 'melanie@12345'
+    password = 'jantionMH@12345'
 
     # 对python说的话
     # 实例化一个带附件的类
@@ -104,7 +104,7 @@ def htmlemail(content):
 
     # 登录邮箱服务器
     username = 'jantion1110@gmail.com'
-    password = 'melanie@12345'
+    password = 'jantionMH@12345'
 
     # 对python说的话
     # 实例化一个带附件的类
